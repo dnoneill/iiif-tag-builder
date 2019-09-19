@@ -1,6 +1,13 @@
 <template>
   <div class="form">
-  <input v-model="url" placeholder="Annotation URL" v-on:change="buildTags();">
+  <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
+    <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
+  </span>
+  <span v-if="viewtype == 'iiif-multistoryboard'">
+    <button @click="urllength += 1">
+      Add Annotation URL
+    </button>
+  </span>
   <input v-model="props['manifesturl']" placeholder="Manifest URL (OPTIONAL)" v-on:change="buildTags();">
   <select v-model="viewtype" v-on:change="updateListType()">
     <option disabled value="">Please select one</option>
@@ -16,14 +23,12 @@
   </select>
   <h2 v-if="viewtype">Settings</h2>
   <div id="settings" v-if="viewtype" v-bind:class="viewtype">
-  <div class="groupings">
+  <div class="groupings" v-if="booleanoptions.length > 0">
     <h2>Boolean Settings</h2>
-    <p>Multiple can be chosen at the same time; hold down Command (Mac) and Control (Windows) key when clicking on options</p>
-    <select v-on:change="buildTags()" multiple="true" v-model="settings['boolean']" v-if="this.booleanoptions.length > 0">
-      <option v-for="option in booleanoptions" :value="option" v-bind:key="option">
-        {{ option }}
-      </option>
-    </select>
+    <div v-for="option in booleanoptions" v-bind:key="option">
+      <input type="checkbox" id="option" v-bind:value="option" v-model="settings[option]" v-on:change="buildTags()">
+      <label v-bind:for="option">{{option}}</label>
+    </div>
   </div>
   <div class="groupings">
     <h2>Free Text fields</h2>
@@ -57,6 +62,13 @@
     </span>
   </div>
   <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
+    <h2>CSS</h2>
+    <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
+      <input type="checkbox" id="style.tag" v-bind:value="style.tag" v-model="css" v-on:change="buildTags()">
+      <label v-bind:for="style.tag">Hide <span v-html="style.icon"></span></label>
+    </div>
+  </div>
+  <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
     <h2>Dropdowns</h2>
     <p>Choose from one of the options</p>
     <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
@@ -68,23 +80,25 @@
   </div>
   <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
     <h2>Color Choosers</h2>
-    <div v-for="colorfield in colorpickers" v-bind:key="colorfield">
-      <span class="headerblock">{{colorfield}}</span>
-      <color-picker v-model="settings[colorfield]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="buildTags()" startColor="none" :width=100 :height=100></color-picker>
+    <div v-for="colorfield in colorpickers" v-bind:key="colorfield.field">
+      <span class="headerblock">{{colorfield.field}}</span>
+      <color-picker v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="buildTags()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
     </div>
   </div>
   <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'" >
     <h2>Tag Color Coding</h2>
     <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
-      <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field">
-      <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="buildTags()" :width=100 :height=100 ></color-picker>
+      <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-on:change="buildTags()">
+      <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="buildTags()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
     </div>
     <button @click="addListField('settings', 'tagscolor', {'tagvalue': '', 'color': ''})" v-if="viewtype && viewtype != 'iiif-annotation'">
      New Tag
     </button>
   </div>
   </div>
-  {{tag}}
+  <p class="tagfield">
+    {{tag}}
+  </p>
   <span v-html="tag"></span>
   </div>
 </template>
@@ -98,21 +112,23 @@ export default {
   },
   data: function() {
     return {
-      'url': '',
+      'url': [],
       'manifesturl': '',
       'viewtype': '',
       'props': {},
       'listoptions': [],
       'listtype': '',
-      'settings': {'tagscolor': [{'tagvalue': '', 'color': ''}], 'boolean': []},
+      'settings': {},
       'tag': '',
       'booleanoptions': [],
-      'boolean': [],
       'textsettings': [],
       'dropdowns': [],
       "overlay": "",
       "colorpickers": [],
-      "additionalinfo": [{'title': '', 'content': ''}]
+      "additionalinfo": [{'title': '', 'content': ''}],
+      "cssfields": [],
+      "css": [],
+      "urllength": 1
     }
   },
   created() {
@@ -129,6 +145,12 @@ export default {
       this.props.images.push('')
     },
     updateListType: function() {
+      this.css = [];
+      this.props = {};
+      this.urllength = 1;
+      this.url = this.url.length > 0 ? [this.url[0]] : [];
+      this.settings = {'tagscolor': [{'tagvalue': '', 'color': ''}]};
+      this.additionalinfo = [{'title': '', 'content': ''}];
       if (this.viewtype == 'iiif-annotation' || this.viewtype == 'iiif-storyboard') {
         this.listoptions = [{'value': 'annotationlist', 'text': 'Annotation List', 'selected': true}, {'value': 'annotationurl', 'text': 'Single Annotation'}]
       }
@@ -139,19 +161,26 @@ export default {
         this.listoptions = [{'value': 'rangeurl', 'text': 'Range URL', 'selected': true}]
       }
       this.listtype = this.listoptions[0]['value'];
-      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only'] : ['autorun_onload', 'hide_toolbar',
-      'fullpage', 'hide_annocontrols', 'toggleoverlay', 'hide_tags', 'controller', 'togglelayers']
+      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount'] : ['autorun_onload', 'hide_toolbar',
+      'fullpage', 'hide_annocontrols', 'toggleoverlay', 'hide_tags', 'controller', 'togglelayers', 'hide_tagcount']
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
         {'field': 'startenddisplay', 'options': ['tags', 'info']}]
-      this.colorpickers = this.viewtype == 'iiif-annotation' ? [] : ['overlaycolor', 'activecolor'];
+      this.colorpickers = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}];
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
+      this.cssfields = this.viewtype == 'iiif-annotation' ? [] : [{'tag': '#header_toolbar', 'icon':'Toolbar'},
+        {'tag': '#autoRunButton', 'icon':'<i class="fas fa-magic"></i>'},{'tag': '#infoButton', 'icon':'<i class="fas fa-info-circle"></i>'},
+        {'tag': '#overlayButton', 'icon':'<i class="fas fa-toggle-on"></i>'},{'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
+        {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
+        {'tag': '#previousButton', 'icon':'<i class="fa fa-arrow-left"></i>'},{'tag': '#nextButton', 'icon':'<i class="fa fa-arrow-right"></i>'},
+        {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'},{'tag': '.annotation', 'icon':'Annotation Box'}]
       this.buildTags()
     },
     getsettings: function() {
-      var activesettings = Object.keys(this.settings).filter(element => this.settings[element] != '' && this.settings[element] != 'none');
+      var defaultcolors = this.colorpickers.map(element => element.default);
+      var activesettings = Object.keys(this.settings).filter(element => this.settings[element] != '' && defaultcolors.indexOf(this.settings[element]) == -1);
       var settingstring = ''
       for (var as=0; as<activesettings.length; as++){
         var field = activesettings[as];
@@ -167,10 +196,6 @@ export default {
           if (Object.keys(tagscolordict).length > 0){
             settingstring += `${field}: ${JSON.stringify(tagscolordict)};`
           }
-        } else if (field === 'boolean') {
-          for (var bool=0; bool<fieldvalue.length; bool++){
-            settingstring += `${fieldvalue[bool]}: true;`
-          }
         } else {
           settingstring += `${field}: ${fieldvalue};`
         }
@@ -179,7 +204,7 @@ export default {
     },
     getAdditionalInfo: function() {
       var divs = '';
-      var id = this.url.split('/').slice(-1)[0].replace('.json', '');
+      var id = this.url ? this.url[0].split('/').slice(-1)[0].replace('.json', '') : '';
       var ids = ''
       for (var ai=0; ai<this.additionalinfo.length; ai++){
         var infodict = this.additionalinfo[ai];
@@ -205,10 +230,22 @@ export default {
       }
       return propstring
     },
+    buildCSS: function() {
+      var style = ''
+      for (var cs=0; cs<this.css.length; cs++){
+        style += cs == 0 ? '<style>' : '' ;
+        style += `${this.css[cs]} {display: none;}`
+        style += cs == this.css.length - 1 ? '</style>' : '' ;
+      }
+      return style;
+    },
     buildTags: function() {
-      if (this.url && this.listoptions.length>0){
+      if (this.url.length > 0 && this.listoptions.length>0){
         var additionalinfo = this.getAdditionalInfo();
-        var tag = `${additionalinfo ? additionalinfo : ''}<${this.viewtype} ${this.listtype}='${this.url}'`;
+        var getcss = this.buildCSS();
+        var tag = `${additionalinfo ? additionalinfo + '<br>' : ''}
+          ${getcss ? getcss + '\n' : ''}
+          <${this.viewtype} ${this.listtype}='${this.url.join(";")}'`;
         var settings = this.getsettings();
         var propstring = this.getpropstring();
         propstring ? tag += `${propstring}` : '';
@@ -247,9 +284,13 @@ a {
   text-align: center;
 }
 
+.tagfield {
+  white-space: pre-line;
+}
 
 .groupings {
-  height: 50vh;
+  height: auto;
+  max-height: 50vh;
   overflow: scroll;
   width: 20%;
 }

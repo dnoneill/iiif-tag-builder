@@ -4,4 +4,7 @@ git init
 git add -A
 git commit -m 'deploy'
 git push -f 'https://github.com/dnoneill/iiif-tag-builder.git' master
-cd ~
+cd ../
+git add -A
+git commit -m "update source code"
+git push -f 'https://github.com/dnoneill/iiif-tag-builder.git' source
