@@ -1,5 +1,19 @@
 <template>
   <div class="form">
+  <a @click="url=['https://dnoneill.github.io/annotate/annotations/fullbayeux-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();">
+  Bayeux Example</a><br>
+  <a @click="url=['https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json'];viewtype='iiif-annotation';updateListType();">
+  Example with tags</a><br>
+  <a @click="url=['https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();">
+  Example with layers</a><br>
+  <a @click="url=['https://dnoneill.github.io/annotate/annotations/131424-list.json'];viewtype='iiif-storyboard';updateListType();props.layers[0]['label'] = '<a href=\'https://www.wikidata.org/wiki/Q4792194\'>View from Arles</a>'; props.layers[0]['xywh'] = '200,200,4750,6513'; props.layers[0]['image'] ='https://tools.wmflabs.org/zoomviewer/iipsrv.fcgi/?iiif=cache/8937e1777945b722457fac2cde0cf61b.tif/info.json'; buildTags();">
+  Example with custom layers</a><br>
+
+  <a @click="viewtype='iiif-multistoryboard';listtype='annotationlist';updateListType();url=['https://ncsu-libraries.github.io/iiif-annotation/webannotations/mc00084-001-te0159-000-001-0001-list.json', 'https://ncsu-libraries.github.io/iiif-annotation/webannotations/ua023-015-003-bx0002-004-026-list.json'];buildTags();">
+  Multistoryboard Example</a><br>
+  <a @click="viewtype='iiif-multistoryboard';listtype='annotationlist';updateListType();url=['https://dnoneill.github.io/annotate/annotations/131424-list.json;'];props.images[0] = 'https://tools.wmflabs.org/zoomviewer/iipsrv.fcgi/?iiif=cache/8937e1777945b722457fac2cde0cf61b.tif/info.json';buildTags();">
+  Multistoryboard Example with custom image</a><br>
+
   <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
     <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
   </span>
@@ -43,7 +57,7 @@
       </span>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
-      <div v-for="(layer, index) in props.layers" v-bind:key="index + '_layers'">
+      <div v-for="(layer, index) in layers" v-bind:key="index + '_layers'">
         <h4>Layer {{index+1}}</h4>
         <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="buildTags()">
       </div>
@@ -128,7 +142,8 @@ export default {
       "additionalinfo": [{'title': '', 'content': ''}],
       "cssfields": [],
       "css": [],
-      "urllength": 1
+      "urllength": 1,
+      "layers": [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}]
     }
   },
   created() {
@@ -139,6 +154,7 @@ export default {
       this.buildTags();
     },
     addLayer: function() {
+      this.layers.push({'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})
       this.props.layers.push({'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})
     },
     addImage: function() {
@@ -164,7 +180,7 @@ export default {
       this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount'] : ['autorun_onload', 'hide_toolbar',
       'fullpage', 'hide_annocontrols', 'toggleoverlay', 'hide_tags', 'controller', 'togglelayers', 'hide_tagcount']
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
-      this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill']},
+      this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
         {'field': 'startenddisplay', 'options': ['tags', 'info']}]
       this.colorpickers = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}];
@@ -175,7 +191,7 @@ export default {
         {'tag': '#overlayButton', 'icon':'<i class="fas fa-toggle-on"></i>'},{'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
         {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
         {'tag': '#previousButton', 'icon':'<i class="fa fa-arrow-left"></i>'},{'tag': '#nextButton', 'icon':'<i class="fa fa-arrow-right"></i>'},
-        {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'},{'tag': '.annotation', 'icon':'Annotation Box'}]
+        {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'}, {'tag': '#layerButton', 'icon':'<i class="fas fa-layer-group"></i>'},{'tag': '.annotation', 'icon':'Annotation Box'}]
       this.buildTags()
     },
     getsettings: function() {
@@ -223,7 +239,7 @@ export default {
         var value = this.props[key];
         value = key == 'images' ? value.join(";") : value;
         var hasvalue = key == 'layers' && value.length > 0 ? value[0].image :  key == 'images' && value.length > 0 ? value [0]: value;
-        value = key == 'layers' ? JSON.stringify(value) : value;
+        value = key == 'layers' ? JSON.stringify(value).replace(/'/g, '\\"') : value;
         if (hasvalue && hasvalue.length > 0){
           propstring += ` ${key}='${value}'`
         }
