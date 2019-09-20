@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-  <a @click="url=['https://dnoneill.github.io/annotate/annotations/fullbayeux-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();">
+  <a @click="url=['https://dnoneill.github.io/annotate/annotations/fullbayeux-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();settings['fit'] = 'horizontal'">
   Bayeux Example</a><br>
   <a @click="url=['https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json'];viewtype='iiif-annotation';updateListType();">
   Example with tags</a><br>
@@ -8,12 +8,12 @@
   Example with layers</a><br>
   <a @click="url=['https://dnoneill.github.io/annotate/annotations/131424-list.json'];viewtype='iiif-storyboard';updateListType();props.layers[0]['label'] = '<a href=\'https://www.wikidata.org/wiki/Q4792194\'>View from Arles</a>'; props.layers[0]['xywh'] = '200,200,4750,6513'; props.layers[0]['image'] ='https://tools.wmflabs.org/zoomviewer/iipsrv.fcgi/?iiif=cache/8937e1777945b722457fac2cde0cf61b.tif/info.json'; buildTags();">
   Example with custom layers</a><br>
-
   <a @click="viewtype='iiif-multistoryboard';listtype='annotationlist';updateListType();url=['https://ncsu-libraries.github.io/iiif-annotation/webannotations/mc00084-001-te0159-000-001-0001-list.json', 'https://ncsu-libraries.github.io/iiif-annotation/webannotations/ua023-015-003-bx0002-004-026-list.json'];buildTags();">
   Multistoryboard Example</a><br>
   <a @click="viewtype='iiif-multistoryboard';listtype='annotationlist';updateListType();url=['https://dnoneill.github.io/annotate/annotations/131424-list.json;'];props.images[0] = 'https://tools.wmflabs.org/zoomviewer/iipsrv.fcgi/?iiif=cache/8937e1777945b722457fac2cde0cf61b.tif/info.json';buildTags();">
   Multistoryboard Example with custom image</a><br>
-
+  <a @click="url=['https://dnoneill.github.io/annotate/ranges/range.json'];viewtype='iiif-rangestoryboard';updateListType();">
+  Example with range. Storyboards have layers.</a><br>
   <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
     <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
   </span>
@@ -110,15 +110,17 @@
     </button>
   </div>
   </div>
-  <p class="tagfield">
-    {{tag}}
-  </p>
+  <div class="tagfield" v-if="tag">
+    <div>{{tag}}</div>
+    <button v-clipboard="tag">Copy Tag</button>
+  </div>
   <span v-html="tag"></span>
   </div>
 </template>
 
 <script>
 import ColorPicker from 'vue-color-picker-wheel';
+
 export default {
   name: 'tagbuilder',
   components: {
@@ -182,7 +184,7 @@ export default {
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
-        {'field': 'startenddisplay', 'options': ['tags', 'info']}]
+        {'field': 'startenddisplay', 'options': ['tags', 'info']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}]
       this.colorpickers = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}];
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
@@ -259,16 +261,15 @@ export default {
       if (this.url.length > 0 && this.listoptions.length>0){
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
-        var tag = `${additionalinfo ? additionalinfo + '<br>' : ''}
-          ${getcss ? getcss + '\n' : ''}
-          <${this.viewtype} ${this.listtype}='${this.url.join(";")}'`;
+        var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
+          ${getcss ? getcss + '\n' : ''}<${this.viewtype} ${this.listtype}='${this.url.join(";")}'`;
         var settings = this.getsettings();
         var propstring = this.getpropstring();
         propstring ? tag += `${propstring}` : '';
         settings ? tag += ` styling='${settings}'` : '' ;
         tag += `></${this.viewtype}>`;
         this.tag = '';
-        this.tag = tag;
+        this.tag = tag.trim();
       }
 
     }
@@ -300,10 +301,6 @@ a {
   text-align: center;
 }
 
-.tagfield {
-  white-space: pre-line;
-}
-
 .groupings {
   height: auto;
   max-height: 50vh;
@@ -320,4 +317,28 @@ a {
   width: 50%;
 }
 
+.tagfield {
+  width: calc(100% - 30px);
+  display: flex;
+  padding: 15px;
+  white-space: pre-line;
+}
+
+.tagfield div {
+  width: 90%;
+  height: 3rem;
+}
+
+.tagfield button {
+  margin-left: 15px;
+  text-align: center;
+  -ms-align-items: center;
+  -ms-justify-content: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 10%;
+  border-radius: 12px;
+  font-weight: 900;
+}
 </style>
