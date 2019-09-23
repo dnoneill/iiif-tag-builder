@@ -1,7 +1,6 @@
 <template>
   <div class="form">
-  <button @click="closeFullpage" class="closebutton" v-if="settings.fullpage && fullpage">Close <i class="fa fa-times"></i></button>
-
+  <button @click="closeFullpage" class="buttons closebutton" v-if="settings.fullpage && fullpage">Close <i class="fa fa-times"></i></button>
   <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2Ffullbayeux-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%22%7D%5D,%22additionalinfo%22%3A%22%22,%22fit%22%3A%22horizontal%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%22,%22xywh%22%3A%22%22,%22image%22%3A%22%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D">
   Bayeux Example</a><br>
   <a href="/iiif-annotation/tag-builder/#/?url=https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json&viewtype=iiif-storyboard&listtype=annotationlist">
@@ -16,27 +15,34 @@
   Multistoryboard Example with custom image</a><br>
   <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl">
   Example with range. Storyboards have layers.</a><br>
-  <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
-    <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
-  </span>
-  <span v-if="viewtype == 'iiif-multistoryboard'">
-    <button @click="urllength += 1">
-      Add Annotation URL
-    </button>
-  </span>
-  <input v-model="props['manifesturl']" placeholder="Manifest URL (OPTIONAL)" v-on:change="buildTags();">
-  <select v-model="viewtype" v-on:change="updateListType()">
-    <option disabled value="">Please select one</option>
-    <option value="iiif-storyboard">Storyboard</option>
-    <option value="iiif-annotation">Image Viewer</option>
-    <option value="iiif-multistoryboard">Multistoryboard Viewer</option>
-    <option value="iiif-rangestoryboard">Range Storyboard</option>
-  </select>
-  <select v-model="listtype" v-on:change="buildTags()" v-if="this.listoptions.length > 0">
-    <option v-for="option in listoptions" :value="option.value" v-bind:key="option.value">
-      {{ option.text }}
-    </option>
-  </select>
+  <div class="requiredfields">
+    <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
+      <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
+      <button @click="deleteField('url', index, 'urllength')">
+        Delete Annotation URL
+      </button>
+    </span>
+    <span v-if="viewtype == 'iiif-multistoryboard'">
+      <button @click="urllength += 1">
+        Add Annotation URL
+      </button>
+    </span>
+    <input v-model="props['manifesturl']" placeholder="Manifest URL (OPTIONAL)" v-on:change="buildTags();">
+    <select v-model="viewtype" v-on:change="updateListType()">
+      <option disabled value="">Please select one</option>
+      <option value="iiif-storyboard">Storyboard</option>
+      <option value="iiif-annotation">Image Viewer</option>
+      <option value="iiif-multistoryboard">Multistoryboard Viewer</option>
+      <option value="iiif-rangestoryboard">Range Storyboard</option>
+    </select>
+    <select v-model="listtype" v-on:change="buildTags()" v-if="this.listoptions.length > 0">
+      <option v-for="option in listoptions" :value="option.value" v-bind:key="option.value">
+        {{ option.text }}
+      </option>
+    </select>
+  </div>
+  <button @click="updateListType" class="buttons clearbutton">Clear all settings</button>
+
   <h2 v-if="viewtype">Settings</h2>
   <div id="settings" v-if="viewtype" v-bind:class="viewtype">
   <div class="groupings" v-if="booleanoptions.length > 0">
@@ -106,6 +112,9 @@
     <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
       <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-on:change="buildTags()">
       <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="buildTags()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
+      <button style="vertical-align: top" @click="deleteField('settings', index, 'tagscolor')">
+       Delete Tag
+      </button>
     </div>
     <button @click="addListField('settings', 'tagscolor', {'tagvalue': '', 'color': ''})">
      New Tag
@@ -164,6 +173,11 @@ export default {
      }
   },
   methods: {
+    deleteField: function(field, index, count) {
+      var secondary = this[count] ? this[count] -= 1 : true;
+      secondary ? this[field][count].splice(index) : this[field].splice(index);
+      this.buildTags();
+    },
     setParams: function() {
       var params = this.$route.query;
       this.listtype = params.listtype ? params.listtype : '';
@@ -397,10 +411,7 @@ a {
   position: sticky;
   top: 0;
 }
-.closebutton {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+.buttons {
   z-index: 1000;
   margin-left: 15px;
   text-align: center;
@@ -412,6 +423,20 @@ a {
   width: 10%;
   border-radius: 12px;
   font-weight: 900;
+}
+.closebutton {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+.clearbutton {
+  float: right;
+  margin: 20px 0px 0px;
+}
+
+.requiredfields > span {
+  display: block;
 }
 
 </style>
