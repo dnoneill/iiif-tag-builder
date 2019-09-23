@@ -2,19 +2,19 @@
   <div class="form">
   <button @click="closeFullpage" class="closebutton" v-if="settings.fullpage && fullpage">Close <i class="fa fa-times"></i></button>
 
-  <a @click="url=['https://dnoneill.github.io/annotate/annotations/fullbayeux-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();settings['fit'] = 'horizontal';buildTags();">
+  <a href="/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2Ffullbayeux-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%22%7D%5D,%22additionalinfo%22%3A%22%22,%22fit%22%3A%22horizontal%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%22,%22xywh%22%3A%22%22,%22image%22%3A%22%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D">
   Bayeux Example</a><br>
-  <a @click="url=['https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json'];viewtype='iiif-annotation';updateListType();">
+  <a href="/#/?url=https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json&viewtype=iiif-storyboard&listtype=annotationlist">
   Example with tags</a><br>
-  <a @click="url=['https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();">
+  <a href="/#/?url=https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json&viewtype=iiif-storyboard&listtype=annotationlist">
   Example with layers</a><br>
-  <a @click="url=['https://dnoneill.github.io/annotate/annotations/131424-list.json'];viewtype='iiif-storyboard';updateListType();props.layers[0]['label'] = '<a href=\'https://www.wikidata.org/wiki/Q4792194\'>View from Arles</a>'; props.layers[0]['xywh'] = '200,200,4750,6513'; props.layers[0]['image'] ='https://tools.wmflabs.org/zoomviewer/iipsrv.fcgi/?iiif=cache/8937e1777945b722457fac2cde0cf61b.tif/info.json'; buildTags();">
+  <a href="/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fiipsrv.fcgi%2F%3Fiiif%3Dcache%2F8937e1777945b722457fac2cde0cf61b.tif%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D">
   Example with custom layers</a><br>
-  <a @click="viewtype='iiif-multistoryboard';listtype='annotationlist';updateListType();url=['https://ncsu-libraries.github.io/iiif-annotation/webannotations/mc00084-001-te0159-000-001-0001-list.json', 'https://ncsu-libraries.github.io/iiif-annotation/webannotations/ua023-015-003-bx0002-004-026-list.json'];buildTags();">
+  <a href="/#/?url=https%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists">
   Multistoryboard Example</a><br>
-  <a @click="viewtype='iiif-multistoryboard';listtype='annotationlist';updateListType();url=['https://dnoneill.github.io/annotate/annotations/131424-list.json;'];props.images[0] = 'https://tools.wmflabs.org/zoomviewer/iipsrv.fcgi/?iiif=cache/8937e1777945b722457fac2cde0cf61b.tif/info.json';buildTags();">
+  <a href='/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json%3B&viewtype=iiif-multistoryboard&listtype=annotationlists&settings={"tagscolor"%3A[{"tagvalue"%3A"","color"%3A"%23add8e6"}],"additionalinfo"%3A"","overlaycolor"%3A"%23add8e6","activecolor"%3A"%2390ee90"}&props={"layers"%3A[],"images"%3A["https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fiipsrv.fcgi%2F%3Fiiif%3Dcache%2F8937e1777945b722457fac2cde0cf61b.tif%2Finfo.json"]}'>
   Multistoryboard Example with custom image</a><br>
-  <a @click="url=['https://dnoneill.github.io/annotate/ranges/range.json'];viewtype='iiif-rangestoryboard';updateListType();">
+  <a href="/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl">
   Example with range. Storyboards have layers.</a><br>
   <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
     <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
@@ -156,7 +156,7 @@ export default {
   watch: {
      '$route.query': {
        handler: function(newVal, oldVal) {
-         if (newVal != oldVal) {
+         if (JSON.stringify(newVal) != JSON.stringify(oldVal)) {
            this.setParams();
          }
        },
@@ -169,10 +169,11 @@ export default {
       this.listtype = params.listtype ? params.listtype : '';
       this.url = params.url ? params.url.split(';') : [];
       this.urllength = this.url.length > 1 ? this.url.length : 1;
-      if (params.viewtype && this.viewtype != params.viewtype) {
-        this.viewtype = params.viewtype ? params.viewtype : '';
-        this.updateListType();
-      }
+      this.viewtype = params.viewtype ? params.viewtype : '';
+      this.setDefaults();
+      params.settings ? this.settings = JSON.parse(params.settings) : '';
+      params.props ? this.props = JSON.parse(params.props) : '';
+      this.buildTags();
     },
     addListField: function(dict, dictfield, data) {
       this[dict][dictfield].push(data);
@@ -185,13 +186,8 @@ export default {
     addImage: function() {
       this.props.images.push('')
     },
-    updateListType: function() {
-      this.css = [];
-      this.props = {};
-      this.urllength = 1;
-      this.url = this.url.length > 0 ? [this.url[0]] : [];
-      this.settings = {'tagscolor': [{'tagvalue': '', 'color': ''}]};
-      this.additionalinfo = [{'title': '', 'content': ''}];
+    setDefaults: function() {
+      this.tag = '';
       if (this.viewtype == 'iiif-annotation' || this.viewtype == 'iiif-storyboard') {
         this.listoptions = [{'value': 'annotationlist', 'text': 'Annotation List', 'selected': true}, {'value': 'annotationurl', 'text': 'Single Annotation'}]
       }
@@ -201,7 +197,6 @@ export default {
       if (this.viewtype == 'iiif-rangestoryboard') {
         this.listoptions = [{'value': 'rangeurl', 'text': 'Range URL', 'selected': true}]
       }
-      this.listtype = this.listoptions[0]['value'];
       this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount'] : ['autorun_onload', 'hide_toolbar',
       'fullpage', 'hide_annocontrols', 'toggleoverlay', 'hide_tags', 'controller', 'togglelayers', 'hide_tagcount']
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
@@ -216,6 +211,16 @@ export default {
         {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
         {'tag': '#previousButton', 'icon':'<i class="fa fa-arrow-left"></i>'},{'tag': '#nextButton', 'icon':'<i class="fa fa-arrow-right"></i>'},
         {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'}, {'tag': '#layerButton', 'icon':'<i class="fas fa-layer-group"></i>'},{'tag': '.annotation', 'icon':'Annotation Box'}]
+    },
+    updateListType: function() {
+      this.css = [];
+      this.props = {};
+      this.settings = {'tagscolor': [{'tagvalue': '', 'color': ''}]};
+      this.additionalinfo = [{'title': '', 'content': ''}];
+      this.url = this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url : [this.url[0]];
+      this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url.length : 1;
+      this.setDefaults();
+      this.listtype = this.listoptions[0]['value'];
       this.buildTags()
     },
     getsettings: function() {
@@ -291,7 +296,9 @@ export default {
       var params = {
           url: this.url.join(";"),
           viewtype: this.viewtype,
-          listtype: this.listtype
+          listtype: this.listtype,
+          settings: JSON.stringify(this.settings),
+          props: JSON.stringify(this.props)
       }
       if (JSON.stringify(this.$route.query) != JSON.stringify(params)){
         this.$router.push({
