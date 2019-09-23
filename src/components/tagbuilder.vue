@@ -18,7 +18,7 @@
   <div class="requiredfields">
     <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
       <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
-      <button @click="deleteField('url', index, 'urllength')">
+      <button @click="deleteField('url', index, 'urllength')" v-if="index != 0">
         Delete Annotation URL
       </button>
     </span>
@@ -41,7 +41,7 @@
       </option>
     </select>
   </div>
-  <button @click="updateListType" class="buttons clearbutton">Clear all settings</button>
+  <button @click="updateListType" class="buttons clearbutton" v-if="viewtype">Clear all settings</button>
 
   <h2 v-if="viewtype">Settings</h2>
   <div id="settings" v-if="viewtype" v-bind:class="viewtype">
@@ -433,10 +433,6 @@ a {
 .clearbutton {
   float: right;
   margin: 20px 0px 0px;
-}
-
-.requiredfields > span {
-  display: block;
 }
 
 </style>
