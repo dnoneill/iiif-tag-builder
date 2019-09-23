@@ -65,11 +65,14 @@
       </span>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
-      <div v-for="(layer, index) in layers" v-bind:key="index + '_layers'">
+      <div v-for="(layer, index) in props.layers" v-bind:key="index + '_layers'">
         <h4>Layer {{index+1}}</h4>
         <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="buildTags()">
+        <button @click="deleteField('props', index, 'layers')">
+          Delete Layer
+        </button>
       </div>
-      <button @click="addLayer">
+      <button @click="addListField('props', 'layers', {'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})">
        Add Additional Layer
       </button>
     </span>
@@ -77,6 +80,9 @@
       <div v-for="(image, index) in props.images" v-bind:key="index + '_images'">
         <h4>Image {{index+1}}</h4>
         <input v-model="props.images[index]" v-bind:placeholder="'Image ' + (index+1) + ' '" v-on:change="buildTags()">
+        <button @click="deleteField('props', index, 'images')">
+          Delete Image
+        </button>
       </div>
       <button @click="addListField('props', 'images', '')">
        Add Additional Image
@@ -156,8 +162,7 @@ export default {
       "cssfields": [],
       "css": [],
       "urllength": 1,
-      "fullpage": true,
-      "layers": [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}]
+      "fullpage": true
     }
   },
   created() {
@@ -192,13 +197,6 @@ export default {
     addListField: function(dict, dictfield, data) {
       this[dict][dictfield].push(data);
       this.buildTags();
-    },
-    addLayer: function() {
-      this.layers.push({'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})
-      this.props.layers.push({'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})
-    },
-    addImage: function() {
-      this.props.images.push('')
     },
     setDefaults: function() {
       this.tag = '';
