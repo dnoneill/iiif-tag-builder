@@ -1,6 +1,8 @@
 <template>
   <div class="form">
-  <a @click="url=['https://dnoneill.github.io/annotate/annotations/fullbayeux-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();settings['fit'] = 'horizontal'">
+  <button @click="closeFullpage" class="closebutton" v-if="settings.fullpage && fullpage">Close <i class="fa fa-times"></i></button>
+
+  <a @click="url=['https://dnoneill.github.io/annotate/annotations/fullbayeux-list.json'];viewtype='iiif-storyboard';listtype='annotationlist';updateListType();settings['fit'] = 'horizontal';buildTags();">
   Bayeux Example</a><br>
   <a @click="url=['https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json'];viewtype='iiif-annotation';updateListType();">
   Example with tags</a><br>
@@ -53,7 +55,7 @@
     <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
       <span v-for="(item, index) in additionalinfo" v-bind:key="index + '_additionalinfo'">
         <h3>Additional Info</h3>
-        <input v-for="(value, key) in item" v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key" v-bind:key="key">
+        <input v-for="(value, key) in item" v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key" v-bind:key="key" v-on:change="buildTags()">
       </span>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
@@ -99,13 +101,13 @@
       <color-picker v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="buildTags()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
     </div>
   </div>
-  <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'" >
+  <div class="groupings">
     <h2>Tag Color Coding</h2>
     <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
       <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-on:change="buildTags()">
       <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="buildTags()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
     </div>
-    <button @click="addListField('settings', 'tagscolor', {'tagvalue': '', 'color': ''})" v-if="viewtype && viewtype != 'iiif-annotation'">
+    <button @click="addListField('settings', 'tagscolor', {'tagvalue': '', 'color': ''})">
      New Tag
     </button>
   </div>
@@ -134,23 +136,44 @@ export default {
       'props': {},
       'listoptions': [],
       'listtype': '',
-      'settings': {},
+      'settings': {'tagscolor': [{'tagvalue': '', 'color': ''}]},
       'tag': '',
       'booleanoptions': [],
       'textsettings': [],
       'dropdowns': [],
       "overlay": "",
-      "colorpickers": [],
+      "colorpickers": [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}],
       "additionalinfo": [{'title': '', 'content': ''}],
       "cssfields": [],
       "css": [],
       "urllength": 1,
+      "fullpage": true,
       "layers": [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}]
     }
   },
   created() {
   },
+  watch: {
+     '$route.query': {
+       handler: function(newVal, oldVal) {
+         if (newVal != oldVal) {
+           this.setParams();
+         }
+       },
+       immediate: true
+     }
+  },
   methods: {
+    setParams: function() {
+      var params = this.$route.query;
+      this.listtype = params.listtype ? params.listtype : '';
+      this.url = params.url ? params.url.split(';') : [];
+      this.urllength = this.url.length > 1 ? this.url.length : 1;
+      if (params.viewtype && this.viewtype != params.viewtype) {
+        this.viewtype = params.viewtype ? params.viewtype : '';
+        this.updateListType();
+      }
+    },
     addListField: function(dict, dictfield, data) {
       this[dict][dictfield].push(data);
       this.buildTags();
@@ -185,7 +208,6 @@ export default {
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
         {'field': 'startenddisplay', 'options': ['tags', 'info']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}]
-      this.colorpickers = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}];
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
       this.cssfields = this.viewtype == 'iiif-annotation' ? [] : [{'tag': '#header_toolbar', 'icon':'Toolbar'},
@@ -208,7 +230,7 @@ export default {
           for (var tc=0; tc<fieldvalue.length; tc++){
             var fields = fieldvalue[tc];
             if (fields['tagvalue'] != '') {
-              tagscolordict[fields['tagvalue']] = fields['color'];
+              tagscolordict[fields['tagvalue'].trim()] = fields['color'];
             }
           }
           if (Object.keys(tagscolordict).length > 0){
@@ -217,8 +239,15 @@ export default {
         } else {
           settingstring += `${field}: ${fieldvalue};`
         }
+        if (field == 'fullpage') {
+          this.fullpage = true;
+        }
       }
       return settingstring;
+    },
+    closeFullpage: function() {
+      this.fullpage = false;
+      document.getElementsByTagName(this.viewtype)[0].childNodes[0].setAttribute("class", "storyboard_viewer");
     },
     getAdditionalInfo: function() {
       var divs = '';
@@ -253,12 +282,29 @@ export default {
       for (var cs=0; cs<this.css.length; cs++){
         style += cs == 0 ? '<style>' : '' ;
         style += `${this.css[cs]} {display: none;}`
+        style += `${this.css[cs] == '#header_toolbar' ? '.annotation {top: 0px!important}' : ''}`
         style += cs == this.css.length - 1 ? '</style>' : '' ;
       }
       return style;
     },
+    updateRouter: function() {
+      var params = {
+          url: this.url.join(";"),
+          viewtype: this.viewtype,
+          listtype: this.listtype
+      }
+      if (JSON.stringify(this.$route.query) != JSON.stringify(params)){
+        this.$router.push({
+          name: 'tagbuilder',
+          query: params
+        }).catch(err => {console.log('router error'); console.log(err)});
+      } else {
+        return false;
+      }
+    },
     buildTags: function() {
       if (this.url.length > 0 && this.listoptions.length>0){
+        this.updateRouter();
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
@@ -271,7 +317,6 @@ export default {
         this.tag = '';
         this.tag = tag.trim();
       }
-
     }
   }
 }
@@ -322,11 +367,13 @@ a {
   display: flex;
   padding: 15px;
   white-space: pre-line;
+  overflow: scroll;
+  outline: 2px solid black;
+  margin: 20px 0px 20px;
 }
 
 .tagfield div {
   width: 90%;
-  height: 3rem;
 }
 
 .tagfield button {
@@ -340,5 +387,24 @@ a {
   width: 10%;
   border-radius: 12px;
   font-weight: 900;
+  position: sticky;
+  top: 0;
 }
+.closebutton {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+  margin-left: 15px;
+  text-align: center;
+  -ms-align-items: center;
+  -ms-justify-content: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  width: 10%;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
 </style>
