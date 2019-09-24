@@ -61,7 +61,7 @@
     <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
       <span v-for="(item, index) in additionalinfo" v-bind:key="index + '_additionalinfo'">
         <h3>Additional Info</h3>
-        <input v-for="(value, key) in item" v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key" v-bind:key="key" v-on:change="updateRouter()">
+        <textarea v-for="(value, key) in item" type=text v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key + '; Shift+Enter creates a new line'" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
       </span>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
@@ -276,7 +276,7 @@ export default {
         var itemid = `${id}_${ai}_additionalinfo`;
         if (infodict['content'] && infodict['title']){
           ids += `${itemid};`
-          divs += `<div id="${itemid}" title="${infodict['title']}">${infodict['content']}</div>`
+          divs += `<div id="${itemid}" title="${infodict['title']}">${infodict['content'].replace(/\n/g, "<br />")}</div>`
         }
       }
       this.settings['additionalinfo'] = ids.slice(0,-1);
