@@ -17,7 +17,7 @@
   Example with range. Storyboards have layers.</a><br>
   <div class="requiredfields">
     <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
-      <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="buildTags();">
+      <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="updateRouter();">
       <button @click="deleteField('url', index, 'urllength')" v-if="index != 0">
         Delete Annotation URL
       </button>
@@ -27,7 +27,7 @@
         Add Annotation URL
       </button>
     </span>
-    <input v-model="props['manifesturl']" placeholder="Manifest URL (OPTIONAL)" v-on:change="buildTags();">
+    <input v-model="props['manifesturl']" placeholder="Manifest URL (OPTIONAL)" v-on:change="updateRouter();">
     <select v-model="viewtype" v-on:change="updateListType()">
       <option disabled value="">Please select one</option>
       <option value="iiif-storyboard">Storyboard</option>
@@ -35,7 +35,7 @@
       <option value="iiif-multistoryboard">Multistoryboard Viewer</option>
       <option value="iiif-rangestoryboard">Range Storyboard</option>
     </select>
-    <select v-model="listtype" v-on:change="buildTags()" v-if="this.listoptions.length > 0">
+    <select v-model="listtype" v-on:change="updateRouter()" v-if="this.listoptions.length > 0">
       <option v-for="option in listoptions" :value="option.value" v-bind:key="option.value">
         {{ option.text }}
       </option>
@@ -48,26 +48,26 @@
   <div class="groupings" v-if="booleanoptions.length > 0">
     <h2>Boolean Settings</h2>
     <div v-for="option in booleanoptions" v-bind:key="option">
-      <input type="checkbox" id="option" v-bind:value="option" v-model="settings[option]" v-on:change="buildTags()">
+      <input type="checkbox" id="option" v-bind:value="option" v-model="settings[option]" v-on:change="updateRouter()">
       <label v-bind:for="option">{{option}}</label>
     </div>
   </div>
   <div class="groupings">
     <h2>Free Text fields</h2>
     <div v-for="setting in textsettings" v-bind:key="setting">
-      <input v-model="settings[setting]" v-bind:placeholder="setting" v-on:change="buildTags()">
+      <input v-model="settings[setting]" v-bind:placeholder="setting" v-on:change="updateRouter()">
     </div>
-    <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="buildTags()">
+    <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="updateRouter()">
     <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
       <span v-for="(item, index) in additionalinfo" v-bind:key="index + '_additionalinfo'">
         <h3>Additional Info</h3>
-        <input v-for="(value, key) in item" v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key" v-bind:key="key" v-on:change="buildTags()">
+        <input v-for="(value, key) in item" v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key" v-bind:key="key" v-on:change="updateRouter()">
       </span>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
       <div v-for="(layer, index) in props.layers" v-bind:key="index + '_layers'">
         <h4>Layer {{index+1}}</h4>
-        <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="buildTags()">
+        <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
         <button @click="deleteField('props', index, 'layers')">
           Delete Layer
         </button>
@@ -79,7 +79,7 @@
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-multistoryboard'">
       <div v-for="(image, index) in props.images" v-bind:key="index + '_images'">
         <h4>Image {{index+1}}</h4>
-        <input v-model="props.images[index]" v-bind:placeholder="'Image ' + (index+1) + ' '" v-on:change="buildTags()">
+        <input v-model="props.images[index]" v-bind:placeholder="'Image ' + (index+1) + ' '" v-on:change="updateRouter()">
         <button @click="deleteField('props', index, 'images')">
           Delete Image
         </button>
@@ -92,7 +92,7 @@
   <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
     <h2>CSS</h2>
     <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
-      <input type="checkbox" id="style.tag" v-bind:value="style.tag" v-model="css" v-on:change="buildTags()">
+      <input type="checkbox" id="style.tag" v-bind:value="style.tag" v-model="css" v-on:change="updateRouter()">
       <label v-bind:for="style.tag">Hide <span v-html="style.icon"></span></label>
     </div>
   </div>
@@ -100,7 +100,7 @@
     <h2>Dropdowns</h2>
     <p>Choose from one of the options</p>
     <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
-      {{dropdown.field}}: <select  v-on:change="buildTags()" v-model="settings[dropdown.field]">
+      {{dropdown.field}}: <select  v-on:change="updateRouter()" v-model="settings[dropdown.field]">
         <option value=""></option>
         <option v-for="option in dropdown.options" v-bind:key="option">{{option}}</option>
       </select>
@@ -110,14 +110,14 @@
     <h2>Color Choosers</h2>
     <div v-for="colorfield in colorpickers" v-bind:key="colorfield.field">
       <span class="headerblock">{{colorfield.field}}</span>
-      <color-picker v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="buildTags()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
+      <color-picker v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="updateRouter()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
     </div>
   </div>
   <div class="groupings">
     <h2>Tag Color Coding</h2>
     <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
-      <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-on:change="buildTags()">
-      <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="buildTags()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
+      <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-on:change="updateRouter()">
+      <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="updateRouter()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
       <button style="vertical-align: top" @click="deleteField('settings', index, 'tagscolor')">
        Delete Tag
       </button>
@@ -179,9 +179,9 @@ export default {
   },
   methods: {
     deleteField: function(field, index, count) {
-      var secondary = this[count] ? this[count] -= 1 : true;
-      secondary ? this[field][count].splice(index) : this[field].splice(index);
-      this.buildTags();
+      var secondary = this[count] ? this[count] -= 1 : 'issecondary';
+      secondary == 'issecondary' ? this[field][count].splice(index) : this[field].splice(index);
+      this.updateRouter();
     },
     setParams: function() {
       var params = this.$route.query;
@@ -192,11 +192,12 @@ export default {
       this.setDefaults();
       params.settings ? this.settings = JSON.parse(params.settings) : '';
       params.props ? this.props = JSON.parse(params.props) : '';
+      params.css ? this.css = JSON.parse(params.css) : '';
       this.buildTags();
     },
     addListField: function(dict, dictfield, data) {
       this[dict][dictfield].push(data);
-      this.buildTags();
+      this.updateRouter();
     },
     setDefaults: function() {
       this.tag = '';
@@ -233,7 +234,7 @@ export default {
       this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url.length : 1;
       this.setDefaults();
       this.listtype = this.listoptions[0]['value'];
-      this.buildTags()
+      this.updateRouter();
     },
     getsettings: function() {
       var defaultcolors = this.colorpickers.map(element => element.default);
@@ -310,7 +311,8 @@ export default {
           viewtype: this.viewtype,
           listtype: this.listtype,
           settings: JSON.stringify(this.settings),
-          props: JSON.stringify(this.props)
+          props: JSON.stringify(this.props),
+          css: JSON.stringify(this.css)
       }
       if (JSON.stringify(this.$route.query) != JSON.stringify(params)){
         this.$router.push({
@@ -323,7 +325,6 @@ export default {
     },
     buildTags: function() {
       if (this.url.length > 0 && this.listoptions.length>0){
-        this.updateRouter();
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
