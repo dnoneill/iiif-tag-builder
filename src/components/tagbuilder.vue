@@ -180,7 +180,7 @@ export default {
   methods: {
     deleteField: function(field, index, count) {
       var secondary = this[count] ? this[count] -= 1 : 'issecondary';
-      secondary == 'issecondary' ? this[field][count].splice(index) : this[field].splice(index);
+      secondary == 'issecondary' ? this[field][count].splice(index, 1) : this[field].splice(index, 1);
       this.updateRouter();
     },
     setParams: function() {
