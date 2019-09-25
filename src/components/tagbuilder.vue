@@ -233,7 +233,8 @@ export default {
       this.url = this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url : [this.url[0]];
       this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url.length : 1;
       this.setDefaults();
-      this.listtype = this.listoptions[0]['value'];
+      var keepexisting = this.listoptions.filter(element => element.value == this.listtype);
+      this.listtype = keepexisting.length > 0 ? this.listtype : this.listoptions[0]['value'];
       this.updateRouter();
     },
     getsettings: function() {
