@@ -446,6 +446,7 @@ a {
 .clearbutton {
   float: right;
   margin: 20px 0px 0px;
+  width: auto!important;
 }
 
 .form {
