@@ -453,4 +453,7 @@ input[type="text"]{
 border: 1px solid #ddd;
 
 }
+input, textarea, select, button {
+-webkit-appearance: initial;
+}
 </style>
