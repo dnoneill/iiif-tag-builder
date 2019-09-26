@@ -402,10 +402,12 @@ a {
   overflow: scroll;
   outline: 2px solid black;
   margin: 20px 0px 20px;
+
 }
 
 .tagfield div {
-  width: 90%;
+  width: 88%;
+  overflow-wrap: break-word;
 }
 
 .tagfield button {
