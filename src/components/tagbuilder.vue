@@ -380,6 +380,7 @@ a {
 
 .groupings > * {
   width: 100%;
+  word-break: break-word;
 }
 
 .groupings input, textarea {
@@ -456,7 +457,7 @@ input[type="text"]{
 border: 1px solid #ddd;
 
 }
-input, textarea, select, button {
+input:not([type='checkbox']), textarea, select, button {
 -webkit-appearance: initial;
 }
 </style>
