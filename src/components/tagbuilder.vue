@@ -361,19 +361,30 @@ a {
 }
 #color-wheel {
   display: inline-block;
+  width: 100%!important;
 }
 #settings {
   display: inline-flex;
   text-align: center;
+  width: 100%;
 }
+
+
 
 .groupings {
   height: auto;
   max-height: 50vh;
   overflow: scroll;
-  width: 20%;
+  width: 16.6666%;
 }
 
+.groupings > * {
+  width: 100%;
+}
+
+.groupings input, textarea {
+  width: 95%!important;
+}
 .headerblock {
   display:block;
   font-weight: bold;
@@ -435,4 +446,11 @@ a {
   margin: 20px 0px 0px;
 }
 
+.form {
+  width: 100%;
+}
+input[type="text"]{
+border: 1px solid #ddd;
+
+}
 </style>
