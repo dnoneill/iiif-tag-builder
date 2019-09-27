@@ -383,7 +383,7 @@ a {
   word-break: break-word;
 }
 
-.groupings input, textarea {
+.groupings input:not([type='checkbox']), textarea {
   width: 95%!important;
 }
 .headerblock {
@@ -457,7 +457,10 @@ input[type="text"]{
 border: 1px solid #ddd;
 
 }
-input:not([type='checkbox']), textarea, select, button {
--webkit-appearance: initial;
+input:not([type='checkbox']), textarea, button {
+  -webkit-appearance: initial;
+}
+select {
+  -webkit-appearance: menulist-button;
 }
 </style>
