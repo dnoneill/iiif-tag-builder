@@ -189,6 +189,7 @@ export default {
       this.url = params.url ? params.url.split(';') : [];
       this.urllength = this.url.length > 1 ? this.url.length : 1;
       this.viewtype = params.viewtype ? params.viewtype : '';
+      this.manifesturl = params.manifesturl ? params.manifesturl : '';
       this.setDefaults();
       params.settings ? this.settings = JSON.parse(params.settings) : '';
       params.props ? this.props = JSON.parse(params.props) : '';
