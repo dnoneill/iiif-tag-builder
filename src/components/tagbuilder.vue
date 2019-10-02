@@ -27,7 +27,7 @@
         Add Annotation URL
       </button>
     </span>
-    <input v-model="props['manifesturl']" placeholder="Manifest URL (OPTIONAL)" v-on:change="updateRouter();">
+    <input v-model="manifesturl" placeholder="Manifest URL (OPTIONAL)" v-on:change="updateRouter();">
     <select v-model="viewtype" v-on:change="updateListType()">
       <option disabled value="">Please select one</option>
       <option value="iiif-storyboard">Storyboard</option>
@@ -312,6 +312,7 @@ export default {
           url: this.url.join(";"),
           viewtype: this.viewtype,
           listtype: this.listtype,
+          manifesturl: this.manifesturl,
           settings: JSON.stringify(this.settings),
           props: JSON.stringify(this.props),
           css: JSON.stringify(this.css)
@@ -333,6 +334,7 @@ export default {
           ${getcss ? getcss + '\n' : ''}<${this.viewtype} ${this.listtype}='${this.url.join(";")}'`;
         var settings = this.getsettings();
         var propstring = this.getpropstring();
+        this.manifesturl ? tag += ` manifesturl='${this.manifesturl}'` : '';
         propstring ? tag += `${propstring}` : '';
         settings ? tag += ` styling='${settings}'` : '' ;
         tag += `></${this.viewtype}>`;
