@@ -7,8 +7,10 @@
   Example with tags</a><br>
   <a href="/iiif-annotation/tag-builder/#/?url=https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json&viewtype=iiif-storyboard&listtype=annotationlist">
   Example with layers</a><br>
-  <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fiipsrv.fcgi%2F%3Fiiif%3Dcache%2F8937e1777945b722457fac2cde0cf61b.tif%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D">
-  Example with custom layers</a><br>
+  <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fproxy.php%3Fiiif%3DVan_Gogh_-_Weizenfeld_mit_Blick_auf_Arles.jpeg%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D">
+  Example with custom layers (Van Gogh)</a><br>
+  <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22togglelayers%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22x-ray%22,%22xywh%22%3A%22%22,%22image%22%3A%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D&css=%5B%5D">
+  Example with custom layers (x-ray image)</a><br>
   <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists">
   Multistoryboard Example</a><br>
   <a href='/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json%3B&viewtype=iiif-multistoryboard&listtype=annotationlists&settings={"tagscolor"%3A[{"tagvalue"%3A"","color"%3A"%23add8e6"}],"additionalinfo"%3A"","overlaycolor"%3A"%23add8e6","activecolor"%3A"%2390ee90"}&props={"layers"%3A[],"images"%3A["https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fiipsrv.fcgi%2F%3Fiiif%3Dcache%2F8937e1777945b722457fac2cde0cf61b.tif%2Finfo.json"]}'>
@@ -89,11 +91,16 @@
       </button>
     </span>
   </div>
-  <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
+  <div class="groupings" v-if="viewtype">
     <h2>CSS</h2>
     <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
-      <input type="checkbox" id="style.tag" v-bind:value="style.tag" v-model="css" v-on:change="updateRouter()">
-      <label v-bind:for="style.tag">Hide <span v-html="style.icon"></span></label>
+      <span v-if="style.icon">
+        <input type="checkbox" id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
+        <label v-bind:for="style.tag">Hide <span v-html="style.icon"></span></label>
+      </span>
+      <span v-if="style.field" v-for="field in style.field" v-bind:id="field">
+        <input v-if="field && style.tag" v-model="css[style.tag][field]" v-bind:placeholder="style.tag + ' ' + field" v-on:change="updateRouter()">
+      </span>
     </div>
   </div>
   <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
@@ -160,7 +167,7 @@ export default {
       "colorpickers": [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}],
       "additionalinfo": [{'title': '', 'content': ''}],
       "cssfields": [],
-      "css": [],
+      "css": {},
       "urllength": 1,
       "fullpage": true
     }
@@ -219,15 +226,25 @@ export default {
         {'field': 'startenddisplay', 'options': ['tags', 'info']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}]
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
-      this.cssfields = this.viewtype == 'iiif-annotation' ? [] : [{'tag': '#header_toolbar', 'icon':'Toolbar'},
+      this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [{'tag': '#header_toolbar', 'icon':'Toolbar'},
         {'tag': '#autoRunButton', 'icon':'<i class="fas fa-magic"></i>'},{'tag': '#infoButton', 'icon':'<i class="fas fa-info-circle"></i>'},
         {'tag': '#overlayButton', 'icon':'<i class="fas fa-toggle-on"></i>'},{'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
         {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
         {'tag': '#previousButton', 'icon':'<i class="fa fa-arrow-left"></i>'},{'tag': '#nextButton', 'icon':'<i class="fa fa-arrow-right"></i>'},
-        {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'}, {'tag': '#layerButton', 'icon':'<i class="fas fa-layer-group"></i>'},{'tag': '.annotation', 'icon':'Annotation Box'}]
+        {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'}, {'tag': '#layerButton', 'icon':'<i class="fas fa-layer-group"></i>'},{'tag': '.fullcontent', 'icon':'Content Box'},
+        {'tag': '.content', 'field': ['font-size']}, {'tag': '.annotation', 'field': ['width', 'height', 'margin']}]
+      this.css = {}
+      for (var cf=0; cf<this.cssfields.length; cf++){
+        var element = this.cssfields[cf]
+        element.field ? this.css[element.tag] = {} : ''
+        if (element.field){
+          for (var ef=0; ef<element.field.length; ef++){
+            this.css[element.tag][element.field[ef]] = '';
+          }
+        }
+      }
     },
     updateListType: function() {
-      this.css = [];
       this.props = {};
       this.settings = {'tagscolor': [{'tagvalue': '', 'color': ''}]};
       this.additionalinfo = [{'title': '', 'content': ''}];
@@ -299,12 +316,21 @@ export default {
     },
     buildCSS: function() {
       var style = ''
-      for (var cs=0; cs<this.css.length; cs++){
-        style += cs == 0 ? '<style>' : '' ;
-        style += `${this.css[cs]} {display: none;}`
-        style += `${this.css[cs] == '#header_toolbar' ? '.annotation {top: 0px!important}' : ''}`
-        style += cs == this.css.length - 1 ? '</style>' : '' ;
+      for (var key in this.css){
+        if (this.css[key] == true) {
+          style += `${key} {display: none;}`
+          style += `${key == '#header_toolbar' ? '.annotation {top: 0px!important}' : ''}`
+        } else {
+          for (var cssfield in this.css[key]){
+            var value = this.css[key][cssfield];
+            if (value){
+              key = cssfield == 'font-size' ? `${key} > * > *` : key;
+              style += `${key} {${cssfield}: ${value}!important}`
+            }
+          }
+        }
       }
+      style = style != '' ? '<style>' + style + '</style>' : style;
       return style;
     },
     updateRouter: function() {
