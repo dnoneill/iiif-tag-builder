@@ -13,13 +13,13 @@
   Example with custom layers (x-ray image)</a><br>
   <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists">
   Multistoryboard Example</a><br>
-  <a href='/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json%3B&viewtype=iiif-multistoryboard&listtype=annotationlists&settings={"tagscolor"%3A[{"tagvalue"%3A"","color"%3A"%23add8e6"}],"additionalinfo"%3A"","overlaycolor"%3A"%23add8e6","activecolor"%3A"%2390ee90"}&props={"layers"%3A[],"images"%3A["https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fiipsrv.fcgi%2F%3Fiiif%3Dcache%2F8937e1777945b722457fac2cde0cf61b.tif%2Finfo.json"]}'>
+  <a href='/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'>
   Multistoryboard Example with custom image</a><br>
   <a href="/iiif-annotation/tag-builder/#/?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl">
   Example with range. Storyboards have layers.</a><br>
   <div class="requiredfields">
     <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
-      <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:id="index + '_link'" v-on:change="updateRouter();">
+      <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
       <button @click="deleteField('url', index, 'urllength')" v-if="index != 0">
         Delete Annotation URL
       </button>
@@ -98,7 +98,7 @@
         <input type="checkbox" id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
         <label v-bind:for="style.tag">Hide <span v-html="style.icon"></span></label>
       </span>
-      <span v-if="style.field" v-for="field in style.field" v-bind:id="field">
+      <span v-if="style.field" v-for="field in style.field" v-bind:key="field">
         <input v-if="field && style.tag" v-model="css[style.tag][field]" v-bind:placeholder="style.tag + ' ' + field" v-on:change="updateRouter()">
       </span>
     </div>
