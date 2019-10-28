@@ -19,25 +19,25 @@
   Example with range. Storyboards have layers.</a><br>
   <div class="requiredfields">
     <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
-      <input v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
+      <input v-bind:aria-label="'Annotation URL ' + index" v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
       <button @click="deleteField('url', index, 'urllength')" v-if="index != 0">
         Delete Annotation URL
       </button>
     </span>
     <span v-if="viewtype == 'iiif-multistoryboard'">
-      <button @click="urllength += 1">
+      <button @click="urllength += 1" aria-label="Add Annotation URL">
         Add Annotation URL
       </button>
     </span>
-    <input v-model="manifesturl" placeholder="Manifest URL (OPTIONAL)" v-on:change="updateRouter();">
-    <select v-model="viewtype" v-on:change="updateListType()">
+    <input v-model="manifesturl" id="manifesturl" v-on:change="updateRouter();" aria-label="Manifest URL (Optional)" placeholder="Manifest URL (Optional)">
+    <select v-model="viewtype" v-on:change="updateListType()" aria-label="dropdown for storyboard, imageviewer, multistoryboard, range storyboard">
       <option disabled value="">Please select one</option>
       <option value="iiif-storyboard">Storyboard</option>
       <option value="iiif-annotation">Image Viewer</option>
       <option value="iiif-multistoryboard">Multistoryboard Viewer</option>
       <option value="iiif-rangestoryboard">Range Storyboard</option>
     </select>
-    <select v-model="listtype" v-on:change="updateRouter()" v-if="this.listoptions.length > 0">
+    <select v-model="listtype" v-on:change="updateRouter()" v-if="this.listoptions.length > 0" aria-label="List type (annotation url/list, range url, etc.) dropdown">
       <option v-for="option in listoptions" :value="option.value" v-bind:key="option.value">
         {{ option.text }}
       </option>
@@ -50,38 +50,38 @@
   <div class="groupings" v-if="booleanoptions.length > 0">
     <h2>Boolean Settings</h2>
     <div v-for="option in booleanoptions" v-bind:key="option">
-      <input type="checkbox" id="option" v-bind:value="option" v-model="settings[option]" v-on:change="updateRouter()">
+      <input type="checkbox" v-bind:id="option" v-bind:value="option" v-model="settings[option]" v-on:change="updateRouter()">
       <label v-bind:for="option">{{option}}</label>
     </div>
   </div>
   <div class="groupings">
     <h2>Free Text fields</h2>
     <div v-for="setting in textsettings" v-bind:key="setting">
-      <input v-model="settings[setting]" v-bind:placeholder="setting" v-on:change="updateRouter()">
+      <input v-model="settings[setting]" v-bind:placeholder="setting" v-bind:aria-label="setting" v-on:change="updateRouter()">
     </div>
-    <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="updateRouter()">
+    <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="updateRouter()" aria-label="websocket">
     <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
       <span v-for="(item, index) in additionalinfo" v-bind:key="index + '_additionalinfo'">
         <h3>Additional Info</h3>
-        <textarea v-for="(value, key) in item" type=text v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key + '; Shift+Enter creates a new line'" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+        <textarea v-bind:aria-label="'Additional Info ' + key + '; Shift+Enter creates a new line'" v-for="(value, key) in item" type=text v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key + '; Shift+Enter creates a new line'" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
       </span>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
       <div v-for="(layer, index) in props.layers" v-bind:key="index + '_layers'">
         <h4>Layer {{index+1}}</h4>
-        <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
-        <button @click="deleteField('props', index, 'layers')">
+        <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:aria-label="'Layer ' + (index+1) + ' ' + key" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
+        <button @click="deleteField('props', index, 'layers')" aria-label="delete layer">
           Delete Layer
         </button>
       </div>
-      <button @click="addListField('props', 'layers', {'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})">
+      <button aria-label="add additional layer" @click="addListField('props', 'layers', {'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})">
        Add Additional Layer
       </button>
     </span>
     <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-multistoryboard'">
       <div v-for="(image, index) in props.images" v-bind:key="index + '_images'">
         <h4>Image {{index+1}}</h4>
-        <input v-model="props.images[index]" v-bind:placeholder="'Image ' + (index+1) + ' '" v-on:change="updateRouter()">
+        <input v-bind:aria-label="'Image ' + (index+1) + ' '" v-model="props.images[index]" v-bind:placeholder="'Image ' + (index+1) + ' '" v-on:change="updateRouter()">
         <button @click="deleteField('props', index, 'images')">
           Delete Image
         </button>
@@ -95,11 +95,12 @@
     <h2>CSS</h2>
     <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
       <span v-if="style.icon">
-        <input type="checkbox" id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
-        <label v-bind:for="style.tag">Hide <span v-html="style.icon"></span></label>
+        <input type="checkbox" v-bind:id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
+        <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">Hide <span v-html="style.icon"></span></label>
       </span>
+
       <span v-if="style.field" v-for="field in style.field" v-bind:key="field">
-        <input v-if="field && style.tag" v-model="css[style.tag][field]" v-bind:placeholder="style.tag + ' ' + field" v-on:change="updateRouter()">
+        <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
       </span>
     </div>
   </div>
@@ -107,7 +108,8 @@
     <h2>Dropdowns</h2>
     <p>Choose from one of the options</p>
     <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
-      {{dropdown.field}}: <select  v-on:change="updateRouter()" v-model="settings[dropdown.field]">
+      <label v-bind:for="dropdown.field">{{dropdown.field}}:</label>
+      <select v-bind:id="dropdown.field" v-on:change="updateRouter()" v-model="settings[dropdown.field]">
         <option value=""></option>
         <option v-for="option in dropdown.options" v-bind:key="option">{{option}}</option>
       </select>
@@ -123,7 +125,7 @@
   <div class="groupings">
     <h2>Tag Color Coding</h2>
     <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
-      <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-on:change="updateRouter()">
+      <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-bind:aria-label="'tag field ' + index+1" v-on:change="updateRouter()">
       <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="updateRouter()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
       <button style="vertical-align: top" @click="deleteField('settings', index, 'tagscolor')">
        Delete Tag
@@ -134,7 +136,7 @@
     </button>
   </div>
   </div>
-  <div class="tagfield" v-if="tag">
+  <div class="tagfield" v-if="tag" aria-label="copy tag button">
     <div>{{tag}}</div>
     <button v-clipboard="tag">Copy Tag</button>
   </div>
@@ -385,9 +387,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
-}
+
 #color-wheel {
   display: inline-block;
   width: 100%!important;
