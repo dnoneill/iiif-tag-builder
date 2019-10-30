@@ -320,7 +320,7 @@ export default {
       var style = ''
       for (var key in this.css){
         if (this.css[key] == true) {
-          style += `${key} {display: none;}`
+          style += `${key} {display: none!important;}`
           style += `${key == '#header_toolbar' ? '.annotation {top: 0px!important}' : ''}`
         } else {
           for (var cssfield in this.css[key]){
