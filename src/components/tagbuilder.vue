@@ -103,6 +103,7 @@
         <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
       </span>
     </div>
+    <textarea aria-label="Free text CSS field. Add any css. Shift+Enter creates a new line" placeholder="Free text CSS field. Add any css. Shift+Enter creates a new line" type=text v-model="css['freetextcss']" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
   </div>
   <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
     <h2>Dropdowns</h2>
@@ -323,7 +324,7 @@ export default {
         if (this.css[key] == true) {
           style += `${key} {display: none!important;}`
           style += `${key == '#header_toolbar' ? '.annotation {top: 0px!important}' : ''}`
-        } else {
+        } else if (key != 'freetextcss') {
           for (var cssfield in this.css[key]){
             var value = this.css[key][cssfield];
             if (value){
@@ -331,6 +332,8 @@ export default {
               style += `${key} {${cssfield}: ${value}!important}`
             }
           }
+        } else {
+          style += this.css[key];
         }
       }
       style = style != '' ? '<style>' + style + '</style>' : style;
