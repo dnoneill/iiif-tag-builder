@@ -227,10 +227,10 @@ export default {
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
-        {'field': 'startenddisplay', 'options': ['tags', 'info']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}]
+        {'field': 'startenddisplay', 'options': ['tags', 'info']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}, {'field': 'toolbarposition', 'options': ['bottom']}]
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
-      this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [{'tag': '#header_toolbar', 'icon':'Toolbar'},
+      this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [
         {'tag': '#autoRunButton', 'icon':'<i class="fas fa-magic"></i>'},{'tag': '#infoButton', 'icon':'<i class="fas fa-info-circle"></i>'},
         {'tag': '#overlayButton', 'icon':'<i class="fas fa-toggle-on"></i>'},{'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
         {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
@@ -323,7 +323,6 @@ export default {
       for (var key in this.css){
         if (this.css[key] == true) {
           style += `${key} {display: none!important;}`
-          style += `${key == '#header_toolbar' ? '.annotation {top: 0px!important}' : ''}`
         } else if (key != 'freetextcss') {
           for (var cssfield in this.css[key]){
             var value = this.css[key][cssfield];
