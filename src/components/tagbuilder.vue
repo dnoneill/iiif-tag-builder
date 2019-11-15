@@ -42,6 +42,7 @@
         {{ option.text }}
       </option>
     </select>
+    <textarea aria-label="Annotation JSON to be used instead of annotation URL; Will not save in the URL parameters so it is unfortunately not shareable." type=text v-model="annotationtext" placeholder="Annotation JSON to be used instead of annotation URL; Will not save in the URL parameters so it is unfortunately not shareable." v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
   </div>
   <button @click="updateListType" class="buttons clearbutton" v-if="viewtype">Clear all settings</button>
 
@@ -138,10 +139,12 @@
   </div>
   </div>
   <div class="tagfield" v-if="tag" aria-label="copy tag button">
-    <div>{{tag}}</div>
+    <div id="tagdata">{{tag}}</div>
     <button v-clipboard="tag">Copy Tag</button>
   </div>
+  <div id="livedemo">
   <span v-html="tag"></span>
+  </div>
   </div>
 </template>
 
@@ -163,6 +166,7 @@ export default {
       'listtype': '',
       'settings': {'tagscolor': [{'tagvalue': '', 'color': ''}]},
       'tag': '',
+      'annotationtext':'',
       'booleanoptions': [],
       'textsettings': [],
       'dropdowns': [],
@@ -176,6 +180,8 @@ export default {
     }
   },
   created() {
+  },
+  mounted() {
   },
   watch: {
      '$route.query': {
@@ -358,7 +364,11 @@ export default {
       }
     },
     buildTags: function() {
-      if (this.url.length > 0 && this.listoptions.length>0){
+      if (this.url.length > 0 || this.annotationtext.length > 0 && this.listoptions.length>0){
+        if (this.annotationtext && this.url.length < 1) {
+          var id =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+          this.url = [id]
+        }
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
@@ -371,6 +381,13 @@ export default {
         tag += `></${this.viewtype}>`;
         this.tag = '';
         this.tag = tag.trim();
+        if (this.annotationtext) {
+          let scripttag = document.createElement('script');
+          scripttag.setAttribute('type', 'application/json');
+          scripttag.id = this.url[0];
+          scripttag.innerHTML = this.annotationtext;
+          this.tag = scripttag.outerHTML + tag;
+        }
       }
     }
   }
