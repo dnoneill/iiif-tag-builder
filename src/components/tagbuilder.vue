@@ -364,7 +364,7 @@ export default {
       }
     },
     buildTags: function() {
-      if (this.url.length > 0 || this.annotationtext.length > 0 && this.listoptions.length>0){
+      if (this.url.length > 0 && this.listoptions.length>0 || this.annotationtext.length > 0 && this.listoptions.length>0){
         if (this.annotationtext && this.url.length < 1) {
           var id =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
           this.url = [id]
