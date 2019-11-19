@@ -95,11 +95,6 @@
   <div class="groupings" v-if="viewtype">
     <h2>CSS</h2>
     <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
-      <span v-if="style.icon">
-        <input type="checkbox" v-bind:id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
-        <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">Hide <span v-html="style.icon"></span></label>
-      </span>
-
       <span v-if="style.field" v-for="field in style.field" v-bind:key="field">
         <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
       </span>
@@ -227,8 +222,9 @@ export default {
       if (this.viewtype == 'iiif-rangestoryboard') {
         this.listoptions = [{'value': 'rangeurl', 'text': 'Range URL', 'selected': true}]
       }
-      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount'] : ['autorun_onload', 'hide_toolbar',
-      'fullpage', 'hide_annocontrols', 'toggleoverlay', 'hide_tags', 'controller', 'togglelayers', 'hide_tagcount', 'overlaynext']
+      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount'] : ['autorun_onload',
+      'fullpage', 'toggleoverlay', 'controller', 'togglelayers', 'hide_tagcount', 'overlaynext', 'hide_annocontrols', 'hide_toolbar',
+      'hide_tagsbutton', 'hide_autorunbutton', 'hide_infobutton', 'hide_overlaybutton', 'hide_layersbutton', 'hide_nextbuttons', 'hide_fullscreenbutton']
       this.viewtype == 'iiif-multistoryboard' ? this.booleanoptions.push('matchclick') : ''
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
@@ -237,11 +233,7 @@ export default {
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
       this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [
-        {'tag': '#autoRunButton', 'icon':'<i class="fas fa-magic"></i>'},{'tag': '#infoButton', 'icon':'<i class="fas fa-info-circle"></i>'},
-        {'tag': '#overlayButton', 'icon':'<i class="fas fa-toggle-on"></i>'},{'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
-        {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
-        {'tag': '#previousButton', 'icon':'<i class="fa fa-arrow-left"></i>'},{'tag': '#nextButton', 'icon':'<i class="fa fa-arrow-right"></i>'},
-        {'tag': '#fullScreenButton', 'icon':'<i class="fas fa-expand"></i>'}, {'tag': '#layerButton', 'icon':'<i class="fas fa-layer-group"></i>'},{'tag': '.fullcontent', 'icon':'Content Box'},
+        {'tag': '.fullcontent', 'icon':'Content Box'},
         {'tag': '.content', 'field': ['font-size']}, {'tag': '.annotation', 'field': ['width', 'height', 'margin']}]
       this.css = {}
       for (var cf=0; cf<this.cssfields.length; cf++){
