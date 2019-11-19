@@ -233,6 +233,8 @@ export default {
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
       this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [
+        {'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
+        {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
         {'tag': '.fullcontent', 'icon':'Content Box'},
         {'tag': '.content', 'field': ['font-size']}, {'tag': '.annotation', 'field': ['width', 'height', 'margin']}]
       this.css = {}
