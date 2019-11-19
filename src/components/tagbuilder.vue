@@ -95,6 +95,10 @@
   <div class="groupings" v-if="viewtype">
     <h2>CSS</h2>
     <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
+      <span v-if="style.icon">
+       <input type="checkbox" v-bind:id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
+       <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">Hide <span v-html="style.icon"></span></label>
+      </span>
       <span v-if="style.field" v-for="field in style.field" v-bind:key="field">
         <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
       </span>
