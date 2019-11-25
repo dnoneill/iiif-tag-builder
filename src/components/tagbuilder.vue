@@ -230,7 +230,7 @@ export default {
       'fullpage', 'toggleoverlay', 'controller', 'togglelayers', 'hide_tagcount', 'overlaynext', 'hide_annocontrols', 'hide_toolbar',
       'hide_tagsbutton', 'hide_autorunbutton', 'hide_infobutton', 'hide_overlaybutton', 'hide_layersbutton', 'hide_nextbuttons', 'hide_fullscreenbutton', 'hide_shortcutsbutton', 'transcription']
       this.viewtype == 'iiif-multistoryboard' ? this.booleanoptions.push('matchclick') : ''
-      this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title']
+      this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title', 'startposition']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
         {'field': 'startenddisplay', 'options': ['tags', 'info', 'transcription']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}, {'field': 'toolbarposition', 'options': ['bottom']}]
