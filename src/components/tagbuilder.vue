@@ -233,7 +233,7 @@ export default {
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title', 'startposition']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
         {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
-        {'field': 'startenddisplay', 'options': ['tags', 'info', 'transcription']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}, {'field': 'toolbarposition', 'options': ['bottom']}]
+        {'field': 'startenddisplay', 'options': ['tags', 'info', 'transcription', 'keyboard']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}, {'field': 'toolbarposition', 'options': ['bottom']}]
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
       this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [
