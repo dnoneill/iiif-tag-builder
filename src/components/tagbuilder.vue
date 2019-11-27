@@ -149,6 +149,7 @@
 
 <script>
 import ColorPicker from 'vue-color-picker-wheel';
+import shared from './shared';
 
 export default {
   name: 'tagbuilder',
@@ -228,7 +229,7 @@ export default {
       }
       this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount'] : ['autorun_onload',
       'fullpage', 'toggleoverlay', 'controller', 'togglelayers', 'hide_tagcount', 'overlaynext', 'hide_annocontrols', 'hide_toolbar',
-      'hide_tagsbutton', 'hide_autorunbutton', 'hide_infobutton', 'hide_overlaybutton', 'hide_layersbutton', 'hide_nextbuttons', 'hide_fullscreenbutton', 'hide_shortcutsbutton', 'transcription', 'textfirst']
+      'hide_tagsbutton', 'hide_autorunbutton', 'hide_infobutton', 'hide_overlaybutton', 'hide_layersbutton', 'hide_nextbuttons', 'hide_fullscreenbutton', 'hide_shortcutbutton', 'transcription', 'textfirst']
       this.viewtype == 'iiif-multistoryboard' ? this.booleanoptions.push('matchclick') : ''
       this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title', 'startposition']
       this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
@@ -363,10 +364,6 @@ export default {
     },
     buildTags: function() {
       if (this.url.length > 0 && this.listoptions.length>0 || this.annotationtext.length > 0 && this.listoptions.length>0){
-        if (this.annotationtext && this.url.length < 1) {
-          var id =  Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-          this.url = [id]
-        }
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
@@ -380,11 +377,9 @@ export default {
         this.tag = '';
         this.tag = tag.trim();
         if (this.annotationtext) {
-          let scripttag = document.createElement('script');
-          scripttag.setAttribute('type', 'application/json');
-          scripttag.id = this.url[0];
-          scripttag.innerHTML = this.annotationtext;
-          this.tag = scripttag.outerHTML + tag;
+          var scriptTag = shared.createScriptTag(this.annotationtext);
+          this.tag = scriptTag['outerHTML'] + tag;
+          this.url = [scriptTag['id']];
         }
       }
     }

@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <tagbuilder/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import tagbuilder from './components/tagbuilder.vue'
+import annotationeditor from './components/annotationeditor.vue'
 
 export default {
   name: 'app',
   components: {
-    tagbuilder
+    tagbuilder,
+    annotationeditor
   }
 }
 </script>
