@@ -14,15 +14,17 @@
       </div>
       <draggable v-model="annotations" draggable=".item" v-bind:id="hasbeenupdated" @change="hasbeenupdated += 1">
         <div v-for="(annotation, index) in originalannotation[bodykey]" :key="index" class="item">
-          <h2>Annotation {{index + 1}}</h2>
-          <span v-html="annotations[index].tag"></span>
+          <button v-on:click="deleteField(index)" v-if="originalannotation[bodykey].length > 1" class="annotationbutton">Delete Annotation {{index + 1}}</button>
+          <h2>Annotation {{index + 1}} <i class="fas fa-arrows-alt-v"></i></h2>
+          <span v-if="annotation['@id']" v-html="annotations[annotation['@id']]"></span>
+          <span v-if="annotation['id']" v-html="annotations[annotation['id']]"></span>
           <div class="annotationtext" v-for="(value, key) in annotation" v-if="value.constructor == String">
             <label>{{key}}</label>
             <input v-model="originalannotation[bodykey][index][key]"></input>
           </div>
           <div v-for="(anno, charindex) in annotation[format['body']]" v-if="annotation[format['body']]" class="annotationbody">
             <h3>Body field {{charindex +1}}</h3>
-            <button v-on:click="deleteField(index, charindex)" v-if="annotation[format['body']].length > 1">Delete body field {{charindex + 1}}</button>
+            <button v-on:click="deleteField(index, charindex)" v-if="annotation[format['body']].length > 1" class="deletebodyfield">Delete body field {{charindex + 1}}</button>
             <div v-for="(value, key) in anno">
               <div class="singleitems" v-if="key != 'items' && key != 'selector'">
                 <label>{{key}}</label>
@@ -77,7 +79,7 @@ export default {
       'url': '',
       'manifesturl': '',
       'endpointapi': '',
-      'annotations': [],
+      'annotations': {},
       'originalannotation': '',
       'annotationorder': [],
       'bodykey': '',
@@ -129,11 +131,13 @@ export default {
       }
       this.hasbeenupdated += 1
     },
-    deleteField: function(index, charindex, choiceindex='false'){
+    deleteField: function(index, charindex='false', choiceindex='false'){
       if (choiceindex != 'false'){
         this.originalannotation.resources[index][this.format['body']][charindex].items.splice(choiceindex,1)
-      } else {
+      } else if (charindex != 'false' && choiceindex == 'false'){
         this.originalannotation.resources[index][this.format['body']].splice(charindex,1)
+      } else if (charindex == 'false' && choiceindex == 'false'){
+        this.originalannotation.resources.splice(index,1)
       }
       this.hasbeenupdated += 1
     },
@@ -226,14 +230,12 @@ export default {
       var type = data['@context'].indexOf('w3') > -1 ? 'w3' : 'oa';
       this.format = this.w3oakey[type];
       type == 'w3' ? this.bodyfields.push('purpose') : '';
-      this.annotations = [];
       for (var i=0; i<annoitems.length;i++){
         var anno = annoitems[i];
+        var dictionary = {}
         var id = anno['@id'] ? anno['@id'] : anno['id'] ? anno['id'] : i.toString();
-        var dictionary = {'id':id }
         var scriptTag = shared.createScriptTag(JSON.stringify(anno));
-        dictionary['tag'] = scriptTag['outerHTML'] + `<iiif-annotation annotationurl='${scriptTag['id']}' styling='image_only:true'></iiifannotation>`;
-        this.annotations.push(dictionary);
+        this.annotations[id] = scriptTag['outerHTML'] + `<iiif-annotation annotationurl='${scriptTag['id']}' styling='image_only:true'></iiifannotation>`;
         for (var f=0; f<this.bodyfields.length; f++){
           var field = this.format['fields'][f];
           if (field){
@@ -335,19 +337,7 @@ li {
   position: sticky;
   top: 0;
 }
-.buttons {
-  z-index: 1000;
-  margin-left: 15px;
-  text-align: center;
-  -ms-align-items: center;
-  -ms-justify-content: center;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  width: 10%;
-  border-radius: 12px;
-  font-weight: 900;
-}
+
 .closebutton {
   position: absolute;
   right: 20px;
@@ -377,9 +367,13 @@ select {
   border: 2px solid darkgrey;
   background-color:lightgrey;
   text-transform: capitalize;
-  padding: 0px 5% 20px;
   margin-top: 20px;
 }
+
+.item > div {
+  padding: 0px 5% 20px;
+}
+
 label {
   font-size: larger;
   font-weight: bold;
@@ -408,5 +402,27 @@ img {
 
   /* This rule is very important, please don't ignore this */
   max-width: 100%;
+}
+
+button {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  text-align: center;
+  padding: 2px;
+  text-decoration: none;
+  font-weight: 900;
+  width: 90px;
+  color: black;
+  background: white;
+}
+
+.annotationbutton {
+  float: right;
+  margin: 20px;
+}
+
+.deletebodyfield {
+  float: right
 }
 </style>
