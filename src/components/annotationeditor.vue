@@ -83,9 +83,17 @@ export default {
       'bodykey': '',
       'update': true,
       'purposes': ['assessing', 'bookmarking', 'classifying', 'commenting', 'describing', 'editing', 'highlighting', 'identifying', 'linking', 'moderating', 'questioning', 'replying', 'tagging'],
-      'fields': ['modified', 'created', 'label'],
       'bodyfields': ['language', 'rights', 'creator', 'textDirection'],
-      'w3oakey': {'w3': {'type': 'w3', 'body': 'body', 'typechoices': ['TextualBody', 'Choice', 'Dataset', 'Image', 'Video', 'Sound', 'Text'], 'value': 'value'}, 'oa': {'type': 'oa','body':'resource', 'typechoices':['cnt:ContentAsText', 'oa:Choice', 'dctypes:Dataset', 'dctypes:Image', 'dctypes:Video', 'dctypes:Sound', 'dctypes:Text', 'oa:Tag'], 'value': 'chars'}},
+      'w3oakey': {'w3':
+        {'type': 'w3', 'body': 'body',
+          'typechoices': ['TextualBody', 'Choice', 'Dataset', 'Image', 'Video', 'Sound', 'Text'],
+          'fields': ['modified', 'created', 'label'],
+          'value': 'value'
+        },
+        'oa': {'type': 'oa','body':'resource',
+          'typechoices':['cnt:ContentAsText', 'oa:Choice', 'dctypes:Dataset', 'dctypes:Image', 'dctypes:Video', 'dctypes:Sound', 'dctypes:Text', 'oa:Tag'],
+          'value': 'chars', 'fields': ['oa:annotatedAt', 'oa:serializedAt', 'label']}
+      },
       'formats': {},
       'hasbeenupdated': 0
     }
@@ -227,7 +235,7 @@ export default {
         dictionary['tag'] = scriptTag['outerHTML'] + `<iiif-annotation annotationurl='${scriptTag['id']}' styling='image_only:true'></iiifannotation>`;
         this.annotations.push(dictionary);
         for (var f=0; f<this.bodyfields.length; f++){
-          var field = this.fields[f];
+          var field = this.format['fields'][f];
           if (field){
             var fielddata = data[field] ? data[field] : '';
             data[field] = fielddata ? fielddata : "";
