@@ -84,8 +84,8 @@ export default {
       'update': true,
       'purposes': ['assessing', 'bookmarking', 'classifying', 'commenting', 'describing', 'editing', 'highlighting', 'identifying', 'linking', 'moderating', 'questioning', 'replying', 'tagging'],
       'fields': ['modified', 'created', 'label'],
-      'bodyfields': ['purpose', 'language', 'rights', 'creator', 'textDirection'],
-      'w3oakey': {'w3': {'body': 'body', 'typechoices': ['TextualBody', 'Choice', 'Dataset', 'Image', 'Video', 'Sound', 'Text'], 'value': 'value'}, 'oa': {'body':'resource', 'typechoices':['cnt:ContentAsText', 'oa:Choice', 'dctypes:Dataset', 'dctypes:Image', 'dctypes:Video', 'dctypes:Sound', 'dctypes:Text'], 'value': 'chars'}},
+      'bodyfields': ['language', 'rights', 'creator', 'textDirection'],
+      'w3oakey': {'w3': {'type': 'w3', 'body': 'body', 'typechoices': ['TextualBody', 'Choice', 'Dataset', 'Image', 'Video', 'Sound', 'Text'], 'value': 'value'}, 'oa': {'type': 'oa','body':'resource', 'typechoices':['cnt:ContentAsText', 'oa:Choice', 'dctypes:Dataset', 'dctypes:Image', 'dctypes:Video', 'dctypes:Sound', 'dctypes:Text', 'oa:Tag'], 'value': 'chars'}},
       'formats': {},
       'hasbeenupdated': 0
     }
@@ -215,7 +215,9 @@ export default {
       this.originalannotation = data;
       var annoitems = data.resources ? data.resources : [data];
       this.bodykey = data.resources ? 'resources': '';
-      this.format = data['@context'].indexOf('w3') > -1 ? this.w3oakey['w3'] : this.w3oakey['oa'];
+      var type = data['@context'].indexOf('w3') > -1 ? 'w3' : 'oa';
+      this.format = this.w3oakey[type];
+      type == 'w3' ? this.bodyfields.push('purpose') : '';
       this.annotations = [];
       for (var i=0; i<annoitems.length;i++){
         var anno = annoitems[i];
