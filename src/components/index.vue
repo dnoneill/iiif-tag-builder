@@ -10,21 +10,19 @@
 </template>
 <script>
 export default {
-    created() {
-      console.log(this.$router.options)
-
-        this.$router.options.routes.forEach(route => {
-            this.items.push({
-                name: route.name
-                , path: route.path,
-                blurb: route.blurb
-            })
-        })
-    },
-    data() {
-        return {
-            items: []
-        }
+  created() {
+    this.$router.options.routes.forEach(route => {
+      this.items.push({
+        name: route.title,
+        path: route.path,
+        blurb: route.blurb
+      })
+    })
+  },
+  data() {
+    return {
+      items: []
     }
+  }
 }
 </script>
