@@ -1,11 +1,12 @@
 npm run build
-cp -r dist/* ../iiif-annotation/docs/tag-builder/
-(echo "---"; echo "layout: page"; echo "title: Tag Builder"; echo "---"; cat ../iiif-annotation/docs/tag-builder/index.html) > /tmp/index.html
-cp /tmp/index.html ../iiif-annotation/docs/tag-builder/index.html
+rm -r ../iiif-annotation/docs/tools/*
+cp -r dist/* ../iiif-annotation/docs/tools/
+(echo "---"; echo "layout: page"; echo "title: Annotation Tools"; echo "---"; cat ../iiif-annotation/docs/tools/index.html) > /tmp/index.html
+cp /tmp/index.html ../iiif-annotation/docs/tools/index.html
 rm /tmp/index.html
-cd ../iiif-annotation/docs/tag-builder
+cd ../iiif-annotation/docs/tools
 git add .
-git commit -m "update tag-builder"
+git commit -m "update annotation tools"
 git push -f 'https://github.com/ncsu-libraries/iiif-annotation.git' master
 cd ~/projects/tag-builder-iiif
 git add -A

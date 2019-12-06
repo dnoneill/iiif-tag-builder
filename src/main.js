@@ -6,6 +6,7 @@ import annotationeditor from './components/annotationeditor.vue'
 
 import VueClipboards from 'vue-clipboards';
 
+
 Vue.use(VueRouter)
 Vue.use(VueClipboards);
 
