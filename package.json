@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "bootstrap-vue": "^2.1.0",
     "core-js": "^2.6.5",
     "cropper": "^4.1.0",
     "cropperjs": "^1.5.6",

@@ -13,52 +13,58 @@
         </div>
       </div>
       <draggable v-model="annotationorder" draggable=".item" v-bind:id="hasbeenupdated" @change="updateOrder()">
-        <div v-for="(annotation, index) in originalannotation[bodykey]" :key="index" class="item">
+        <b-card v-for="(annotation, index) in originalannotation[bodykey]" :key="index" class="item">
           <button v-on:click="deleteField(index)" v-if="originalannotation[bodykey].length > 1" class="annotationbutton">Delete Annotation {{index + 1}}</button>
-          <h2>Annotation {{index + 1}} <i class="fas fa-arrows-alt-v"></i></h2>
-          <span v-if="annotation['@id']" v-html="annotations[annotation['@id']]"></span>
-          <span v-if="annotation['id']" v-html="annotations[annotation['id']]"></span>
-          <div class="annotationtext" v-for="(value, key) in annotation" v-if="value.constructor == String">
-            <label>{{key}}</label>
-            <input v-model="originalannotation[bodykey][index][key]"></input>
-          </div>
-          <div v-for="(anno, charindex) in annotation[format['body']]" v-if="annotation[format['body']]" class="annotationbody">
-            <h3>Body field {{charindex +1}}</h3>
-            <button v-on:click="deleteField(index, charindex)" v-if="annotation[format['body']].length > 1" class="deletebodyfield">Delete body field {{charindex + 1}}</button>
-            <div v-for="(value, key) in anno">
-              <div class="singleitems" v-if="key != 'items' && key != 'selector'">
-                <label>{{key}}</label>
-                <input v-if="key.indexOf('type') == -1 && key != 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]"></input>
-                <select v-if="key.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key]" v-on:change="switchType(index, charindex)">
-                  <option v-for="typechoice in format['typechoices']" v-bind:value="typechoice">{{typechoice}}</option>
-                </select>
-                <select v-if="key == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]">
-                  <option v-for="purpose in purposes" v-bind:value="purpose">{{purpose}}</option>
-                </select>
-              </div>
-              <div class="choicefield" v-if="key == 'items'">
-                <div v-for="(item, choiceindex) in anno[key]" v-bind:id="'choice_' + choiceindex" class="choiceindex">
-                  <h4>Choice {{choiceindex + 1}}</h4>
-                  <button v-on:click="deleteField(index, charindex, choiceindex)" v-if="anno[key].length > 1">Delete {{choiceindex + 1}}</button>
-                  <span v-for="(choicevalue, choicekey) in item">
-                    <div v-if="choicekey != 'selector'">
-                      <label>{{choicekey}}</label>
-                      <input v-if="choicekey.indexOf('type') == -1 && choicekey != 'purpose'" v-model="item[choicekey]"></input>
-                      <select v-if="choicekey.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]" v-on:change="switchType(index, charindex)">
-                        <option v-for="typechoice in format['typechoices']" v-bind:value="typechoice">{{typechoice}}</option>
-                      </select>
-                      <select v-if="choicekey == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]">
-                        <option v-for="purpose in purposes" v-bind:value="purpose">{{purpose}}</option>
-                      </select>
-                    </div>
-                  </span>
+          <b-card-header header-tag="header" class="p-1" role="tab">
+            <b-button block href="#" v-b-toggle="'accordion-' + index" variant="info">
+              <h2>Annotation {{index + 1}} <i class="fas fa-arrows-alt-v"></i></h2>
+              <span v-if="annotation['@id']" v-html="annotations[annotation['@id']]"></span>
+              <span v-if="annotation['id']" v-html="annotations[annotation['id']]"></span>
+            </b-button>
+          </b-card-header>
+          <b-collapse v-bind:id="'accordion-' + index" visible accordion="my-accordion">
+            <div class="annotationtext" v-for="(value, key) in annotation" v-if="value.constructor == String">
+              <label>{{key}}</label>
+              <input v-model="originalannotation[bodykey][index][key]"></input>
+            </div>
+            <div v-for="(anno, charindex) in annotation[format['body']]" v-if="annotation[format['body']]" class="annotationbody">
+              <h3>Body field {{charindex +1}}</h3>
+              <button v-on:click="deleteField(index, charindex)" v-if="annotation[format['body']].length > 1" class="deletebodyfield">Delete body field {{charindex + 1}}</button>
+              <div v-for="(value, key) in anno">
+                <div class="singleitems" v-if="key != 'items' && key != 'selector'">
+                  <label>{{key}}</label>
+                  <input v-if="key.indexOf('type') == -1 && key != 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]"></input>
+                  <select v-if="key.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key]" v-on:change="switchType(index, charindex)">
+                    <option v-for="typechoice in format['typechoices']" v-bind:value="typechoice">{{typechoice}}</option>
+                  </select>
+                  <select v-if="key == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]">
+                    <option v-for="purpose in purposes" v-bind:value="purpose">{{purpose}}</option>
+                  </select>
                 </div>
-                <button v-on:click="addField(index, charindex)">Add Choice Field</button>
+                <div class="choicefield" v-if="key == 'items'">
+                  <div v-for="(item, choiceindex) in anno[key]" v-bind:id="'choice_' + choiceindex" class="choiceindex">
+                    <h4>Choice {{choiceindex + 1}}</h4>
+                    <button v-on:click="deleteField(index, charindex, choiceindex)" v-if="anno[key].length > 1">Delete {{choiceindex + 1}}</button>
+                    <span v-for="(choicevalue, choicekey) in item">
+                      <div v-if="choicekey != 'selector'">
+                        <label>{{choicekey}}</label>
+                        <input v-if="choicekey.indexOf('type') == -1 && choicekey != 'purpose'" v-model="item[choicekey]"></input>
+                        <select v-if="choicekey.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]" v-on:change="switchType(index, charindex)">
+                          <option v-for="typechoice in format['typechoices']" v-bind:value="typechoice">{{typechoice}}</option>
+                        </select>
+                        <select v-if="choicekey == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]">
+                          <option v-for="purpose in purposes" v-bind:value="purpose">{{purpose}}</option>
+                        </select>
+                      </div>
+                    </span>
+                  </div>
+                  <button v-on:click="addField(index, charindex)">Add Choice Field</button>
+                </div>
               </div>
             </div>
-          </div>
-          <button v-on:click="addField(index)">Add Another Body Field</button>
-        </div>
+            <button v-on:click="addField(index)">Add Another Body Field</button>
+          </b-collapse>
+        </b-card>
       </draggable>
     </div>
   </div>
@@ -68,11 +74,16 @@
 import axios from 'axios';
 import shared from './shared';
 import draggable from 'vuedraggable'
+import Vue from 'vue';
+import BootStrapVue from 'bootstrap-vue';
+import collapse from 'bootstrap-vue';
+Vue.use(BootStrapVue);
 
 export default {
   name: 'annotationeditor',
   components: {
     draggable,
+    collapse
   },
   data: function() {
     return {
@@ -116,7 +127,7 @@ export default {
   },
   methods: {
     addField: function(index, charindex='false') {
-      var body = charindex != 'false' ? this.originalannotation.resources[index][this.format['body']][charindex].items : this.originalannotation.resources[index][this.format['body']];
+      var body = charindex != 'false' ? this.originalannotation[this.bodykey][index][this.format['body']][charindex].items : this.originalannotation[this.bodykey][index][this.format['body']];
       var originalvalue = Object.keys(body[0]);
       var newVal = {}
       for (var nv=0; nv<originalvalue.length; nv++){
@@ -125,19 +136,19 @@ export default {
         newVal[key] = value;
       }
       if (charindex != 'false'){
-        this.originalannotation.resources[index][this.format['body']][charindex].items.push(newVal);
+        this.originalannotation[this.bodykey][index][this.format['body']][charindex].items.push(newVal);
       } else {
-        this.originalannotation.resources[index][this.format['body']].push(newVal);
+        this.originalannotation[this.bodykey][index][this.format['body']].push(newVal);
       }
       this.hasbeenupdated += 1
     },
     deleteField: function(index, charindex='false', choiceindex='false'){
       if (choiceindex != 'false'){
-        this.originalannotation.resources[index][this.format['body']][charindex].items.splice(choiceindex,1)
+        this.originalannotation[this.bodykey][index][this.format['body']][charindex].items.splice(choiceindex,1)
       } else if (charindex != 'false' && choiceindex == 'false'){
-        this.originalannotation.resources[index][this.format['body']].splice(charindex,1)
+        this.originalannotation[this.bodykey][index][this.format['body']].splice(charindex,1)
       } else if (charindex == 'false' && choiceindex == 'false'){
-        this.originalannotation.resources.splice(index,1)
+        this.originalannotation[this.bodykey].splice(index,1)
       }
       this.hasbeenupdated += 1
     },
@@ -240,6 +251,7 @@ export default {
         var scriptTag = shared.createScriptTag(JSON.stringify(anno));
         this.annotationorder.push(id)
         this.annotations[id] = scriptTag['outerHTML'] + `<iiif-annotation annotationurl='${scriptTag['id']}' styling='image_only:true'></iiifannotation>`;
+        console.log(this.annotations)
         for (var f=0; f<this.bodyfields.length; f++){
           var field = this.format['fields'][f];
           if (field){
