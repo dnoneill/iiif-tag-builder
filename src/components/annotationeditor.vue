@@ -12,7 +12,7 @@
           <input v-model="originalannotation[key]"></input>
         </div>
       </div>
-      <draggable v-model="annotations" draggable=".item" v-bind:id="hasbeenupdated" @change="hasbeenupdated += 1">
+      <draggable v-model="annotationorder" draggable=".item" v-bind:id="hasbeenupdated" @change="updateOrder()">
         <div v-for="(annotation, index) in originalannotation[bodykey]" :key="index" class="item">
           <button v-on:click="deleteField(index)" v-if="originalannotation[bodykey].length > 1" class="annotationbutton">Delete Annotation {{index + 1}}</button>
           <h2>Annotation {{index + 1}} <i class="fas fa-arrows-alt-v"></i></h2>
@@ -148,6 +148,15 @@ export default {
       this.endpointapi = params.endpointapi ? params.endpointapi : '';
       this.buildView();
     },
+    updateOrder: function(){
+      var ids = this.annotationorder;
+      var correctorder = []
+      for (var id=0; id<ids.length; id++){
+        var correctfield = this.originalannotation[this.bodykey].filter(element => element['@id'] == ids[id])[0];
+        correctorder.push(correctfield)
+      }
+      this.originalannotation[this.bodykey] = correctorder;
+    },
     updateRouter: function() {
       var params = {
           url: this.url,
@@ -172,13 +181,7 @@ export default {
       }
     },
     downloadAnnotation: function(){
-      var ids = this.annotations.map(elem => elem.id);
-      var correctorder = []
-      for (var id=0; id<ids.length; id++){
-        var correctfield = this.originalannotation[this.bodykey].filter(element => element['@id'] == ids[id])[0];
-        correctorder.push(correctfield)
-      }
-      this.originalannotation[this.bodykey] = correctorder;
+      this.updateOrder();
       const data = JSON.stringify(this.originalannotation);
       const blob = new Blob([data], {type: 'application/json'})
       const e = document.createEvent('MouseEvents'),
@@ -235,6 +238,7 @@ export default {
         var dictionary = {}
         var id = anno['@id'] ? anno['@id'] : anno['id'] ? anno['id'] : i.toString();
         var scriptTag = shared.createScriptTag(JSON.stringify(anno));
+        this.annotationorder.push(id)
         this.annotations[id] = scriptTag['outerHTML'] + `<iiif-annotation annotationurl='${scriptTag['id']}' styling='image_only:true'></iiifannotation>`;
         for (var f=0; f<this.bodyfields.length; f++){
           var field = this.format['fields'][f];
