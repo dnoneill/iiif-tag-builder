@@ -366,6 +366,11 @@ export default {
     },
     buildTags: function() {
       if (this.url.length > 0 && this.listoptions.length>0 || this.annotationtext.length > 0 && this.listoptions.length>0){
+        var scriptTag;
+        if (this.annotationtext) {
+          scriptTag = shared.createScriptTag(this.annotationtext);
+          this.url = [scriptTag['id']];
+        }
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
@@ -377,12 +382,7 @@ export default {
         settings ? tag += ` styling='${settings}'` : '' ;
         tag += `></${this.viewtype}>`;
         this.tag = '';
-        this.tag = tag.trim();
-        if (this.annotationtext) {
-          var scriptTag = shared.createScriptTag(this.annotationtext);
-          this.tag = scriptTag['outerHTML'] + tag;
-          this.url = [scriptTag['id']];
-        }
+        this.tag = scriptTag ? `${scriptTag['outerHTML']}${tag.trim()}` : tag.trim();
       }
     }
   }
