@@ -181,6 +181,7 @@ export default {
     }
   },
   created() {
+    shared.redirect();
     this.baseurl = process.env['BASE_URL'];
   },
   mounted() {

@@ -9,8 +9,10 @@
   </div>
 </template>
 <script>
+import shared from './shared';
 export default {
   created() {
+    shared.redirect();
     this.$router.options.routes.forEach(route => {
       this.items.push({
         name: route.title,

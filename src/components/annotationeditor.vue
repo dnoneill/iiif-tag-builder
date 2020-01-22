@@ -112,6 +112,7 @@ export default {
     }
   },
   created() {
+    shared.redirect();
   },
   mounted() {
   },
