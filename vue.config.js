@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/iiif-annotation/tools'
+  publicPath: '/annona/tools'
 }
