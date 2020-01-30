@@ -1,10 +1,15 @@
 <template>
   <div class="form">
     <div class="requiredfields">
-      <input aria-label="Annotation URL" v-model="url" value="" placeholder="Annotation URL" v-on:change="updateRouter();">
-      <input v-model="manifesturl" id="manifesturl" v-on:change="updateRouter();" aria-label="Manifest URL (Optional)" placeholder="Manifest URL (Optional)">
-      <input v-model="endpointapi" id="endpointapi" v-on:change="updateRouter();" aria-label="Endpoint URL (Optional)" placeholder="Endpoint URL (Optional)">
-      <button v-if="originalannotation" v-on:click="downloadAnnotation()">Download Annotation</button>
+      <div class="headerbuttons">
+        <button v-if="originalannotation" v-on:click="downloadAnnotation()">Download Annotation</button>
+        <button v-if="originalannotation && endpointapi" v-on:click="writeToEndpoint()">Write to Endpoint</button>
+      </div>
+      <div class="inputform">
+        <input aria-label="Annotation URL" v-model="url" value="" placeholder="Annotation URL" v-on:change="updateRouter();">
+        <input v-model="manifesturl" id="manifesturl" v-on:change="updateRouter();" aria-label="Manifest URL (Optional)" placeholder="Manifest URL (Optional)">
+        <input v-model="endpointapi" id="endpointapi" v-on:change="updateRouter();" aria-label="Endpoint URL (Optional)" placeholder="Endpoint URL (Optional)">
+      </div>
       <div class="annotationlistcontent" v-if="originalannotation">
         <h2>Annotation List Fields</h2>
         <div v-for="(value, key) in originalannotation"  v-if="value.constructor == String" class="annotationlistfields">
@@ -14,7 +19,9 @@
       </div>
       <draggable v-model="annotationorder" draggable=".item" v-bind:id="hasbeenupdated" @change="updateOrder()">
         <b-card v-for="(annotation, index) in originalannotation[bodykey]" :key="index" class="item">
-          <button v-on:click="deleteField(index)" v-if="originalannotation[bodykey].length > 1" class="annotationbutton">Delete Annotation {{index + 1}}</button>
+          <div class="controlbuttons">
+            <button v-on:click="deleteField(index)" v-if="originalannotation[bodykey].length > 1" class="annotationbutton">Delete Annotation {{index + 1}}</button>
+          </div>
           <b-card-header header-tag="header" class="p-1" role="tab">
             <b-button block href="#" v-b-toggle="'accordion-' + index" variant="info">
               <h2>Annotation {{index + 1}} <i class="fas fa-arrows-alt-v"></i></h2>
@@ -186,10 +193,16 @@ export default {
       this.buildView();
     },
     buildView: function() {
+      var vue = this;
       if (this.url){
         axios.get(this.url).then(response => {
           this.parseAnnotation(response.data);
-        })
+        }).catch(function (error) {
+          vue.originalannotation = '';
+          console.log(error);
+        });
+      } else {
+        this.originalannotation = '';
       }
     },
     downloadAnnotation: function(){
@@ -237,6 +250,17 @@ export default {
       }
       this.originalannotation[this.bodykey][index][bodyfield][charindex][typefield] = type;
       this.hasbeenupdated += 1;
+    },
+    writeToEndpoint: function(){
+      this.updateOrder();
+      var vue = this;
+      axios.post(this.endpointapi, this.originalannotation)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        alert(`${vue.endpointapi} is returning error`)
+      });
     },
     parseAnnotation(data) {
       this.originalannotation = data;
@@ -435,11 +459,58 @@ button {
 }
 
 .annotationbutton {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  width: auto;
   float: right;
-  margin: 20px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.controlbuttons {
+  position: absolute;
+  right: 0;
+  padding: 15px 20px;
+  z-index: 1;
+}
+
+.card-header {
+  width: 100%;
+  display: inline-block;
 }
 
 .deletebodyfield {
   float: right
+}
+.headerbuttons {
+  float: right;
+  display: block;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding-top: 5px;
+  z-index: 20;
+}
+
+.headerbuttons > button {
+  margin-left: 5px;
+  background-color: cadetblue;
+  padding: 5px 12px;
+  color: black;
+  font-size: 16px;
+  font-weight: 900;
+  width: auto;
+}
+
+.inputform {
+  width: 100%;
+  display: inline-block;
+  margin-top: 20px;
+}
+.inputform > input {
+  width: 30%;
+  margin-right: 3px;
 }
 </style>

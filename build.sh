@@ -7,7 +7,7 @@ rm /tmp/index.html
 cd ../iiif-annotation/docs/tools
 git add .
 git commit -m "update annotation tools"
-git push -f 'https://github.com/ncsu-libraries/iiif-annotation.git' master
+git push -f 'https://github.com/ncsu-libraries/annona.git' master
 cd ~/projects/tag-builder-iiif
 git add -A
 git commit -m "update source code"
