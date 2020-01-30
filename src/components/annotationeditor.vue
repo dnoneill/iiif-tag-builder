@@ -26,7 +26,8 @@
             <b-button block href="#" v-b-toggle="'accordion-' + index" variant="info">
               <h2>Annotation {{index + 1}} <i class="fas fa-arrows-alt-v"></i></h2>
               <span v-if="annotation['@id']" v-html="annotations[annotation['@id']]"></span>
-              <span v-if="annotation['id']" v-html="annotations[annotation['id']]"></span>
+              <span v-else-if="annotation['id']" v-html="annotations[annotation['id']]"></span>
+              <span v-else-if="Object.values(annotations).length == 1" v-html="Object.values(annotations)[0]"></span>
             </b-button>
           </b-card-header>
           <b-collapse v-bind:id="'accordion-' + index" visible accordion="my-accordion">
@@ -42,11 +43,12 @@
               <div v-for="(value, key) in anno">
                 <div class="singleitems" v-if="key != 'items' && key != 'selector'">
                   <label>{{key}}</label>
-                  <input v-if="key.indexOf('type') == -1 && key != 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]"></input>
-                  <select v-if="key.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key]" v-on:change="switchType(index, charindex)">
+                  <ckeditor :editor="editor" v-if="key == 'value' || key == 'chars'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]"></ckeditor>
+                  <input v-else-if="key.indexOf('type') == -1 && key != 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]"></input>
+                  <select v-else-if="key.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key]" v-on:change="switchType(index, charindex)">
                     <option v-for="typechoice in format['typechoices']" v-bind:value="typechoice">{{typechoice}}</option>
                   </select>
-                  <select v-if="key == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]">
+                  <select v-else-if="key == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key]">
                     <option v-for="purpose in purposes" v-bind:value="purpose">{{purpose}}</option>
                   </select>
                 </div>
@@ -57,11 +59,12 @@
                     <span v-for="(choicevalue, choicekey) in item">
                       <div v-if="choicekey != 'selector'">
                         <label>{{choicekey}}</label>
-                        <input v-if="choicekey.indexOf('type') == -1 && choicekey != 'purpose'" v-model="item[choicekey]"></input>
-                        <select v-if="choicekey.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]" v-on:change="switchType(index, charindex)">
+                        <ckeditor :editor="editor" v-if="choicekey == 'value' || choicekey == 'chars'" v-model="item[choicekey]"></ckeditor>
+                        <input v-else-if="choicekey.indexOf('type') == -1 && choicekey != 'purpose'" v-model="item[choicekey]"></input>
+                        <select v-else-if="choicekey.indexOf('type') > -1" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]" v-on:change="switchType(index, charindex)">
                           <option v-for="typechoice in format['typechoices']" v-bind:value="typechoice">{{typechoice}}</option>
                         </select>
-                        <select v-if="choicekey == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]">
+                        <select v-else-if="choicekey == 'purpose'" v-model="originalannotation[bodykey][index][format['body']][charindex][key][choiceindex][choicekey]">
                           <option v-for="purpose in purposes" v-bind:value="purpose">{{purpose}}</option>
                         </select>
                       </div>
@@ -86,17 +89,24 @@ import draggable from 'vuedraggable'
 import Vue from 'vue';
 import BootStrapVue from 'bootstrap-vue';
 import collapse from 'bootstrap-vue';
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+Vue.use( CKEditor );
 Vue.use(BootStrapVue);
+
 
 export default {
   name: 'annotationeditor',
   components: {
+    ckeditor: CKEditor.component,
     draggable,
     collapse
   },
   data: function() {
     return {
       'url': '',
+      'editor': ClassicEditor,
       'manifesturl': '',
       'endpointapi': '',
       'annotations': {},
@@ -278,7 +288,6 @@ export default {
         var scriptTag = shared.createScriptTag(JSON.stringify(anno));
         this.annotationorder.push(id)
         this.annotations[id] = scriptTag['outerHTML'] + `<iiif-annotation annotationurl='${scriptTag['id']}' styling='image_only:true'></iiifannotation>`;
-        console.log(this.annotations)
         for (var f=0; f<this.bodyfields.length; f++){
           var field = this.format['fields'][f];
           if (field){
