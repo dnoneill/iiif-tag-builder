@@ -35,8 +35,10 @@
               <input v-model="originalannotation[bodykey][index][key]"></input>
             </div>
             <div v-for="(anno, charindex) in annotation[format['body']]" v-if="annotation[format['body']]" class="annotationbody">
-              <h3>Body field {{charindex +1}}</h3>
-              <button v-on:click="deleteField(index, charindex)" v-if="annotation[format['body']].length > 1" class="deletebodyfield">Delete body field {{charindex + 1}}</button>
+              <div class="bodyheader">
+                <h3>Body field {{charindex +1}}</h3>
+                <button v-on:click="deleteField(index, charindex)" v-if="annotation[format['body']].length > 1" class="deletebodyfield">Delete body field {{charindex + 1}}</button>
+              </div>
               <div v-for="(value, key) in anno">
                 <div class="singleitems" v-if="key != 'items' && key != 'selector'">
                   <label>{{key}}</label>
@@ -470,20 +472,10 @@ button {
 }
 
 .controlbuttons {
-  position: absolute;
-  right: 0;
-  padding: 15px 20px;
+  padding: 15px 0px;
   z-index: 1;
 }
 
-.card-header {
-  width: 100%;
-  display: inline-block;
-}
-
-.deletebodyfield {
-  float: right
-}
 .headerbuttons {
   float: right;
   display: block;
@@ -512,5 +504,25 @@ button {
 .inputform > input {
   width: 30%;
   margin-right: 3px;
+}
+
+.item > .card-body {
+  padding: 0 15px 20px;
+}
+
+.bodyheader > h3 {
+  margin: 0px;
+  align-self: center;
+}
+
+.deletebodyfield {
+  align-self: center;
+  width: auto;
+  margin-left: 20px;
+}
+
+.bodyheader {
+  display: inline-flex;
+  margin: 30px 0px 10px;
 }
 </style>
