@@ -230,7 +230,7 @@ export default {
       if (this.viewtype == 'iiif-rangestoryboard') {
         this.listoptions = [{'value': 'rangeurl', 'text': 'Range URL', 'selected': true}]
       }
-      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount', 'table_view'] : ['autorun_onload',
+      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount', 'hide_beforeafter', 'table_view'] : ['autorun_onload',
       'fullpage', 'toggleoverlay', 'controller', 'togglelayers', 'hide_tagcount', 'overlaynext', 'hide_annocontrols', 'hide_toolbar',
       'hide_tagsbutton', 'hide_autorunbutton', 'hide_infobutton', 'hide_overlaybutton', 'hide_layersbutton', 'hide_nextbuttons', 'hide_fullscreenbutton', 'hide_shortcutbutton', 'hide_annotationtext', 'transcription', 'textfirst']
       this.viewtype == 'iiif-multistoryboard' ? this.booleanoptions.push('matchclick') : ''
