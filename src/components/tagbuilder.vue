@@ -17,6 +17,9 @@
   Multistoryboard Example with custom image</a><br>
   <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl'">
   Example with range. Storyboards have layers.</a><br>
+  <div class="savebutton" v-if="tag && apiurl">
+      <button v-on:click="savetoapi()">Save</button>
+    </div>
   <div class="requiredfields">
     <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
       <input v-bind:aria-label="'Annotation URL ' + index" v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
@@ -150,6 +153,7 @@
 <script>
 import ColorPicker from 'vue-color-picker-wheel';
 import shared from './shared';
+import axios from 'axios';
 
 export default {
   name: 'tagbuilder',
@@ -160,6 +164,7 @@ export default {
     return {
       'url': [],
       'manifesturl': '',
+      'apiurl': '',
       'viewtype': '',
       'props': {},
       'listoptions': [],
@@ -210,6 +215,7 @@ export default {
       this.viewtype = params.viewtype ? params.viewtype : '';
       this.manifesturl = params.manifesturl ? params.manifesturl : '';
       this.setDefaults();
+      params.apiurl ? this.apiurl = params.apiurl : '';
       params.settings ? this.settings = JSON.parse(params.settings) : '';
       params.props ? this.props = JSON.parse(params.props) : '';
       params.css ? this.css = JSON.parse(params.css) : '';
@@ -266,6 +272,14 @@ export default {
       var keepexisting = this.listoptions.filter(element => element.value == this.listtype);
       this.listtype = keepexisting.length > 0 ? this.listtype : this.listoptions[0]['value'];
       this.updateRouter();
+    },
+    savetoapi: function(){
+      axios.post(this.apiurl, {'tag': this.tag})
+      .then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        alert(error)
+      });
     },
     getsettings: function() {
       var defaultcolors = this.colorpickers.map(element => element.default);
@@ -352,6 +366,7 @@ export default {
           viewtype: this.viewtype,
           listtype: this.listtype,
           manifesturl: this.manifesturl,
+          apiurl: this.apiurl,
           settings: JSON.stringify(this.settings),
           props: JSON.stringify(this.props),
           css: JSON.stringify(this.css)
@@ -507,5 +522,25 @@ input:not([type='checkbox']), textarea, button {
 }
 select {
   -webkit-appearance: menulist-button;
+}
+
+.savebutton {
+  position: fixed;
+  right: 40px;
+  top: 30px;
+  z-index: 400000;
+}
+
+.savebutton button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 </style>

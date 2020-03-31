@@ -9,7 +9,6 @@ export default {
   },
   redirect: function(){
     var url = window.location.href;
-    console.log(url)
     if (url.indexOf('/iiif-annotation/') > -1){
       location.href = url.replace(/\/iiif-annotation\//g, '/annona/')
     }
