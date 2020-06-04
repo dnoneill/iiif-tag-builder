@@ -26,6 +26,7 @@ if (process.env.NODE_ENV == 'flask'){
 
 console.log(routes)
 const router = new VueRouter({
+  mode: 'history',
   routes // short for `routes: routes`
 })
 
