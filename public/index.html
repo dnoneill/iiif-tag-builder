@@ -9,8 +9,10 @@
     <link rel="stylesheet" type="text/css" href="//ncsu-libraries.github.io/annona/latest/annona.css">
     <title>iiif-tag-builder</title>
   </head>
+  <span v-if="process.env.NODE_ENV != 'flask' && process.env.NODE_ENV != 'development'">
     {% extends 'base.html' %}
     {% block content %}
+  </span>
   <body>
     <noscript>
       <strong>We're sorry but iiif-tag-builder doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
@@ -18,5 +20,7 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <span v-if="process.env.NODE_ENV != 'flask' && process.env.NODE_ENV != 'development'">
     {% endblock %}
+  </span>
 </html>
