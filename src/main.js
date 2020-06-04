@@ -7,8 +7,6 @@ import annotationeditor from './components/annotationeditor.vue'
 import index from './components/index.vue'
 
 import VueClipboards from 'vue-clipboards';
-import vueClipboards from 'vue-clipboards'
-
 
 Vue.use(VueRouter)
 Vue.use(VueClipboards);
@@ -26,6 +24,7 @@ if (process.env.NODE_ENV == 'flask'){
   ]
 }
 
+console.log(routes)
 const router = new VueRouter({
   mode: 'history',
   routes // short for `routes: routes`
