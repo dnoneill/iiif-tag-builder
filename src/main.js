@@ -14,9 +14,9 @@ Vue.use(VueClipboards);
 Vue.config.productionTip = false
 
 var routes = [
-  { path: process.env.BASE_URL, component: index, 'name': 'index'},
-  { path: process.env.BASE_URL + 'tag-builder', component: tagbuilder, 'name': 'tagbuilder', 'title': 'Tag Builder', 'blurb': 'The Tag Builder is a user interface for creating tags to be used with this library. It provides a more user friendly way of implementing settings.'},
-  { path: process.env.BASE_URL + 'annotationeditor', component: annotationeditor, 'name': 'annotationeditor', 'title': 'Annotation Editor', 'blurb': 'The Annotation Editor is currently in development. It provides a user friendly for editing annotations with fields like rights. If there are things you would like to see implemented in this viewer please open an issue in the GitHub repo.'}
+  { path: '/', component: index, 'name': 'index'},
+  { path: '/tag-builder', component: tagbuilder, 'name': 'tagbuilder', 'title': 'Tag Builder', 'blurb': 'The Tag Builder is a user interface for creating tags to be used with this library. It provides a more user friendly way of implementing settings.'},
+  { path: '/annotationeditor', component: annotationeditor, 'name': 'annotationeditor', 'title': 'Annotation Editor', 'blurb': 'The Annotation Editor is currently in development. It provides a user friendly for editing annotations with fields like rights. If there are things you would like to see implemented in this viewer please open an issue in the GitHub repo.'}
 ]
 if (process.env.NODE_ENV == 'flask'){
   routes = [
