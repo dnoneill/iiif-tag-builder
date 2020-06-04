@@ -5,6 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "serveflask": "NODE_ENV=flask vue-cli-service serve --mode flask",
+    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/index.html ~/projects/githubflaskanno/templates/annonabuilder.html && cp dist/app.js ~/projects/githubflaskanno/static/app.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -46,7 +48,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

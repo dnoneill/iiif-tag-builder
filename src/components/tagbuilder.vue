@@ -1,25 +1,28 @@
 <template>
   <div class="form">
   <button @click="closeFullpage" class="buttons closebutton" v-if="settings.fullpage && fullpage">Close <i class="fa fa-times"></i></button>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2Ffullbayeux-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%22%7D%5D,%22additionalinfo%22%3A%22%22,%22fit%22%3A%22horizontal%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%22,%22xywh%22%3A%22%22,%22image%22%3A%22%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
-  Bayeux Example</a><br>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json&viewtype=iiif-storyboard&listtype=annotationlist'">
-  Example with tags</a><br>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json&viewtype=iiif-storyboard&listtype=annotationlist'">
-  Example with layers</a><br>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fproxy.php%3Fiiif%3DVan_Gogh_-_Weizenfeld_mit_Blick_auf_Arles.jpeg%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
-  Example with custom layers (Van Gogh)</a><br>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22togglelayers%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22x-ray%22,%22xywh%22%3A%22%22,%22image%22%3A%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
-  Example with custom layers (x-ray image)</a><br>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22matchclick%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'">
-  Multistoryboard Example</a><br>
-  <a href='/iiif-annotation/tag-builder/#/#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'>
-  Multistoryboard Example with custom image</a><br>
-  <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl'">
-  Example with range. Storyboards have layers.</a><br>
+  <div class="examples" v-if="env.NODE_ENV != 'flask'">
+    <a v-bind:href="baseurl + 'tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2Ffullbayeux-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%22%7D%5D,%22additionalinfo%22%3A%22%22,%22fit%22%3A%22horizontal%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%22,%22xywh%22%3A%22%22,%22image%22%3A%22%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
+    Bayeux Example</a><br>
+    <a v-bind:href="baseurl + 'tag-builder?url=https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json&viewtype=iiif-storyboard&listtype=annotationlist'">
+    Example with tags</a><br>
+    <a v-bind:href="baseurl + 'tag-builder?url=https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json&viewtype=iiif-storyboard&listtype=annotationlist'">
+    Example with layers</a><br>
+    <a v-bind:href="baseurl + 'tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fproxy.php%3Fiiif%3DVan_Gogh_-_Weizenfeld_mit_Blick_auf_Arles.jpeg%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
+    Example with custom layers (Van Gogh)</a><br>
+    <a v-bind:href="baseurl + 'tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22togglelayers%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22x-ray%22,%22xywh%22%3A%22%22,%22image%22%3A%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
+    Example with custom layers (x-ray image)</a><br>
+    <a v-bind:href="baseurl + 'tag-builder?url=https%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fiiif-annotation%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22matchclick%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'">
+    Multistoryboard Example</a><br>
+    <a href='tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'>
+    Multistoryboard Example with custom image</a><br>
+    <a v-bind:href="baseurl + 'tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl'">
+    Example with range. Storyboards have layers.</a><br>
+  </div>
   <div class="savebutton" v-if="tag && apiurl">
-      <button v-on:click="savetoapi()">Save</button>
-    </div>
+    <input v-model="apifilename" placeholder="filename for created file">
+    <button v-on:click="savetoapi()">Save</button>
+  </div>
   <div class="requiredfields">
     <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
       <input v-bind:aria-label="'Annotation URL ' + index" v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
@@ -160,11 +163,12 @@ export default {
   components: {
     ColorPicker
   },
+  props: ['apiurl'],
   data: function() {
     return {
       'url': [],
+      'apifilename': '',
       'manifesturl': '',
-      'apiurl': '',
       'viewtype': '',
       'props': {},
       'listoptions': [],
@@ -182,7 +186,8 @@ export default {
       "css": {},
       "urllength": 1,
       "fullpage": true,
-      "baseurl": ''
+      "baseurl": '',
+      "env": process.env
     }
   },
   created() {
@@ -274,7 +279,7 @@ export default {
       this.updateRouter();
     },
     savetoapi: function(){
-      axios.post(this.apiurl, {'tag': this.tag})
+      axios.post(this.apiurl, {'tag': this.tag, 'slug': this.apifilename})
       .then(function (response) {
         console.log(response);
       }).catch(function (error) {
@@ -387,6 +392,9 @@ export default {
           scriptTag = shared.createScriptTag(this.annotationtext);
           this.url = [scriptTag['id']];
         }
+        if (this.apiurl){
+          this.apifilename = this.url[0].split('/').slice(-1)[0].replace('.json', '')
+        } 
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
@@ -526,8 +534,8 @@ select {
 
 .savebutton {
   position: fixed;
-  right: 40px;
-  top: 30px;
+  right: 1em;
+  top: 5em;
   z-index: 400000;
 }
 

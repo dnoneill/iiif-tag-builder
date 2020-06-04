@@ -1,6 +1,6 @@
 <template>
 <div>
-<div v-for="item in items" v-if="item.path != '/'">
+<div v-for="item in items" v-bind:key="item.path">
     <router-link :to="item.path">
         {{item.name}}
     </router-link>

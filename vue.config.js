@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/annona/tools'
+  publicPath: process.env.NODE_ENV === 'flask' ? '/' : '/annona/tools'
 }
