@@ -204,16 +204,6 @@ export default {
     shared.redirect();
     this.baseurl = process.env['BASE_URL'];
   },
-  mounted() {
-    if (this.$route.path == '/display') {
-      const header = document.getElementsByTagName('header')[0];
-      if (header){
-        header.setAttribute('style', 'display:none')
-        const ssindex = Array.from(document.styleSheets).findIndex(element => element.href.indexOf("main.css"));
-        document.styleSheets[ssindex].disabled = 'true';
-      }
-    }
-  },
   watch: {
      '$route.query': {
        handler: function(newVal, oldVal) {
