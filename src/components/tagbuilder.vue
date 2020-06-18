@@ -149,8 +149,8 @@
         <div id="tagdata">{{tag}}</div>
         <button v-clipboard="tag">Copy Tag</button>
       </div>
-      <hr>
-      <div class="tagfieldline">
+      <hr v-if="!annotationtext">
+      <div class="tagfieldline" v-if="!annotationtext">
         <a v-bind:href="displayURL" target="_blank">Display URL</a>
         <button v-clipboard="displayURL">Copy URL</button>
       </div>
