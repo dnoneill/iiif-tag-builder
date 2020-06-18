@@ -203,6 +203,8 @@ export default {
   created() {
     shared.redirect();
     this.baseurl = process.env['BASE_URL'];
+  },
+  mounted() {
     if (this.$route.path == '/display') {
       const header = document.getElementsByTagName('header')[0];
       const footer = document.getElementsByTagName('footer')[0];
@@ -213,8 +215,6 @@ export default {
         document.styleSheets[0].disabled = 'true';
       }
     }
-  },
-  mounted() {
   },
   watch: {
      '$route.query': {
