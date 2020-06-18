@@ -208,7 +208,9 @@ export default {
       const footer = document.getElementsByTagName('footer')[0];
       if (header){
         header.style.display = 'none';
+        console.log(footer)
         footer.style.display = 'none';
+        document.styleSheets[0].disabled = 'true';
       }
     }
   },
