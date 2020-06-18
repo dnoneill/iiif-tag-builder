@@ -207,12 +207,13 @@ export default {
   mounted() {
     if (this.$route.path == '/display') {
       const header = document.getElementsByTagName('header')[0];
-      const footer = document.getElementsByTagName('footer')[0];
+      const footer = document.getElementsByClassName('site-footer')[0];
       if (header){
         header.style.display = 'none';
-        console.log(document.getElementsByTagName('footer'))
+        console.log(document.getElementsByClassName('site-footer'))
+        const ssindex = Array.from(document.styleSheets).findIndex(element => element.href.indexOf("main.css"));
+        document.styleSheets[ssindex].disabled = 'true';
         footer.style.display = 'none';
-        document.styleSheets[0].disabled = 'true';
       }
     }
   },
