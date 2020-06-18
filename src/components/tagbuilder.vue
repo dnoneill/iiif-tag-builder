@@ -421,6 +421,9 @@ export default {
   computed: {
     displayURL: function() {
       const params = this.$route.query;
+      const paramsettings = JSON.parse(params['settings']);
+      paramsettings['fullpage'] = true;
+      params['settings'] = JSON.stringify(paramsettings);
       const host = window.location.protocol + "//" + location.hostname+(location.port ? ':'+location.port: '');
       return `${host}${this.$router.resolve({ name: 'display', query: params}).href}`;
     },
