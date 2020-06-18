@@ -203,6 +203,14 @@ export default {
   created() {
     shared.redirect();
     this.baseurl = process.env['BASE_URL'];
+    if (this.$route.path == '/display') {
+      const header = document.getElementsByTagName('header')[0];
+      const footer = document.getElementsByTagName('footer')[0];
+      if (header){
+        header.style.display = 'none';
+        footer.style.display = 'none';
+      }
+    }
   },
   mounted() {
   },
