@@ -1,7 +1,7 @@
 npm run build
 rm -r ../iiif-annotation/docs/tools/*
 cp -r dist/* ../iiif-annotation/docs/tools/
-(echo "---"; echo "layout: null"; echo "---\n<"; cat ../iiif-annotation/docs/tools/index.html) > /tmp/index.html
+(echo "---"; echo "layout: page"; echo "title: Annotation Tools"; echo "---"; cat ../iiif-annotation/docs/tools/index.html) > /tmp/index.html
 cp /tmp/index.html ../iiif-annotation/docs/tools/index.html
 rm /tmp/index.html
 cd ../iiif-annotation/docs/tools
