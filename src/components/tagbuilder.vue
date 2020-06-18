@@ -207,13 +207,10 @@ export default {
   mounted() {
     if (this.$route.path == '/display') {
       const header = document.getElementsByTagName('header')[0];
-      const footer = document.getElementsByClassName('site-footer')[0];
       if (header){
         header.setAttribute('style', 'display:none')
-        console.log(document.getElementsByClassName('site-footer'))
         const ssindex = Array.from(document.styleSheets).findIndex(element => element.href.indexOf("main.css"));
         document.styleSheets[ssindex].disabled = 'true';
-        footer.setAttribute('style', 'display:none')
       }
     }
   },
@@ -587,12 +584,13 @@ select {
   cursor: pointer;
 }
 
-
-
 hr {
   border:solid 1px black;
   width: 96%;
 }
 
+.site-footer {
+  display: none;
+}
 
 </style>
