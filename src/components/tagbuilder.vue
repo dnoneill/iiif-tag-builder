@@ -20,10 +20,6 @@
       <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl'">
       Example with range. Storyboards have layers.</a><br>
     </div>
-    <div class="savebutton" v-if="tag && apiurl">
-      <input v-model="apifilename" placeholder="filename for created file">
-      <button v-on:click="savetoapi()">Save</button>
-    </div>
     <div class="requiredfields">
       <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
         <input v-bind:aria-label="'Annotation URL ' + index" v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
@@ -50,6 +46,11 @@
         </option>
       </select>
       <textarea aria-label="Annotation JSON to be used instead of annotation URL; Will not save in the URL parameters so it is unfortunately not shareable." type=text v-model="annotationtext" placeholder="Annotation JSON to be used instead of annotation URL; Will not save in the URL parameters so it is unfortunately not shareable." v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+      <div class="savebutton" v-if="tag && apiurl">
+        <label for="savetoapi"><b>Filename:</b></label>
+        <input id="savetoapi" v-model="apifilename" placeholder="filename for created file">
+        <button v-on:click="savetoapi()">Save</button>
+      </div>
     </div>
     <button @click="updateListType" class="buttons clearbutton" v-if="viewtype">Clear all settings</button>
 
@@ -57,15 +58,22 @@
     <div id="settings" v-if="viewtype" v-bind:class="viewtype">
     <div class="groupings" v-if="booleanoptions.length > 0">
       <h2>Boolean Settings</h2>
-      <div v-for="option in booleanoptions" v-bind:key="option">
-        <input type="checkbox" v-bind:id="option" v-bind:value="option" v-model="settings[option]" v-on:change="updateRouter()">
-        <label v-bind:for="option">{{option}}</label>
+      <div v-for="option in booleanoptions" v-bind:key="option.name">
+        <input type="checkbox" v-bind:id="option.name" v-bind:value="option.name" v-model="settings[option.name]" v-on:change="updateRouter()">
+        <label v-bind:for="option">{{option.name}}
+          <button :content="option.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
+        </label>
       </div>
     </div>
     <div class="groupings">
       <h2>Free Text fields</h2>
-      <div v-for="setting in textsettings" v-bind:key="setting">
-        <input v-model="settings[setting]" v-bind:placeholder="setting" v-bind:aria-label="setting" v-on:change="updateRouter()">
+      <div v-for="setting in textsettings" v-bind:key="setting.name">
+        <input v-model="settings[setting.name]" v-bind:placeholder="setting.name" v-bind:aria-label="setting.name" v-on:change="updateRouter()">
+        <button :content="setting.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <i class="fas fa-info-circle"></i>
+        </button>
       </div>
       <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="updateRouter()" aria-label="websocket">
       <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
@@ -116,7 +124,11 @@
       <h2>Dropdowns</h2>
       <p>Choose from one of the options</p>
       <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
-        <label v-bind:for="dropdown.field">{{dropdown.field}}:</label>
+        <label v-bind:for="dropdown.field">{{dropdown.field}}
+          <button :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <i class="fas fa-info-circle"></i>
+        </button>
+        </label>
         <select v-bind:id="dropdown.field" v-on:change="updateRouter()" v-model="settings[dropdown.field]">
           <option value=""></option>
           <option v-for="option in dropdown.options" v-bind:key="option">{{option}}</option>
@@ -144,7 +156,7 @@
       </button>
     </div>
     </div>
-    <div class="tagfield" v-if="tag" aria-label="copy tag button">
+    <div class="tagfield" v-if="tag && !apiurl" aria-label="copy tag button">
       <div class="tagfieldline">
         <div id="tagdata">{{tag}}</div>
         <button v-clipboard="tag">Copy Tag</button>
@@ -167,6 +179,10 @@
 import ColorPicker from 'vue-color-picker-wheel';
 import shared from './shared';
 import axios from 'axios';
+import booleanoptions from '../assets/booleanoptions.js'
+import freetext from '../assets/freetext.js'
+import dropdowns from '../assets/dropdowns.js'
+var _ = require('lodash');
 
 export default {
   name: 'tagbuilder',
@@ -249,14 +265,10 @@ export default {
       if (this.viewtype == 'iiif-rangestoryboard') {
         this.listoptions = [{'value': 'rangeurl', 'text': 'Range URL', 'selected': true}]
       }
-      this.booleanoptions = this.viewtype == 'iiif-annotation' ? ['hide_viewlarger', 'hide_fullobject', 'hide_tags', 'image_only', 'text_only', 'hide_tagcount', 'hide_beforeafter', 'table_view'] : ['autorun_onload',
-      'fullpage', 'toggleoverlay', 'controller', 'togglelayers', 'hide_tagcount', 'overlaynext', 'hide_annocontrols', 'hide_toolbar',
-      'hide_tagsbutton', 'hide_autorunbutton', 'hide_infobutton', 'hide_overlaybutton', 'hide_layersbutton', 'hide_nextbuttons', 'hide_fullscreenbutton', 'hide_shortcutbutton', 'hide_annotationtext', 'transcription', 'textfirst']
-      this.viewtype == 'iiif-multistoryboard' ? this.booleanoptions.push('matchclick') : ''
-      this.textsettings = this.viewtype == 'iiif-annotation' ? ['height', 'width'] : ['autorun_interval', 'mapmarker', 'tts', 'truncate_length', 'customid','imagecrop','title', 'startposition']
-      this.dropdowns = this.viewtype == 'iiif-annotation' ? [] : [{'field': 'fit', 'options': ['fill', 'horizontal']},
-        {'field': 'panorzoom', 'options': ['pan']}, {'field': 'textposition', 'options': ['top', 'bottom', 'right', 'left']},
-        {'field': 'startenddisplay', 'options': ['tags', 'info', 'transcription', 'keyboard']}, {'field': 'annoview', 'options': ['sidebyside', 'collapse']}, {'field': 'toolbarposition', 'options': ['bottom']}]
+      const viewtype = this.viewtype.replace('-', '');
+      this.booleanoptions = _.sortBy(booleanoptions[viewtype](), 'name');
+      this.textsettings = _.sortBy(freetext[viewtype](), 'name');
+      this.dropdowns = _.sortBy(dropdowns[viewtype](), 'name');
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
       this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [
@@ -290,6 +302,7 @@ export default {
       axios.post(this.apiurl, {'tag': this.tag, 'slug': this.apifilename})
       .then(function (response) {
         console.log(response);
+        alert(response.data.message)
       }).catch(function (error) {
         alert(error)
       });
@@ -428,7 +441,8 @@ export default {
       paramsettings['fullpage'] = true;
       params['settings'] = JSON.stringify(paramsettings);
       const host = window.location.protocol + "//" + location.hostname+(location.port ? ':'+location.port: '');
-      return `${host}${this.$router.resolve({ name: 'display', query: params}).href}`;
+      const display = this.env.NODE_ENV != 'flask' ? `${host}${this.$router.resolve({ name: 'display', query: params}).href}` : `https://ncsu-libraries.github.io/annona/tools/#/tag-builder${this.$router.resolve({ name: 'display', query: params}).href}`
+      return display;
     },
   }
 }
@@ -561,17 +575,18 @@ select {
 }
 
 .savebutton {
-  position: fixed;
-  right: 1em;
-  top: 5em;
+  position: relative;
   z-index: 400000;
 }
 
+.savebutton input {
+  max-width: 50%;
+}
 .savebutton button {
-  background-color: #4CAF50;
+  background-color:teal;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

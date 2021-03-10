@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "serveflask": "NODE_ENV=flask vue-cli-service serve --mode flask",
-    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/index.html ~/projects/githubflaskanno/templates/annonabuilder.html && cp dist/app.js ~/projects/githubflaskanno/static/app.js",
+    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/app.js ~/projects/githubflaskanno/static/app.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "vue-clipboards": "^1.3.0",
     "vue-color-picker-wheel": "^0.4.3",
     "vue-router": "^3.1.3",
+    "vue-tippy": "^4.8.0",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
