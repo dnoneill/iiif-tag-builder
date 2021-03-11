@@ -288,7 +288,7 @@ export default {
       this.manifesturl = params.manifesturl ? params.manifesturl : '';
       this.setDefaults();
       params.apiurl ? this.apiurl = params.apiurl : '';
-      params.settings ? this.settings = JSON.parse(params.settings) : '';
+      params.settings ? this.settings = _.merge(this.settings, JSON.parse(params.settings)) : '';
       params.props ? this.props = JSON.parse(params.props) : '';
       params.css ? this.css = JSON.parse(params.css) : '';
       this.buildTags();
