@@ -478,6 +478,7 @@ export default {
       return withoutEmpty;
     },
     updateRouter: function() {
+      console.log(this.$router)
       const css = this.removeEmpty(this.css);
       const settings = this.removeEmpty(this.settings);
       const props = this.removeEmpty(this.props);
