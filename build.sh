@@ -5,9 +5,9 @@ cp -r dist/* ../annona/docs/tools/
 cp /tmp/index.html ../annona/docs/tools/index.html
 rm /tmp/index.html
 cd ../annona/docs/tools
-git add .
-git commit -m "update annotation tools"
-git push -f 'https://github.com/ncsu-libraries/annona.git' main
+# git add .
+# git commit -m "update annotation tools"
+# git push -f 'https://github.com/ncsu-libraries/annona.git' main
 cd ~/projects/tag-builder-iiif
 git add -A
 git commit -m "update source code"
