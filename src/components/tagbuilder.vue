@@ -582,7 +582,7 @@ li {
   max-height: 50vh;
   overflow: scroll;
   text-align: center;
-  outline: 2px solid grey;
+  border: 2px solid grey;
   /* width: 16.6666%; */
 } 
 
