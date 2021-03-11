@@ -103,7 +103,7 @@ export default {
   ]
 },
   iiifmultistoryboard: function() {
-    var options = this.storyboardoptions();
+    var options = this.iiifstoryboard();
     options.push({
       'name': 'matchclick',
       'description': `When clicking overlays the default is the match
@@ -112,7 +112,7 @@ export default {
     })
   },
   iiifrangestoryboard: function() {
-    return this.storyboardoptions();
+    return this.iiifstoryboard();
   },
   iiifannotation: function() {
     return [

@@ -58,10 +58,10 @@ export default {
     ]
   },
     iiifmultistoryboard: function() {
-      return this.storyboardoptions()
+      return this.iiifstoryboard()
     },
     iiifrangestoryboard: function() {
-      return this.storyboardoptions();
+      return this.iiifstoryboard();
     },
     iiifannotation: function() {
       return [

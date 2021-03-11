@@ -3,21 +3,21 @@
     <div class="form" v-if="this.$route.path != '/display'">
     <button @click="closeFullpage" class="buttons closebutton" v-if="settings.fullpage && fullpage">Close <i class="fa fa-times"></i></button>
     <div class="examples" v-if="env.NODE_ENV != 'flask'">
-      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2Ffullbayeux-list.json&viewtype=iiif-storyboard&listtype=annotationlist&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%22%7D%5D,%22additionalinfo%22%3A%22%22,%22fit%22%3A%22horizontal%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%22,%22xywh%22%3A%22%22,%22image%22%3A%22%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2Ffullbayeux-list.json&viewtype=iiif-storyboard&manifesturl=&css=&settings=%7B%22fit%22%3A%22horizontal%22%7D&props='">
       Bayeux Example</a><br>
-      <a v-bind:href="baseurl + '#/tag-builder?url=https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json&viewtype=iiif-storyboard&listtype=annotationlist'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https://dnoneill.github.io/annotate/annotations/wh234bz9013-0001-list.json&viewtype=iiif-storyboard'">
       Example with tags</a><br>
-      <a v-bind:href="baseurl + '#/tag-builder?url=https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json&viewtype=iiif-storyboard&listtype=annotationlist'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https://dnoneill.github.io/annotate/annotations/ba-obj-722-conservation-list.json&viewtype=iiif-storyboard'">
       Example with layers</a><br>
-      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fproxy.php%3Fiiif%3DVan_Gogh_-_Weizenfeld_mit_Blick_auf_Arles.jpeg%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F131424-list.json&viewtype=iiif-storyboard&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22%3Ca%20href%3D%5C%5C%27https%3A%2F%2Fwww.wikidata.org%2Fwiki%2FQ4792194%5C%5C%27%3EView%20from%20Arles%3C%2Fa%3E%22,%22xywh%22%3A%22200,200,4750,6513%22,%22image%22%3A%22https%3A%2F%2Ftools.wmflabs.org%2Fzoomviewer%2Fproxy.php%3Fiiif%3DVan_Gogh_-_Weizenfeld_mit_Blick_auf_Arles.jpeg%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
       Example with custom layers (Van Gogh)</a><br>
-      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-storyboard&listtype=annotationlist&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22togglelayers%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22x-ray%22,%22xywh%22%3A%22%22,%22image%22%3A%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-storyboard&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22togglelayers%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%7B%22label%22%3A%22x-ray%22,%22xywh%22%3A%22%22,%22image%22%3A%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22,%22section%22%3A%22%22,%22rotation%22%3A%22%22%7D%5D,%22images%22%3A%5B%5D%7D'">
       Example with custom layers (x-ray image)</a><br>
-      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fncsu-libraries.github.io%2Fannona%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fannona%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22matchclick%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fncsu-libraries.github.io%2Fannona%2Fwebannotations%2Fmc00084-001-te0159-000-001-0001-list.json%3Bhttps%3A%2F%2Fncsu-libraries.github.io%2Fannona%2Fwebannotations%2Fua023-015-003-bx0002-004-026-list.json&viewtype=iiif-multistoryboard&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22,%22matchclick%22%3Atrue%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'">
       Multistoryboard Example</a><br>
-      <a href='#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-multistoryboard&listtype=annotationlists&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'>
+      <a href='#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Fannotations%2F04fbbb28-d5a7-4408-b7da-800c4e65eda3-list.json&viewtype=iiif-multistoryboard&manifesturl=&settings=%7B%22tagscolor%22%3A%5B%7B%22tagvalue%22%3A%22%22,%22color%22%3A%22%23add8e6%22%7D%5D,%22additionalinfo%22%3A%22%22,%22overlaycolor%22%3A%22%23add8e6%22,%22activecolor%22%3A%22%2390ee90%22%7D&props=%7B%22layers%22%3A%5B%5D,%22images%22%3A%5B%22https%3A%2F%2Fdlcs.io%2Fiiif-img%2F3%2F2%2F8034eb5b-9c90-4471-ad68-52124232ec0c%2Finfo.json%22%5D%7D&css=%7B%22.content%22%3A%7B%22font-size%22%3A%22%22%7D,%22.annotation%22%3A%7B%22width%22%3A%22%22,%22height%22%3A%22%22,%22margin%22%3A%22%22%7D%7D'>
       Multistoryboard Example with custom image</a><br>
-      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard&listtype=rangeurl'">
+      <a v-bind:href="baseurl + '#/tag-builder?url=https%3A%2F%2Fdnoneill.github.io%2Fannotate%2Franges%2Frange.json&viewtype=iiif-rangestoryboard'">
       Example with range. Storyboards have layers.</a><br>
     </div>
     <div class="requiredfields">
@@ -40,11 +40,6 @@
         <option value="iiif-multistoryboard">Multistoryboard Viewer</option>
         <option value="iiif-rangestoryboard">Range Storyboard</option>
       </select>
-      <select v-model="listtype" v-on:change="updateRouter()" v-if="this.listoptions.length > 0" aria-label="List type (annotation url/list, range url, etc.) dropdown">
-        <option v-for="option in listoptions" :value="option.value" v-bind:key="option.value">
-          {{ option.text }}
-        </option>
-      </select>
       <textarea aria-label="Annotation JSON to be used instead of annotation URL; Will not save in the URL parameters so it is unfortunately not shareable." type=text v-model="annotationtext" placeholder="Annotation JSON to be used instead of annotation URL; Will not save in the URL parameters so it is unfortunately not shareable." v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
       <div class="savebutton" v-if="tag && apiurl">
         <label for="savetoapi"><b>Filename:</b></label>
@@ -61,7 +56,7 @@
       <div v-for="option in booleanoptions" v-bind:key="option.name">
         <input type="checkbox" v-bind:id="option.name" v-bind:value="option.name" v-model="settings[option.name]" v-on:change="updateRouter()">
         <label v-bind:for="option">{{option.name}}
-          <button :content="option.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <button class="infobutton" :content="option.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
@@ -70,22 +65,44 @@
     <div class="groupings">
       <h2>Free Text fields</h2>
       <div v-for="setting in textsettings" v-bind:key="setting.name">
+        <label v-bind:for="setting.name">{{setting.name}}
+          <button class="infobutton" :content="setting.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
+        </label>
         <input v-model="settings[setting.name]" v-bind:placeholder="setting.name" v-bind:aria-label="setting.name" v-on:change="updateRouter()">
-        <button :content="setting.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
-          <i class="fas fa-info-circle"></i>
-        </button>
       </div>
       <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="updateRouter()" aria-label="websocket">
       <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
         <span v-for="(item, index) in additionalinfo" v-bind:key="index + '_additionalinfo'">
           <h3>Additional Info</h3>
-          <textarea v-bind:aria-label="'Additional Info ' + key + '; Shift+Enter creates a new line'" v-for="(value, key) in item" type=text v-model="additionalinfo[index][key]" v-bind:placeholder="'Additional Info ' + key + '; Shift+Enter creates a new line'" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+          <button class="infobutton" content="Allows the user to add additonal information to the info box; Requires both fields to be filled out to work. This will build a section with the title that is clickable and the user can click on to display the information." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
+          <div v-for="(value, key) in item" v-bind:key="key">
+          <label v-bind:for="key">{{key}}: </label>
+          <textarea v-bind:aria-label="'Additional Info ' + key + '; Shift+Enter creates a new line'" type=text v-model="additionalinfo[index][key]" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+          </div>
         </span>
       </span>
       <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
+        <h3>Layers 
+          <button class="infobutton" 
+          content="Allows the user to add image layers to the viewer. 
+          This will add images that can be placed on top of the base image."
+           v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
+        </h3>
         <div v-for="(layer, index) in props.layers" v-bind:key="index + '_layers'">
           <h4>Layer {{index+1}}</h4>
-          <input v-for="(value, key) in layer" v-model="props.layers[index][key]" v-bind:aria-label="'Layer ' + (index+1) + ' ' + key" v-bind:placeholder="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
+          <div v-for="(value, key) in layer" v-bind:key="key">
+          <label v-bind:for="key">Layer {{index+1}} {{key}} 
+            <span v-if="key == 'label' || key =='image'">(Required)</span>
+            <span v-else>(optional)</span>
+          </label>
+          <input v-model="props.layers[index][key]" v-bind:aria-label="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
+          </div>
           <button @click="deleteField('props', index, 'layers')" aria-label="delete layer">
             Delete Layer
           </button>
@@ -112,22 +129,33 @@
       <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
         <span v-if="style.icon">
         <input type="checkbox" v-bind:id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
-        <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">Hide <span v-html="style.icon"></span></label>
+        <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">
+          Hide <span v-html="style.icon"></span>
+        </label>
         </span>
         <span v-else-if="style.field" v-for="field in style.field" v-bind:key="field">
           <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
+          <button class="infobutton" :content="style.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
         </span>
+        
       </div>
-      <textarea aria-label="Free text CSS field. Add any css. Shift+Enter creates a new line" placeholder="Free text CSS field. Add any css. Shift+Enter creates a new line" type=text v-model="css['freetextcss']" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+      <div>
+        <textarea aria-label="Free text CSS field." placeholder="Free text CSS field. Add any css. Shift+Enter creates a new line" type=text v-model="css['freetextcss']" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+        <button class="infobutton" content="Add any css code. Shift+Enter creates a new line in the box." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <i class="fas fa-info-circle"></i>
+        </button>
+      </div>
     </div>
     <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
       <h2>Dropdowns</h2>
       <p>Choose from one of the options</p>
       <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
         <label v-bind:for="dropdown.field">{{dropdown.field}}
-          <button :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
-          <i class="fas fa-info-circle"></i>
-        </button>
+          <button class="infobutton" :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
         </label>
         <select v-bind:id="dropdown.field" v-on:change="updateRouter()" v-model="settings[dropdown.field]">
           <option value=""></option>
@@ -138,12 +166,19 @@
     <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
       <h2>Color Choosers</h2>
       <div v-for="colorfield in colorpickers" v-bind:key="colorfield.field">
-        <span class="headerblock">{{colorfield.field}}</span>
+        <label v-bind:for="colorfield.field">{{colorfield.field}}
+          <button class="infobutton" :content="colorfield.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+            <i class="fas fa-info-circle"></i>
+          </button>
+        </label>
         <color-picker v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="updateRouter()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
       </div>
     </div>
     <div class="groupings">
       <h2>Tag Color Coding</h2>
+      <button class="infobutton" content="Color code overlays based on tag value." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <i class="fas fa-info-circle"></i>
+      </button>
       <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
         <input v-model="settings.tagscolor[index].tagvalue" placeholder="tag field" v-bind:aria-label="'tag field ' + index+1" v-on:change="updateRouter()">
         <color-picker v-model="settings.tagscolor[index].color" v-on:color-change="updateRouter()" :width=100 :height=100 v-bind:startColor="colorpickers[0].default" ></color-picker>
@@ -182,6 +217,8 @@ import axios from 'axios';
 import booleanoptions from '../assets/booleanoptions.js'
 import freetext from '../assets/freetext.js'
 import dropdowns from '../assets/dropdowns.js'
+import cssfields from '../assets/cssfields.js'
+
 var _ = require('lodash');
 
 export default {
@@ -197,7 +234,6 @@ export default {
       'manifesturl': '',
       'viewtype': '',
       'props': {},
-      'listoptions': [],
       'listtype': '',
       'settings': {'tagscolor': [{'tagvalue': '', 'color': ''}]},
       'tag': '',
@@ -206,7 +242,8 @@ export default {
       'textsettings': [],
       'dropdowns': [],
       "overlay": "",
-      "colorpickers": [{'field': 'overlaycolor', 'default': '#add8e6'}, {'field' :'activecolor', 'default': '#90ee90'}],
+      "colorpickers": [{'field': 'overlaycolor', 'default': '#add8e6', 'description': `Color of overlays when the annotation does not have a tag.`}, 
+        {'field' :'activecolor', 'default': "#90ee90", 'description': `Color that outlines an overlay when the annotation is clicked.`}],
       "additionalinfo": [{'title': '', 'content': ''}],
       "cssfields": [],
       "css": {},
@@ -217,12 +254,20 @@ export default {
     }
   },
   created() {
+    console.log(this.colorpickers)
     shared.redirect();
     this.baseurl = process.env['BASE_URL'];
   },
   watch: {
      '$route.query': {
        handler: function(newVal, oldVal) {
+         if (this.viewtype == 'iiif-multistoryboard'){
+        this.listtype = 'annotationurls';
+        } else if (this.viewtype == 'iiif-rangestorybord'){
+          this.listtype = 'rangeurl';
+        } else {
+          this.listtype = 'annotationurl';
+        } 
          if (JSON.stringify(newVal) != JSON.stringify(oldVal)) {
            this.setParams();
          }
@@ -238,7 +283,6 @@ export default {
     },
     setParams: function() {
       var params = this.$route.query;
-      this.listtype = params.listtype ? params.listtype : '';
       this.url = params.url ? params.url.split(';') : [];
       this.urllength = this.url.length > 1 ? this.url.length : 1;
       this.viewtype = params.viewtype ? params.viewtype : '';
@@ -256,36 +300,14 @@ export default {
     },
     setDefaults: function() {
       this.tag = '';
-      if (this.viewtype == 'iiif-annotation' || this.viewtype == 'iiif-storyboard') {
-        this.listoptions = [{'value': 'annotationlist', 'text': 'Annotation List', 'selected': true}, {'value': 'annotationurl', 'text': 'Single Annotation'}]
-      }
-      if (this.viewtype == 'iiif-multistoryboard') {
-        this.listoptions = [{'value': 'annotationlists', 'text': 'Annotation List', 'selected': true}, {'value': 'annotationurls', 'text': 'Single Annotation'}]
-      }
-      if (this.viewtype == 'iiif-rangestoryboard') {
-        this.listoptions = [{'value': 'rangeurl', 'text': 'Range URL', 'selected': true}]
-      }
       const viewtype = this.viewtype.replace('-', '');
       this.booleanoptions = _.sortBy(booleanoptions[viewtype](), 'name');
       this.textsettings = _.sortBy(freetext[viewtype](), 'name');
       this.dropdowns = _.sortBy(dropdowns[viewtype](), 'name');
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
-      this.cssfields = this.viewtype == 'iiif-annotation' ? [{'tag': '#content', 'field': ['font-size']}, {'tag': '#tags', 'field': ['font-size']}] : [
-        {'tag': '#zoomInButton', 'icon':'<i class="fas fa-search-plus"></i>'},
-        {'tag': '#zoomOutButton', 'icon':'<i class="fas fa-search-minus"></i>'},{'tag': '#homeZoomButton', 'icon':'<i class="fas fa-home"></i>'},
-        {'tag': '.fullcontent', 'icon':'Content Box'},
-        {'tag': '.content', 'field': ['font-size']}, {'tag': '.annotation', 'field': ['width', 'height', 'margin']}]
-      this.css = {}
-      for (var cf=0; cf<this.cssfields.length; cf++){
-        var element = this.cssfields[cf]
-        element.field ? this.css[element.tag] = {} : ''
-        if (element.field){
-          for (var ef=0; ef<element.field.length; ef++){
-            this.css[element.tag][element.field[ef]] = '';
-          }
-        }
-      }
+      this.cssfields = cssfields[viewtype]();
+      this.css = this.parseCSS(this.cssfields);
     },
     updateListType: function() {
       this.props = {};
@@ -294,8 +316,6 @@ export default {
       this.url = this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url : [this.url[0]];
       this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url.length : 1;
       this.setDefaults();
-      var keepexisting = this.listoptions.filter(element => element.value == this.listtype);
-      this.listtype = keepexisting.length > 0 ? this.listtype : this.listoptions[0]['value'];
       this.updateRouter();
     },
     savetoapi: function(){
@@ -319,7 +339,7 @@ export default {
           for (var tc=0; tc<fieldvalue.length; tc++){
             var fields = fieldvalue[tc];
             if (fields['tagvalue'] != '') {
-              tagscolordict[fields['tagvalue'].trim()] = fields['color'];
+              tagscolordict[this.tagToClass(fields['tagvalue'].trim())] = fields['color'];
             }
           }
           if (Object.keys(tagscolordict).length > 0){
@@ -337,6 +357,14 @@ export default {
     closeFullpage: function() {
       this.fullpage = false;
       document.getElementsByTagName(this.viewtype)[0].childNodes[0].setAttribute("class", "storyboard_viewer");
+    },
+    tagToClass: function(tag) {
+      var regex = "-?[_a-zA-Z]+[_a-zA-Z0-9-]*";
+      if (tag.length > 0){
+        return [...`${tag.toLowerCase()}`.matchAll(regex)].join("");
+      } else {
+        return ''
+      }
     },
     getAdditionalInfo: function() {
       var divs = '';
@@ -386,16 +414,82 @@ export default {
       style = style != '' ? '<style>' + style + '</style>' : style;
       return style;
     },
+    parseCSS: function(inputfields) {
+      var returnvalue = {}
+      for (var cf=0; cf<inputfields.length; cf++){
+        var element = inputfields[cf];
+        element.field ? returnvalue[element.tag] = {} : ''
+        if (element.field){
+          for (var ef=0; ef<element.field.length; ef++){
+            returnvalue[element.tag][element.field[ef]] = '';
+          }
+        }
+      }
+      return returnvalue;
+    },
+    removeEmpty: function(dictionary) {
+      var withoutEmpty = {}
+      for (var key in dictionary){
+        if (dictionary[key].constructor.name == 'String'){
+          if (dictionary[key]) {
+            if (key == 'activecolor' && dictionary[key] != this.defaultactivecolor){
+              withoutEmpty[key] = dictionary[key];
+            } else if (key == 'overlaycolor' && dictionary[key] != this.defaultoverlaycolor) {
+              withoutEmpty[key] = dictionary[key];
+            } else if (key != 'activecolor' && key !='overlaycolor'){
+              withoutEmpty[key] = dictionary[key];
+            }   
+          }
+        } else if (dictionary[key].constructor.name == 'Array'){
+          if (dictionary[key].length > 0){
+              if (key == 'tagscolor'){
+                var tagscolorlist = []
+                for (var ta=0; ta<dictionary[key].length; ta++){
+                  if (dictionary[key][ta]['tagvalue'] && dictionary[key][ta]['tagvalue']){
+                    tagscolorlist.push(dictionary[key][ta]);
+                  }
+                }
+                if (tagscolorlist.length > 0){
+                  withoutEmpty[key] = tagscolorlist;
+                }
+              } else if (key == 'layers') {
+                var layerslist = []
+                for (var la=0; la<dictionary[key].length; la++){
+                  if (dictionary[key][la]['image'] && dictionary[key][la]['label']){
+                    layerslist.push(dictionary[key][la]);
+                  }
+                }
+                if (layerslist.length > 0){
+                  withoutEmpty[key] = layerslist;
+                }
+              }else {
+                withoutEmpty[key] = dictionary[key];
+              }         
+          }
+        } else {
+          for (var item in dictionary[key]){
+            if (dictionary[key][item]){
+              withoutEmpty[key] = withoutEmpty[key] ? withoutEmpty[key] : {}
+              withoutEmpty[key][item] = dictionary[key][item]
+            }
+          }
+        }
+      }
+      withoutEmpty = Object.keys(withoutEmpty).length == 0 ? '' : JSON.stringify(withoutEmpty);
+      return withoutEmpty;
+    },
     updateRouter: function() {
+      const css = this.removeEmpty(this.css);
+      const settings = this.removeEmpty(this.settings);
+      const props = this.removeEmpty(this.props);
       var params = {
           url: this.url.join(";"),
           viewtype: this.viewtype,
-          listtype: this.listtype,
           manifesturl: this.manifesturl,
           apiurl: this.apiurl,
-          settings: JSON.stringify(this.settings),
-          props: JSON.stringify(this.props),
-          css: JSON.stringify(this.css)
+          css: css,
+          settings: settings,
+          props: props
       }
       if (JSON.stringify(this.$route.query) != JSON.stringify(params)){
         this.$router.push({
@@ -407,7 +501,7 @@ export default {
       }
     },
     buildTags: function() {
-      if (this.url.length > 0 && this.listoptions.length>0 || this.annotationtext.length > 0 && this.listoptions.length>0){
+      if (this.url.length > 0  || this.annotationtext.length > 0 ){
         var scriptTag;
         if (this.annotationtext) {
           scriptTag = shared.createScriptTag(this.annotationtext);
@@ -432,6 +526,12 @@ export default {
     }
   },
   computed: {
+    defaultoverlaycolor: function() {
+      return this.colorpickers.filter(elem => elem['field'] == 'overlaycolor')[0]['default'];
+    },
+    defaultactivecolor: function() {
+      return this.colorpickers.filter(elem => elem['field'] == 'activecolor')[0]['default'];
+    },
     displayURL: function() {
       const params = this.$route.query;
       var paramsettings = {}
@@ -470,16 +570,19 @@ li {
   display: inline-flex;
   text-align: center;
   width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
 }
 
 
 
-.groupings {
+ .groupings {
   height: auto;
   max-height: 50vh;
   overflow: scroll;
-  width: 16.6666%;
-}
+  text-align: center;
+  /* width: 16.6666%; */
+} 
 
 .groupings > * {
   width: 100%;
@@ -487,15 +590,15 @@ li {
 }
 
 .groupings input:not([type='checkbox']), textarea {
-  width: 95%!important;
+  width: 70%!important;
 }
 .headerblock {
   display:block;
   font-weight: bold;
 
 }
-.iiif-annotation .groupings {
-  width: 50%;
+.iiif-annotation#settings {
+  grid-template-columns: auto auto auto auto;
 }
 
 .tagfield {
@@ -604,4 +707,13 @@ hr {
   display: none;
 }
 
+.infobutton {
+  background: none;
+  color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 </style>
