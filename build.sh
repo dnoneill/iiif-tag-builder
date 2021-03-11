@@ -1,10 +1,10 @@
 npm run build
-rm -r ../iiif-annotation/docs/tools/*
-cp -r dist/* ../iiif-annotation/docs/tools/
-(echo "---"; echo "layout: page"; echo "title: Annotation Tools"; echo "---"; cat ../iiif-annotation/docs/tools/index.html) > /tmp/index.html
-cp /tmp/index.html ../iiif-annotation/docs/tools/index.html
+rm -r ../annona/docs/tools/*
+cp -r dist/* ../annona/docs/tools/
+(echo "---"; echo "layout: page"; echo "title: Annotation Tools"; echo "---"; cat ../annona/docs/tools/index.html) > /tmp/index.html
+cp /tmp/index.html ../annona/docs/tools/index.html
 rm /tmp/index.html
-cd ../iiif-annotation/docs/tools
+cd ../annona/docs/tools
 git add .
 git commit -m "update annotation tools"
 git push -f 'https://github.com/ncsu-libraries/annona.git' main
