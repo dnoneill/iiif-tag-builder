@@ -300,13 +300,15 @@ export default {
     setDefaults: function() {
       this.tag = '';
       const viewtype = this.viewtype.replace('-', '');
-      this.booleanoptions = _.sortBy(booleanoptions[viewtype](), 'name');
-      this.textsettings = _.sortBy(freetext[viewtype](), 'name');
-      this.dropdowns = _.sortBy(dropdowns[viewtype](), 'name');
+      if (viewtype){
+        this.booleanoptions = _.sortBy(booleanoptions[viewtype](), 'name');
+        this.textsettings = _.sortBy(freetext[viewtype](), 'name');
+        this.dropdowns = _.sortBy(dropdowns[viewtype](), 'name');
+        this.cssfields = cssfields[viewtype]();
+        this.css = this.parseCSS(this.cssfields);
+      }
       this.props.layers = this.viewtype == 'iiif-storyboard' ? [{'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''}] : [];
       this.props.images = this.viewtype == 'iiif-multistoryboard' ?  [''] : [];
-      this.cssfields = cssfields[viewtype]();
-      this.css = this.parseCSS(this.cssfields);
     },
     updateListType: function() {
       this.props = {};
