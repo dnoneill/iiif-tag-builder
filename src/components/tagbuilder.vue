@@ -254,7 +254,6 @@ export default {
     }
   },
   created() {
-    console.log(this.colorpickers)
     shared.redirect();
     this.baseurl = process.env['BASE_URL'];
   },
