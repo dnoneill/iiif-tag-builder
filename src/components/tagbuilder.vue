@@ -22,7 +22,7 @@
     </div>
     <div class="requiredfields">
       <span v-for="(n, index) in urllength " v-bind:key="index + '_urls'">
-        <input v-bind:aria-label="'Annotation URL ' + index" v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateRouter();">
+        <input v-bind:aria-label="'Annotation URL ' + index" v-model="url[index]" value="" placeholder="Annotation URL " v-bind:key="index + '_link'" v-on:change="updateListType()">
         <button @click="deleteField('url', index, 'urllength')" v-if="index != 0">
           Delete Annotation URL
         </button>
@@ -32,7 +32,7 @@
           Add Annotation URL
         </button>
       </span>
-      <input v-model="manifesturl" id="manifesturl" v-on:change="updateRouter();" aria-label="Manifest URL (Optional)" placeholder="Manifest URL (Optional)">
+      <input v-model="manifesturl" id="manifesturl" v-on:change="updateListType();" aria-label="Manifest URL (Optional)" placeholder="Manifest URL (Optional)">
       <select v-model="viewtype" v-on:change="updateListType()" aria-label="dropdown for storyboard, imageviewer, multistoryboard, range storyboard">
         <option disabled value="">Please select one</option>
         <option value="iiif-storyboard">Storyboard</option>
@@ -288,7 +288,7 @@ export default {
       this.manifesturl = params.manifesturl ? params.manifesturl : '';
       this.setDefaults();
       params.apiurl ? this.apiurl = params.apiurl : '';
-      params.settings ? this.settings = _.merge(this.settings, JSON.parse(params.settings)) : '';
+      this.settings = params.settings ? _.merge({'tagscolor': [{'tagvalue': '', 'color': ''}]}, JSON.parse(params.settings)) : {'tagscolor': [{'tagvalue': '', 'color': ''}]};
       params.props ? this.props = JSON.parse(params.props) : '';
       params.css ? this.css = JSON.parse(params.css) : '';
       this.buildTags();
