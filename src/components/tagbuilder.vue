@@ -301,6 +301,8 @@ export default {
       this.tag = '';
       const viewtype = this.viewtype.replace('-', '');
       if (viewtype){
+        console.log(viewtype)
+        console.log(booleanoptions)
         this.booleanoptions = _.sortBy(booleanoptions[viewtype](), 'name');
         this.textsettings = _.sortBy(freetext[viewtype](), 'name');
         this.dropdowns = _.sortBy(dropdowns[viewtype](), 'name');
