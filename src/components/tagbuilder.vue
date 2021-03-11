@@ -300,9 +300,7 @@ export default {
     setDefaults: function() {
       this.tag = '';
       const viewtype = this.viewtype.replace('-', '');
-      if (viewtype){
-        console.log(viewtype)
-        console.log(booleanoptions)
+      if (this.viewtype){
         this.booleanoptions = _.sortBy(booleanoptions[viewtype](), 'name');
         this.textsettings = _.sortBy(freetext[viewtype](), 'name');
         this.dropdowns = _.sortBy(dropdowns[viewtype](), 'name');
@@ -584,6 +582,7 @@ li {
   max-height: 50vh;
   overflow: scroll;
   text-align: center;
+  outline: 2px solid grey;
   /* width: 16.6666%; */
 } 
 
