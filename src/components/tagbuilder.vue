@@ -431,7 +431,7 @@ export default {
     removeEmpty: function(dictionary) {
       var withoutEmpty = {}
       for (var key in dictionary){
-        if (dictionary[key].constructor.name == 'String'){
+        if (dictionary[key].constructor.name == 'String' || dictionary[key].constructor.name == 'Boolean'){
           if (dictionary[key]) {
             if (key == 'activecolor' && dictionary[key] != this.defaultactivecolor){
               withoutEmpty[key] = dictionary[key];

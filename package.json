@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "serveflask": "NODE_ENV=flask vue-cli-service serve --mode flask",
-    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/app.js ~/projects/githubflaskanno/static/app.js",
+    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/app.js ~/heroku/annonatate/static/app.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
