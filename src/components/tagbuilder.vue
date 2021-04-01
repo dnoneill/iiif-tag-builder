@@ -234,7 +234,6 @@ export default {
       'manifesturl': '',
       'viewtype': '',
       'props': {},
-      'listtype': '',
       'settings': {'tagscolor': [{'tagvalue': '', 'color': ''}]},
       'tag': '',
       'annotationtext':'',
@@ -260,13 +259,6 @@ export default {
   watch: {
      '$route.query': {
        handler: function(newVal, oldVal) {
-         if (this.viewtype == 'iiif-multistoryboard'){
-        this.listtype = 'annotationurls';
-        } else if (this.viewtype == 'iiif-rangestorybord'){
-          this.listtype = 'rangeurl';
-        } else {
-          this.listtype = 'annotationurl';
-        } 
          if (JSON.stringify(newVal) != JSON.stringify(oldVal)) {
            this.setParams();
          }
@@ -513,8 +505,14 @@ export default {
         } 
         var additionalinfo = this.getAdditionalInfo();
         var getcss = this.buildCSS();
+        var urlprop = 'annotationurl'
+        if (this.viewtype == 'iiif-multistoryboard'){
+          urlprop = 'annotationurls';
+        } else if (this.viewtype == 'iiif-rangestoryboard'){
+          urlprop = 'rangeurl';
+        }
         var tag = `${additionalinfo ? additionalinfo + '\n' : ''}
-          ${getcss ? getcss + '\n' : ''}<${this.viewtype} ${this.listtype}='${this.url.join(";")}'`;
+          ${getcss ? getcss + '\n' : ''}<${this.viewtype} ${urlprop}='${this.url.join(";")}'`;
         var settings = this.getsettings();
         var propstring = this.getpropstring();
         this.manifesturl ? tag += ` manifesturl='${this.manifesturl}'` : '';
