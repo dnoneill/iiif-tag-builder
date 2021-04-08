@@ -107,7 +107,7 @@
             Delete Layer
           </button>
         </div>
-        <button aria-label="add additional layer" @click="addListField('props', 'layers', {'label':'', 'xywh': '', 'image':'', 'section':'', 'rotation': ''})">
+        <button aria-label="add additional layer" @click="addListField('props', 'layers', {'label':'label placeholder', 'image':'image placeholder', 'xywh': '', 'section':'', 'rotation': ''})">
         Add Additional Layer
         </button>
       </span>
@@ -119,7 +119,7 @@
             Delete Image
           </button>
         </div>
-        <button @click="addListField('props', 'images', '')">
+        <button @click="addListField('props', 'images', 'image placeholder')">
         Add Additional Image
         </button>
       </span>
@@ -186,7 +186,7 @@
         Delete Tag
         </button>
       </div>
-      <button @click="addListField('settings', 'tagscolor', {'tagvalue': '', 'color': ''})">
+      <button @click="addListField('settings', 'tagscolor', {'tagvalue': 'tag placeholder', 'color': defaultoverlaycolor})">
       New Tag
       </button>
     </div>
@@ -234,7 +234,7 @@ export default {
       'manifesturl': '',
       'viewtype': '',
       'props': {},
-      'settings': {'tagscolor': [{'tagvalue': '', 'color': ''}]},
+      'settings': {'tagscolor': [{'tagvalue': '', 'color': this.defaultoverlaycolor}]},
       'tag': '',
       'annotationtext':'',
       'booleanoptions': [],
@@ -331,7 +331,7 @@ export default {
           var tagscolordict = {}
           for (var tc=0; tc<fieldvalue.length; tc++){
             var fields = fieldvalue[tc];
-            if (fields['tagvalue'] != '') {
+            if (fields['tagvalue'] != '' && fields['tagvalue'].indexOf('placeholder') == -1) {
               tagscolordict[this.tagToClass(fields['tagvalue'].trim())] = fields['color'];
             }
           }
@@ -378,7 +378,7 @@ export default {
       var propstring = ''
       for (var key in this.props) {
         var value = this.props[key];
-        value = key == 'images' ? value.join(";") : value;
+        value = key == 'images' ? value.filter(elem => elem.indexOf('placeholder') == -1).join(";") : value.filter(element => element.label.indexOf('placeholder') == -1);
         var hasvalue = key == 'layers' && value.length > 0 ? value[0].image :  key == 'images' && value.length > 0 ? value [0]: value;
         value = key == 'layers' ? JSON.stringify(value).replace(/'/g, '\\"') : value;
         if (hasvalue && hasvalue.length > 0){

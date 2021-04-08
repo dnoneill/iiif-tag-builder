@@ -74,14 +74,8 @@ export default {
         }
       ]
   },
-    iiifmultistoryboard: function() {
-      var options = this.iiifstoryboard();
-      options.push({
-        'name': 'matchclick',
-        'description': `When clicking overlays the default is the match
-         the position on the image. 
-         If you would like to match position in annotation set this to true.`
-      })
+  iiifmultistoryboard: function() {
+      return this.iiifstoryboard();
     },
     iiifrangestoryboard: function() {
       return this.iiifstoryboard();

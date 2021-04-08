@@ -110,6 +110,7 @@ export default {
        the position on the image. 
        If you would like to match position in annotation set this to true.`
     })
+    return options;
   },
   iiifrangestoryboard: function() {
     return this.iiifstoryboard();
