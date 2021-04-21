@@ -128,10 +128,10 @@
       <h2>CSS</h2>
       <div v-for="(style, index) in cssfields" v-bind:key="index + '_css'">
         <span v-if="style.icon">
-        <input type="checkbox" v-bind:id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
-        <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">
-          Hide <span v-html="style.icon"></span>
-        </label>
+          <input type="checkbox" v-bind:id="style.tag" v-model="css[style.tag]" v-on:change="updateRouter()">
+          <label v-bind:for="style.tag" v-bind:aria-label="'hide ' + style.tag">
+            Hide <span v-html="style.icon"></span>
+          </label>
         </span>
         <span v-else-if="style.field" v-for="field in style.field" v-bind:key="field">
           <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
@@ -282,7 +282,7 @@ export default {
       params.apiurl ? this.apiurl = params.apiurl : '';
       this.settings = params.settings ? _.merge({'tagscolor': [{'tagvalue': '', 'color': ''}]}, JSON.parse(params.settings)) : {'tagscolor': [{'tagvalue': '', 'color': ''}]};
       params.props ? this.props = JSON.parse(params.props) : '';
-      params.css ? this.css = JSON.parse(params.css) : '';
+      params.css ? this.css = Object.assign(this.css, JSON.parse(params.css)) : '';
       this.buildTags();
     },
     addListField: function(dict, dictfield, data) {

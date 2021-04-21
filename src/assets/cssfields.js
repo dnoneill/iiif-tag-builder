@@ -17,6 +17,11 @@ export default {
               "description": `Hide the Home Button`
             },
             {
+              "icon": "<i class='fa fa-arrow-left'></i><i class='fa fa-arrow-right'></i> in content box",
+              "tag": "#previousButton.annocontrols_button, #nextButton.annocontrols_button",
+              "description": `Hide the Previous and Next buttons in the annotation text box only/`
+            },
+            {
               "icon": "Content Box",
               "tag": ".fullcontent",
               "description": `Hide the annotation content box.`
