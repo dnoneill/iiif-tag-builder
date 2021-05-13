@@ -46,6 +46,17 @@
         <input id="savetoapi" v-model="apifilename" placeholder="filename for created file">
         <button v-on:click="savetoapi()">Save</button>
       </div>
+      <div class="savecollection" v-if="tag && collectionurl && viewtype != 'iiif-rangestoryboard'">
+        <label for="savecollection"><b>Collection:</b></label>
+        <select v-model="savecollection['title']" aria-label="collection">
+          <option value="">New Collection</option>
+          <option v-for="collection in parsecollections" v-bind:key="collection" v-bind:value="collection">{{collection}}</option>
+        </select>
+        <input v-model="savecollection['annotitle']" placeholder="Annotation title" aria-label="annotation title">
+        <input v-model="savecollection['description']" placeholder="Annotation description" aria-label="annotation title">
+        <input v-model="savecollection['thumbnail']" placeholder="Annotation Thumbnail" aria-label="annotation title">
+        <button v-on:click="savetocollection()">Add to Collection</button>
+      </div>
     </div>
     <button @click="updateListType" class="buttons clearbutton" v-if="viewtype">Clear all settings</button>
 
@@ -55,8 +66,8 @@
       <h2>Boolean Settings</h2>
       <div v-for="option in booleanoptions" v-bind:key="option.name">
         <input type="checkbox" v-bind:id="option.name" v-bind:value="option.name" v-model="settings[option.name]" v-on:change="updateRouter()">
-        <label v-bind:for="option">{{option.name}}
-          <button class="infobutton" :content="option.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+        <label v-bind:for="option.name">{{option.name}}
+          <button v-bind:aria-label="option.name + ' description'" class="infobutton" :content="option.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
@@ -66,28 +77,29 @@
       <h2>Free Text fields</h2>
       <div v-for="setting in textsettings" v-bind:key="setting.name">
         <label v-bind:for="setting.name">{{setting.name}}
-          <button class="infobutton" :content="setting.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <button class="infobutton" :content="setting.description" v-bind:aria-label="setting.name + ' description'" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
-        <input v-model="settings[setting.name]" v-bind:placeholder="setting.name" v-bind:aria-label="setting.name" v-on:change="updateRouter()">
+        <input v-bind:id="setting.name" v-model="settings[setting.name]" v-bind:placeholder="setting.name" v-bind:aria-label="setting.name" v-on:change="updateRouter()">
       </div>
       <input v-model="props['ws']" placeholder="websocket" v-if="viewtype && viewtype != 'iiif-annotation'"  v-on:change="updateRouter()" aria-label="websocket">
       <span id="additionalinfo" v-if="viewtype && viewtype != 'iiif-annotation'">
         <span v-for="(item, index) in additionalinfo" v-bind:key="index + '_additionalinfo'">
           <h3>Additional Info</h3>
-          <button class="infobutton" content="Allows the user to add additonal information to the info box; Requires both fields to be filled out to work. This will build a section with the title that is clickable and the user can click on to display the information." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <button class="infobutton" aria-label="about additional info feature" content="Allows the user to add additonal information to the info box; Requires both fields to be filled out to work. This will build a section with the title that is clickable and the user can click on to display the information." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
           <div v-for="(value, key) in item" v-bind:key="key">
           <label v-bind:for="key">{{key}}: </label>
-          <textarea v-bind:aria-label="'Additional Info ' + key + '; Shift+Enter creates a new line'" type=text v-model="additionalinfo[index][key]" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
+          <textarea v-bind:id="key" v-bind:aria-label="'Additional Info ' + key + '; Shift+Enter creates a new line'" type=text v-model="additionalinfo[index][key]" v-bind:key="key" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
           </div>
         </span>
       </span>
       <span id="additionalinfo" v-if="viewtype && viewtype == 'iiif-storyboard'">
         <h3>Layers 
           <button class="infobutton" 
+          aria-label="about layer feature"
           content="Allows the user to add image layers to the viewer. 
           This will add images that can be placed on top of the base image."
            v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
@@ -101,7 +113,7 @@
             <span v-if="key == 'label' || key =='image'">(Required)</span>
             <span v-else>(optional)</span>
           </label>
-          <input v-model="props.layers[index][key]" v-bind:aria-label="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
+          <input v-bind:id="key" v-model="props.layers[index][key]" v-bind:aria-label="'Layer ' + (index+1) + ' ' + key" v-bind:key="key" v-on:change="updateRouter()">
           </div>
           <button @click="deleteField('props', index, 'layers')" aria-label="delete layer">
             Delete Layer
@@ -135,7 +147,7 @@
         </span>
         <span v-else-if="style.field" v-for="field in style.field" v-bind:key="field">
           <input v-if="field && style.tag" v-bind:aria-label="style.tag + '(css class/tag) ' + field + '(css field)'" v-bind:placeholder="style.tag + ' ' + field" v-model="css[style.tag][field]" v-bind:id="style.tag + ' ' + field" v-on:change="updateRouter()">
-          <button class="infobutton" :content="style.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <button class="infobutton" v-bind:aria-label="'about' + style.tag + 'feature'" :content="style.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </span>
@@ -143,7 +155,7 @@
       </div>
       <div>
         <textarea aria-label="Free text CSS field." placeholder="Free text CSS field. Add any css. Shift+Enter creates a new line" type=text v-model="css['freetextcss']" v-on:keyup.enter.exact="buildTags()" @keydown.enter.exact.prevent/>
-        <button class="infobutton" content="Add any css code. Shift+Enter creates a new line in the box." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+        <button class="infobutton" aria-label="About free text css feature" content="Add any css code. Shift+Enter creates a new line in the box." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
           <i class="fas fa-info-circle"></i>
         </button>
       </div>
@@ -153,7 +165,7 @@
       <p>Choose from one of the options</p>
       <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
         <label v-bind:for="dropdown.field">{{dropdown.field}}
-          <button class="infobutton" :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <button class="infobutton" v-bind:aria-label="'about' + dropdown.field + 'feature'" :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
@@ -167,16 +179,16 @@
       <h2>Color Choosers</h2>
       <div v-for="colorfield in colorpickers" v-bind:key="colorfield.field">
         <label v-bind:for="colorfield.field">{{colorfield.field}}
-          <button class="infobutton" :content="colorfield.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+          <button class="infobutton" v-bind:aria-label="'about' + colorfield.field + 'feature'" :content="colorfield.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
-        <color-picker v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="updateRouter()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
+        <color-picker v-bind:id="colorfield.field" v-model="settings[colorfield.field]" v-if="viewtype && viewtype != 'iiif-annotation'" v-on:color-change="updateRouter()" v-bind:startColor="colorfield.default" :width=100 :height=100></color-picker>
       </div>
     </div>
     <div class="groupings">
       <h2>Tag Color Coding</h2>
-      <button class="infobutton" content="Color code overlays based on tag value." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+      <button class="infobutton" aria-label="about tag color coding feature" content="Color code overlays based on tag value." v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
           <i class="fas fa-info-circle"></i>
       </button>
       <div v-for="(n, index) in settings.tagscolor" v-bind:key="index + '_tagscolor'">
@@ -226,12 +238,13 @@ export default {
   components: {
     ColorPicker
   },
-  props: ['apiurl'],
+  props: ['apiurl', 'collectionurl', 'collections'],
   data: function() {
     return {
       'url': [],
       'apifilename': '',
       'manifesturl': '',
+      'savecollection': {'title': '', 'annotitle': '', 'description': '', 'thumbnail': ''},
       'viewtype': '',
       'props': {},
       'settings': {'tagscolor': [{'tagvalue': '', 'color': this.defaultoverlaycolor}]},
@@ -254,6 +267,7 @@ export default {
   },
   created() {
     shared.redirect();
+    this.collections ? this.parsecollections = JSON.parse(this.collections) : '';
     this.baseurl = process.env['BASE_URL'];
   },
   watch: {
@@ -310,6 +324,24 @@ export default {
       this.url.length > 1 && this.viewtype == 'iiif-multistoryboard' ? this.url.length : 1;
       this.setDefaults();
       this.updateRouter();
+    },
+    savetocollection: function() {
+      const data = {'add': true, 'annotations': [{'board': this.tag, 'description': this.savecollection['description'],'thumbnail': this.savecollection['thumbnail'], 'title': this.savecollection['annotitle'], 'url': this.url.join(';'), 'viewtype': this.viewtype, 'annotation': ''}], 'title': this.savecollection['title']}
+      if (this.annotationtext){
+        data['annotations'][0]['annotation'] = this.annotationtext;
+        data['annotations'][0]['board'] = this.tag.split('<\/script>')[1];
+      }
+      if (this.savecollection['title']){
+      axios.post(this.collectionurl, data)
+      .then(function (response) {
+        console.log(response);
+        alert('Success!')
+      }).catch(function (error) {
+        alert(error)
+      });
+      } else {
+        location.href = `${this.collectionurl}?tag=${data['annotations'][0]['board']}&viewtype=${this.viewtype}&url=${this.url.join(';')}&desc=${this.savecollection['description']}&annotitle=${this.savecollection['annotitle']}&annotation=${this.annotationtext}`;
+      }
     },
     savetoapi: function(){
       axios.post(this.apiurl, {'tag': this.tag, 'slug': this.apifilename})
@@ -494,7 +526,7 @@ export default {
       }
     },
     buildTags: function() {
-      if (this.url.length > 0  || this.annotationtext.length > 0 ){
+      if ((this.url.length > 0  || this.annotationtext.length > 0) && this.viewtype != ''){
         var scriptTag;
         if (this.annotationtext) {
           scriptTag = shared.createScriptTag(this.annotationtext);

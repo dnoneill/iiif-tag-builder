@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-import FlaskApp from './FlaskApp.vue'
 import VueRouter from 'vue-router'
 import tagbuilder from './components/tagbuilder.vue'
 import index from './components/index.vue'
-
+import 'document-register-element/build/document-register-element';
+import vueCustomElement from 'vue-custom-element'
 import VueClipboards from 'vue-clipboards';
 import VueTippy, { TippyComponent } from "vue-tippy";
 
@@ -34,10 +34,9 @@ const router = new VueRouter({
 })
 
 if (process.env.NODE_ENV == 'flask'){
-  new Vue({
-    render: h => h(FlaskApp),
-    router
-  }).$mount('#app')
+  Vue.mixin({router});
+  Vue.use(vueCustomElement);
+  Vue.customElement('annona-tagbuilder', tagbuilder);
 } else {
 new Vue({
   render: h => h(App),
