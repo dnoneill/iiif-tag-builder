@@ -266,6 +266,13 @@ export default {
     }
   },
   created() {
+    console.log(this.$route)
+    if (this.$route.path == '/display'){
+      var header = document.getElementsByTagName("header")[0];
+      header.parentNode.removeChild(header);
+      var footer = document.getElementsByTagName("footer")[0];
+      footer.parentNode.removeChild(footer);
+    }
     shared.redirect();
     this.collections ? this.parsecollections = JSON.parse(this.collections) : '';
     this.baseurl = process.env['BASE_URL'];
