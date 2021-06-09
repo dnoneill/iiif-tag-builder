@@ -684,9 +684,8 @@ li {
 }
 
 .closebutton {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
+  position: relative;
+  z-index: 400000;
 }
 
 .clearbutton {

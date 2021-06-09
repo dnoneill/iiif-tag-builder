@@ -27,13 +27,18 @@ if (process.env.NODE_ENV == 'flask'){
   ]
 }
 
-const router = new VueRouter({
+var router = new VueRouter({
   base: process.env['BASE_URL'],
   //mode: 'history',
   routes // short for `routes: routes`
 })
 
 if (process.env.NODE_ENV == 'flask'){
+  router = new VueRouter({
+    base: process.env['BASE_URL'],
+    mode: 'history',
+    routes // short for `routes: routes`
+  })
   Vue.mixin({router});
   Vue.use(vueCustomElement);
   Vue.customElement('annona-tagbuilder', tagbuilder);
