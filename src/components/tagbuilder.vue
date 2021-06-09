@@ -684,7 +684,9 @@ li {
 }
 
 .closebutton {
-  position: relative;
+  position: fixed;
+  top: 20px;
+  right: 20px;
   z-index: 400000;
 }
 
