@@ -712,7 +712,6 @@ select {
 
 .savebutton {
   position: relative;
-  z-index: 400;
 }
 
 .savebutton input {
