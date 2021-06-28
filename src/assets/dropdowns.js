@@ -57,7 +57,8 @@ export default {
           "field": "annoview",
           "options": [
             "sidebyside",
-            "collapse"
+            "collapse",
+            "scrollview"
           ],
           "description": ` Will change how the annotation and information box style. 
           <b>Collapse:<b> positions the box on top of the viewer and allows for the bar to collapse. 
