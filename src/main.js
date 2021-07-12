@@ -47,9 +47,8 @@ if (process.env.NODE_ENV == 'flask'){
 } else {
 new Vue({
   render: h => h(App),
-  routes
+  router
 }).$mount('#app')
-Vue.mixin({router});
 Vue.use(vueCustomElement);
 Vue.customElement('annona-settings', settings);
 }
