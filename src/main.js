@@ -49,5 +49,6 @@ new Vue({
   render: h => h(App),
   router
 }).$mount('#app')
+Vue.use(vueCustomElement);
 Vue.customElement('annona-settings', settings);
 }

@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <settings type="iiifstoryboard"></settings>
   </div>
 </template>
 
