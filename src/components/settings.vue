@@ -35,10 +35,12 @@ export default {
       }
   },
   created() {
+      console.log('created')
       var settings = booleanoptions[this.type]()
       settings = settings.concat(freetext[this.type]())
       settings = settings.concat(dropdowns[this.type]())
       this.settings = _.sortBy(settings, 'name');
+      console.log(this.settings)
   }
 }
 </script>
