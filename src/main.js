@@ -47,6 +47,7 @@ if (process.env.NODE_ENV == 'flask'){
 } else {
 new Vue({
   render: h => h(App),
+  mode: 'history',
   routes
 })
 Vue.mixin({router});
