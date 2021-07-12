@@ -45,10 +45,10 @@ if (process.env.NODE_ENV == 'flask'){
   Vue.use(vueCustomElement);
   Vue.customElement('annona-tagbuilder', tagbuilder);
 } else {
-// new Vue({
-//   render: h => h(App),
-//   routes
-// }).$mount('#app')
+new Vue({
+  render: h => h(App),
+  routes
+}).$mount('#app')
 Vue.mixin({router});
 Vue.use(vueCustomElement);
 Vue.customElement('annona-settings', settings);
