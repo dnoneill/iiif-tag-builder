@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import tagbuilder from './components/tagbuilder.vue'
+import settings from './components/settings.vue'
+
 import index from './components/index.vue'
 import 'document-register-element/build/document-register-element';
 import vueCustomElement from 'vue-custom-element'
@@ -47,4 +49,5 @@ new Vue({
   render: h => h(App),
   router
 }).$mount('#app')
+Vue.customElement('annona-settings', settings);
 }
