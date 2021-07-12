@@ -1,5 +1,5 @@
-npm run build
 npm run buildsettings
+npm run build
 rm -r ../annona/docs/tools/*
 cp -r dist/* ../annona/docs/tools/
 (echo "---"; echo "layout: page"; echo "title: Annotation Tools"; echo "---"; cat ../annona/docs/tools/index.html) > /tmp/index.html
