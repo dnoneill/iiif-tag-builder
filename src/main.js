@@ -44,6 +44,7 @@ if (process.env.NODE_ENV == 'flask'){
   Vue.use(vueCustomElement);
   Vue.customElement('annona-tagbuilder', tagbuilder);
 } else {
+  console.log(routes)
 new Vue({
   render: h => h(App),
   router
