@@ -4,7 +4,7 @@ export default {
     iiifstoryboard: function () {
       return [
         {
-          "field": "fit",
+          "name": "fit",
           "options": [
             "fill",
             "horizontal"
@@ -16,7 +16,7 @@ export default {
           These options can mean poritions of the image are not visible based on your image.`
         },
         {
-          "field": "panorzoom",
+          "name": "panorzoom",
           "options": [
             "pan"
           ],
@@ -27,7 +27,7 @@ export default {
             recenter the image to the clicked annotation`
         },
         {
-          "field": "textposition",
+          "name": "textposition",
           "options": [
             "top",
             "bottom",
@@ -41,7 +41,7 @@ export default {
            Each option has a dedicated CSS class based on the option name (.top, .right, etc.)`
         },
         {
-          "field": "startenddisplay",
+          "name": "startenddisplay",
           "options": [
             "tags",
             "info",
@@ -54,7 +54,7 @@ export default {
           for the first and last item.`
         },
         {
-          "field": "annoview",
+          "name": "annoview",
           "options": [
             "sidebyside",
             "collapse",
@@ -65,7 +65,7 @@ export default {
           <b>Side by side:</b> is similar to the default but it is positioned next to the viewer`
         },
         {
-          "field": "toolbarposition",
+          "name": "toolbarposition",
           "options": [
             "bottom"
           ],

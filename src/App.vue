@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <settings type="iiifstoryboard"></settings>
   </div>
 </template>
 
 <script>
 import tagbuilder from './components/tagbuilder.vue'
+import settings from './components/settings.vue'
 
 export default {
   name: 'app',
   components: {
-    tagbuilder
+    tagbuilder,
+    settings
   }
 }
 </script>

@@ -163,13 +163,13 @@
     <div class="groupings" v-if="viewtype && viewtype != 'iiif-annotation'">
       <h2>Dropdowns</h2>
       <p>Choose from one of the options</p>
-      <div v-for="dropdown in dropdowns" v-bind:key="dropdown.field">
-        <label v-bind:for="dropdown.field">{{dropdown.field}}
-          <button class="infobutton" v-bind:aria-label="'about' + dropdown.field + 'feature'" :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
+      <div v-for="dropdown in dropdowns" v-bind:key="dropdown.name">
+        <label v-bind:for="dropdown.name">{{dropdown.name}}
+          <button class="infobutton" v-bind:aria-label="'about' + dropdown.name + 'feature'" :content="dropdown.description" v-tippy="{ trigger : 'click', placement : 'top',  arrow: true }">
             <i class="fas fa-info-circle"></i>
           </button>
         </label>
-        <select v-bind:id="dropdown.field" v-on:change="updateRouter()" v-model="settings[dropdown.field]">
+        <select v-bind:id="dropdown.name" v-on:change="updateRouter()" v-model="settings[dropdown.name]">
           <option value=""></option>
           <option v-for="option in dropdown.options" v-bind:key="option">{{option}}</option>
         </select>
