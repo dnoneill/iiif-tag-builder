@@ -82,6 +82,10 @@ export default {
         "description": `Will stop the shortcuts button (<i class="fas fa-keyboard"></i>) from rendering and
         will not allow the keyboard shortcuts to render.`
     },
+    {"name": "hide_textoverlaybutton",
+        "description": `Will stop the textoverlay button (<i class="fas fa-align-justify"></i>) from rendering and
+        will not allow the keyboard shortcuts to render.`
+    },
     {"name": "hide_annotationtext",
         "description": `This will hide the annotation text 
         associated with annotation while still allowing for the box to
