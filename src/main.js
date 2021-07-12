@@ -47,7 +47,7 @@ if (process.env.NODE_ENV == 'flask'){
 } else {
 new Vue({
   render: h => h(App),
-  router
+  routes
 }).$mount('#app')
 Vue.mixin({router});
 Vue.use(vueCustomElement);
