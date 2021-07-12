@@ -6,13 +6,11 @@
 
 <script>
 import tagbuilder from './components/tagbuilder.vue'
-import settings from './components/settings.vue'
 
 export default {
   name: 'app',
   components: {
-    tagbuilder,
-    settings
+    tagbuilder
   }
 }
 </script>
