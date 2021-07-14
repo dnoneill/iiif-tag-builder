@@ -37,6 +37,20 @@ export default {
           listed in the annotation (not the tags button) add to css to .tags {display: none;}`,
           "options": "any number"
       },
+      {"name": "maplayer",
+          "description": `This can be set to any Leaflet compatible map tile. 
+          The corresponding mapattribution setting needs to be filled out for this to work.
+          By default it is set to https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png; 
+          This only works if your annotation has GeoJSON and you have the <b>mapattribution setting enabled</b>.`,
+          "options": "Leaflet compatible map tile"
+      },
+      {"name": "mapattribution",
+          "description": `This needs to be set to the correct attribution for the map you are using. 
+          If it is not loaded your custom map layer will not load. 
+          By default it is set to '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'.
+          This only works if your annotation has GeoJSON`,
+          "options": "Leaflet compatible map tile"
+      },
       {"name": "customid",
           "description": `If for some reason you would like to customize
            the identifier which gets automatically generated 
