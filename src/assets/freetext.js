@@ -59,6 +59,18 @@ export default {
            get added to the same page.`,
            "options": "any combination of letters and numbers"
       },
+      {"name": "textoverlayopacity",
+          "description": `Allows you to set the default opacity for text overlay when the storyboard loads. 100 is no opacity, 0 is invisible. Default is 100.`,
+           "options": "any number between 1-100"
+      },
+      {"name": "textoverlayfontcolor",
+          "description": `Allows you to set the default text color for text overlay when the storyboard loads. Default is #000000.`,
+           "options": "HEX color code"
+      },
+      {"name": "textoverlaybackground",
+      "description": `Allows you to set the default background color for text overlay when the storyboard loads. Default is none;`,
+           "options": "HEX color code"
+      },
       {"name": "imagecrop",
           "description": ` X,Y,W,H coordinates on the image in the following format “x,y,w,h”, 
           e.g. “200,300,600,400”. 
