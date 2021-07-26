@@ -103,6 +103,14 @@ export default {
     {"name": "textfirst",
         "description": `Will show the commenting annotations before the transcription. 
         Is only effective if used when the transcription setting is enabled.`
+    },
+    {"name": "toggletextoverlay",
+        "description": `Will have the text overlay toggled on the storyboard load. 
+        This only works with Annotations that have a OCR text annotations. In OpenAnnotation 
+        it is Cnt:ContentAsText with sc:paiting.
+        In W3 web annotations it is anything with a purpose of transcribing or supplementing.
+        
+        `
     }
   ]
 },
