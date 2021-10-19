@@ -95,7 +95,15 @@ export default {
       return this.iiifstoryboard()
     },
     iiifrangestoryboard: function() {
-      return this.iiifstoryboard();
+      var options = this.iiifstoryboard();
+      options.push({"name": "perpage",
+      "description": `Any number.
+      This will place images side by side. For example, if you enter 3, the first 3 images/annotations will show up side by side 
+      and the arrows will tab through all the annotations in order of boards (left-to-right).
+      `,
+      "options": "any integer (no decimals)"
+      })
+      return options;
     },
     iiifannotation: function() {
       return [

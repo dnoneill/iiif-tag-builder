@@ -122,6 +122,13 @@ export default {
        the position on the image. 
        If you would like to match position in annotation set this to true.`
     })
+    options.push({
+      'name': 'continousboard',
+      'description': `Instead of having annotations being tabbed together, this setting allows
+      the users to view all annotations in order (based on board order). All of the annotaitons 
+      in the first board will be run through, then the next board, etc.
+      `
+    })
     return options;
   },
   iiifrangestoryboard: function() {
