@@ -103,6 +103,14 @@ export default {
       `,
       "options": "any integer (no decimals)"
       })
+      options.push({"name": "listnumber",
+      "description": `By default, the range storyboard will treat each list in a manifest as seperate board. 
+      If you want only one list to show up, you can choose that list, and only those will show up. For example, 
+      if your manifest has a word, paragraph and section list for each canvas, by default you will get a seperate word, paragraph and section page in your viewer. 
+      You can choose to only have one lists be visible by choosing the correct number of item. If the word, paragraph and section lists are in that order, word would be 1, paragraph would be 2, section would be 3.
+      `,
+      "options": "any integer (no decimals)"
+      })
       return options;
     },
     iiifannotation: function() {

@@ -65,6 +65,9 @@ export default {
         "description": `Will stop the info button (<i class="fas fa-toggle-on"></i>) from rendering and
         will not allow the keyboard shortcuts to render.`
     },
+    {"name": "hide_reloadbutton",
+        "description": `Hides the reload button`
+    },
     {"name": "hide_layersbutton",
         "description":  `Will stop the info button (<i class="fas fa-layer-group"></i>) from rendering and
         will not allow the keyboard shortcuts to render.`
