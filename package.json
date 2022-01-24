@@ -7,7 +7,7 @@
     "build": "vue-cli-service build --no-clean",
     "buildsettings": "TYPE=settings vue-cli-service build src/settings.js",
     "serveflask": "NODE_ENV=flask vue-cli-service serve --mode flask",
-    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/app.js ~/heroku/annonatate/static/app.js",
+    "buildflask": "NODE_ENV=flask vue-cli-service build --mode flask && cp dist/js/app.js ~/heroku/annonatate/annonatate-sourcecode/annonatate/static/app.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
