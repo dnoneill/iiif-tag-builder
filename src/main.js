@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 import tagbuilder from './components/tagbuilder.vue'
 
 import index from './components/index.vue'
-import 'document-register-element/build/document-register-element';
 import vueCustomElement from 'vue-custom-element'
 import VueClipboards from 'vue-clipboards';
 import VueTippy, { TippyComponent } from "vue-tippy";
