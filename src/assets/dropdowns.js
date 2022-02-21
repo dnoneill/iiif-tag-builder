@@ -7,13 +7,26 @@ export default {
           "name": "fit",
           "options": [
             "fill",
-            "horizontal"
+            "horizontal",
+            "vertical"
           ],
-          "description": `By default the image is fit vertically 
-          to the viewer. 
+          "description": `By default the image is fit whichever side of the image has longest edge. 
           <b>Horizontal: </b>Fits the image to the viewer on the horizontal (x-axis).
+          <b>Vertical: </b>Fits the image to the viewer on the vertical (y-axis).
           <b>Fill: </b> Fits the image to the viewer so there is no margins.
           These options can mean poritions of the image are not visible based on your image.`
+        },
+        {
+          "name": "sortannos",
+          "options": [
+            "horizontal",
+            "vertical",
+            "longedge"
+          ],
+          "description": `By default the annotations are sorted by the order in the annotation list. This setting allows you to tab through annotations based on their position on the image instead of their position in the list.  
+          <b>Horizontal: </b>Goes through annotations based on position on the x-axis.
+          <b>Vertical: </b>Goes through annotations based on position on the y-axis.
+          <b>Longedge: </b> Figures out the longest edge on the image (x/y axis). Goes through annotations based on longest edge.`
         },
         {
           "name": "panorzoom",
