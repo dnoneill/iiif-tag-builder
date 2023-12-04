@@ -5,13 +5,8 @@
 </template>
 
 <script>
-import tagbuilder from './components/tagbuilder.vue'
-
 export default {
-  name: 'app',
-  components: {
-    tagbuilder
-  }
+  name: 'app'
 }
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <tagbuilder apiurl="/saveannonaview"></tagbuilder>
+    <tagbuilder apiurl="/saveannonaview" collectionurl="/createcollections"></tagbuilder>
   </div>
 </template>
 
 <script>
-import tagbuilder from './components/tagbuilder.vue'
+import tagbuilder from './components/tagbuilder2.vue'
 export default {
   name: 'flaskapp',
   components: {

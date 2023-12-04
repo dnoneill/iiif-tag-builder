@@ -33,7 +33,8 @@ export default {
         "description": `This only works if there are tags in your annotation (<i class="fas fa-tags"></i> in toolbar).
         By default, the viewer will the show the number of times each tag appears in the tag box.
         This setting removes that count from view.
-        `
+        `,
+        "icon": "Tag count (in tag box)"
     },
     {"name": "overlaynext",
         "description": `When overlays have not been toggled, this will toggle only the overlay of the current annotation.
@@ -42,57 +43,70 @@ export default {
     },
     {"name": "hide_annocontrols",
         "description": `This setting hides <i class="fas fa-times close_button"></i>, <i class="fas fa-caret-square-up close_button"></i> 
-        and any other icons in annotation box.`
+        and any other icons in annotation box.`,
+        "icon": "<i class='fas fa-times close_button'></i><i class='fas fa-caret-square-up close_button'></i>"
     },
     {"name": "hide_toolbar",
         "description": `This setting will hide the toolbar. 
-        If you enable this setting it is recommended you enable toggle_overlays so users can interact with the storyboard.`
+        If you enable this setting it is recommended you enable toggle_overlays so users can interact with the storyboard.`,
+        "icon": "entire toolbar"
     },
     {"name": "hide_tagsbutton",
         "description": `If there are tags in the annotation, 
         this will hide the tags button (<i class="fas fa-tags"></i>) in the toolbar
-        and stop keyboard shortcuts from rendering.`
+        and stop keyboard shortcuts from rendering.`,
+        "icon": "<i class='fas fa-tags'></i> button"
     },
     {"name": "hide_autorunbutton",
         "description": `Will stop the autorun button (<i class="fas fa-magic"></i>) from rendering and
-         will not allow the keyboard shortcuts to render.`
+         will not allow the keyboard shortcuts to render.`,
+         "icon": `<i class="fas fa-magic"></i>`
     },
     {"name": "hide_infobutton",
         "description": `Will stop the info button (<i class="fas fa-info"></i>) from rendering and
-        will not allow the keyboard shortcuts to render.`
+        will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-info"></i>`
     },
     {"name": "hide_overlaybutton",
         "description": `Will stop the info button (<i class="fas fa-toggle-on"></i>) from rendering and
-        will not allow the keyboard shortcuts to render.`
+        will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-toggle-on"></i>`
     },
     {"name": "hide_reloadbutton",
-        "description": `Hides the reload button`
+        "description": `Hides the reload button`,
+        "icon": `<i class="fas fa-redo"></i>`
     },
     {"name": "hide_layersbutton",
         "description":  `Will stop the info button (<i class="fas fa-layer-group"></i>) from rendering and
-        will not allow the keyboard shortcuts to render.`
+        will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-layer-group"></i>`
     },
     {"name": "hide_nextbuttons",
         "description": `Will stop the prev (<i class="fas fa-arrow-left"></i>) 
         and next buttons (<i class="fas fa-arrow-right"></i>) from rendering 
-        and will not allow the keyboard shortcuts to render.`
+        and will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-arrow-left"></i><i class="fas fa-arrow-right"></i>`
     },
     {"name": "hide_fullscreenbutton",
         "description": `Will stop the fullscreen button (<i class="fas fa-expand"></i>) from rendering and
-        will not allow the keyboard shortcuts to render.`
+        will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-expand"></i>`
     },
     {"name": "hide_shortcutbutton",
         "description": `Will stop the shortcuts button (<i class="fas fa-keyboard"></i>) from rendering and
-        will not allow the keyboard shortcuts to render.`
+        will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-keyboard"></i>`
     },
     {"name": "hide_textoverlaybutton",
         "description": `Will stop the textoverlay button (<i class="fas fa-align-justify"></i>) from rendering and
-        will not allow the keyboard shortcuts to render.`
+        will not allow the keyboard shortcuts to render.`,
+        "icon": `<i class="fas fa-align-justify"></i>`
     },
     {"name": "hide_annotationtext",
         "description": `This will hide the annotation text 
         associated with annotation while still allowing for the box to
-        appear for overlays and tags`
+        appear for overlays and tags`,
+        "icon": 'annotation text'
     },
     {"name": "transcription",
         "description": `For annotations that contain transcriptions. 
@@ -140,7 +154,7 @@ export default {
   iiifannotation: function() {
     return [
       {"name": "hide_viewlarger",
-        "description": `Hides the “View Full Image” button`
+        "description": `Hides the “View Full Image” button`,
       },
       {"name": "hide_fullobject",
         "description": `Hides the full object url`
